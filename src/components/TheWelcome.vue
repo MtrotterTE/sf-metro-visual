@@ -67,6 +67,15 @@ function runAfterLoad() {
   let EmbarcaderoStationInbound = 0;
   let EmbarcaderoStationInboundNumVehicles = 0;
 
+  let MontgomeryStationOutbound = 0;
+  let MontgomeryStationOutboundNumVehicles = 0;
+  let MontgomeryStationInbound = 0;
+  let MontgomeryStationInboundNumVehicles = 0;
+
+  // Maximum and minimum average time at station for color scaling
+  let maximumAverageTimeAtStation = 50;
+  let minimumAverageTimeAtStation = 0;
+
   // Cycle through the data
   console.log(Array.isArray(data1.value));
   Object.values(data1.value).forEach((stop) => {
@@ -76,6 +85,9 @@ function runAfterLoad() {
         if (stop.stationId === "17217" && stop.timeAtStop > 0) { // Embarcadero Station outbound
           EmbarcaderoStationOutbound += stop.timeAtStop;
           EmbarcaderoStationOutboundNumVehicles++;
+        } else if (stop.stationId === "16994" && stop.timeAtStop > 0) { // Montgomery Station outbound
+          MontgomeryStationOutbound += stop.timeAtStop;
+          MontgomeryStationOutboundNumVehicles++;
         }
       } else { // vehicle at intersection
 
@@ -85,6 +97,9 @@ function runAfterLoad() {
         if (stop.stationId === "16992" && stop.timeAtStop > 0) { // Embarcadero Station inbound
           EmbarcaderoStationInbound += stop.timeAtStop;
           EmbarcaderoStationInboundNumVehicles++;
+        } else if (stop.stationId === "15731" && stop.timeAtStop > 0) { // Montgomery Station inbound
+          MontgomeryStationInbound += stop.timeAtStop;
+          MontgomeryStationInboundNumVehicles++;
         }
       } else { // vehicle at intersection
 
@@ -92,24 +107,38 @@ function runAfterLoad() {
     }
   });
 
-  console.log("Embarcadero Station Outbound Total Time: " + EmbarcaderoStationOutbound);
-  console.log("Embarcadero Station Outbound Number of Vehicles: " + EmbarcaderoStationOutboundNumVehicles);
-  console.log("Embarcadero Station Inbound Total Time: " + EmbarcaderoStationInbound);
-  console.log("Embarcadero Station Inbound Number of Vehicles: " + EmbarcaderoStationInboundNumVehicles);
-
   const outboundCX = 345;
   const inboundCX = 465;
-  const stationCYOffset = 100;
+  const stationCYOffset = 200;
   const radiusScaler = 0.01
 
+  // Outbound label
+  svg.append('text')
+    .attr('x', 50)
+    .attr('y', 800)
+    .attr('transform', 'rotate(-90, 50, 800)')
+    .attr('class', 'outbound-label')
+    .text('Outbound');
+
+  // Inbound label
+  svg.append('text')
+    .attr('x', 750)
+    .attr('y', 620)
+    .attr('transform', 'rotate(90, 750, 620)')
+    .attr('class', 'inbound-label')
+    .text('Inbound');
+
+  // Embarcadero Station outbound
+  let averageTimeEmbarcaderoOutbound = EmbarcaderoStationOutbound / EmbarcaderoStationOutboundNumVehicles;
   svg.append('circle')
     .attr('cx', outboundCX)
     .attr('cy', stationCYOffset)
     .attr('r', EmbarcaderoStationOutbound * radiusScaler)
     .attr('class', 'embarcadero-outbound station-circle')
+    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeEmbarcaderoOutbound / maximumAverageTimeAtStation)))
     .on("mouseover", (event, d) => {
       tooltip.style("opacity", 1)
-        .html(EmbarcaderoStationOutbound);
+        .html("Embarcadero Station (Outbound).<br>Total Time at Station: " + EmbarcaderoStationOutbound + " seconds<br>Total Vehicles: " + EmbarcaderoStationOutboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeEmbarcaderoOutbound.toFixed(2) + " seconds");
     })
     .on("mousemove", (event) => {
       tooltip.style("left", (event.pageX + 10) + "px")
@@ -118,15 +147,24 @@ function runAfterLoad() {
     .on("mouseout", () => {
       tooltip.style("opacity", 0);
     });
+  
+  svg.append('text')
+    .attr('x', outboundCX - 200)
+    .attr('y', stationCYOffset + 5)
+    .attr('class', 'station-label')
+    .text('Embarcadero Station');
 
+  // Embarcadero Station inbound
+  let averageTimeEmbarcaderoInbound = EmbarcaderoStationInbound / EmbarcaderoStationInboundNumVehicles;
   svg.append('circle')
     .attr('cx', inboundCX)
     .attr('cy', stationCYOffset)
     .attr('r', EmbarcaderoStationInbound * radiusScaler)
     .attr('class', 'embarcadero-inbound station-circle')
+    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeEmbarcaderoInbound / maximumAverageTimeAtStation)))
     .on("mouseover", (event, d) => {
       tooltip.style("opacity", 1)
-        .html(EmbarcaderoStationInbound);
+        .html("Embarcadero Station (Inbound).<br>Total Time at Station: " + EmbarcaderoStationInbound + " seconds<br>Total Vehicles: " + EmbarcaderoStationInboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeEmbarcaderoInbound.toFixed(2) + " seconds");
     })
     .on("mousemove", (event) => {
       tooltip.style("left", (event.pageX + 10) + "px")
@@ -135,15 +173,77 @@ function runAfterLoad() {
     .on("mouseout", () => {
       tooltip.style("opacity", 0);
     });
+
+  svg.append('text')
+    .attr('x', inboundCX + 30)
+    .attr('y', stationCYOffset + 5)
+    .attr('class', 'station-label')
+    .text('Embarcadero Station');
+
+  // Montgomery Station outbound
+  let averageTimeMontgomeryOutbound = MontgomeryStationOutbound / MontgomeryStationOutboundNumVehicles;
+  svg.append('circle')
+    .attr('cx', outboundCX)
+    .attr('cy', stationCYOffset * 2)
+    .attr('r', MontgomeryStationOutbound * radiusScaler)
+    .attr('class', 'montgomery-outbound station-circle')
+    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeMontgomeryOutbound / maximumAverageTimeAtStation)))
+    .on("mouseover", (event, d) => {
+      tooltip.style("opacity", 1)
+        .html("Montgomery Station (Outbound).<br>Total Time at Station: " + MontgomeryStationOutbound + " seconds<br>Total Vehicles: " + MontgomeryStationOutboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeMontgomeryOutbound.toFixed(2) + " seconds");
+    })
+    .on("mousemove", (event) => {
+      tooltip.style("left", (event.pageX + 10) + "px")
+        .style("top", (event.pageY - 20) + "px");
+    })
+    .on("mouseout", () => {
+      tooltip.style("opacity", 0);
+    });
+  
+  svg.append('text')
+    .attr('x', outboundCX - 200)
+    .attr('y', stationCYOffset * 2 + 5)
+    .attr('class', 'station-label')
+    .text('Montgomery Station');
+
+  // Montgomery Station inbound
+  let averageTimeMontgomeryInbound = MontgomeryStationInbound / MontgomeryStationInboundNumVehicles;
+  svg.append('circle')
+    .attr('cx', inboundCX)
+    .attr('cy', stationCYOffset * 2)
+    .attr('r', MontgomeryStationInbound * radiusScaler)
+    .attr('class', 'montgomery-inbound station-circle')
+    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeMontgomeryInbound / maximumAverageTimeAtStation)))
+    .on("mouseover", (event, d) => {
+      tooltip.style("opacity", 1)
+        .html("Montgomery Station (Inbound).<br>Total Time at Station: " + MontgomeryStationInbound + " seconds<br>Total Vehicles: " + MontgomeryStationInboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeMontgomeryInbound.toFixed(2) + " seconds");
+    })
+    .on("mousemove", (event) => {
+      tooltip.style("left", (event.pageX + 10) + "px")
+        .style("top", (event.pageY - 20) + "px");
+    })
+    .on("mouseout", () => {
+      tooltip.style("opacity", 0);
+    });
+
+  svg.append('text')
+    .attr('x', inboundCX + 30)
+    .attr('y', stationCYOffset * 2 + 5)
+    .attr('class', 'station-label')
+    .text('Montgomery Station');
 }
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 .page-title {
+  font-family: "Roboto", sans-serif;
   text-align: center;
   font-size: 2rem;
   color: #C3BFBA;
   text-decoration: underline;
+  font-weight: 700;
 }
 
 .svg-area {
@@ -159,15 +259,8 @@ function runAfterLoad() {
   stroke-width: 3px;
 }
 
-.embarcadero-outbound {
-  fill: #FF5733; /* Outbound color */
-}
-
-.embarcadero-inbound {
-  fill: #33C3FF; /* Inbound color */
-}
-
 .tooltip {
+  font-family: "Roboto", sans-serif;
   position: absolute;
   text-align: center;
   padding: 6px;
@@ -178,5 +271,19 @@ function runAfterLoad() {
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.2s ease;
+}
+
+.outbound-label, .inbound-label {
+  font-family: "Roboto", sans-serif;
+  fill: #C3BFBA;
+  font-size: 3rem;
+  font-weight: 300;
+}
+
+.station-label {
+  font-family: "Roboto", sans-serif;
+  fill: #C3BFBA;
+  font-size: 1rem;
+  font-weight: 500;
 }
 </style>
