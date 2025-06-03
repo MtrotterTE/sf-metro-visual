@@ -10,7 +10,7 @@ export default defineConfig({
     vue(),
     vueDevTools(),
   ],
-  base: '/vue-gh-pages-template/',
+  base: '/sf-metro-visual/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
