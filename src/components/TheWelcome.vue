@@ -39,7 +39,7 @@ function runAfterLoad() {
 
   // svg canvas dimensions
   const width = 800;
-  const height = 4000;
+  const height = 4500;
 
   const svg = d3.select(chart.value)
     .append('svg')
@@ -132,6 +132,36 @@ function runAfterLoad() {
   let OceanAptosStationInbound = 0;
   let OceanAptosStationInboundNumVehicles = 0;
 
+  let OceanVictoriaStationOutbound = 0;
+  let OceanVictoriaStationOutboundNumVehicles = 0;
+  let OceanFairfieldStationInbound = 0;
+  let OceanFairfieldStationInboundNumVehicles = 0;
+
+  let OceanJulesStationOutbound = 0;
+  let OceanJulesStationOutboundNumVehicles = 0;
+  let OceanDoradoStationInbound = 0;
+  let OceanDoradoStationInboundNumVehicles = 0;
+
+  let OceanMiramarStationOutbound = 0;
+  let OceanMiramarStationOutboundNumVehicles = 0;
+  let OceanMiramarStationInbound = 0;
+  let OceanMiramarStationInboundNumVehicles = 0;
+
+  let OceanLeeStationOutbound = 0;
+  let OceanLeeStationOutboundNumVehicles = 0;
+  let OceanLeeStationInbound = 0;
+  let OceanLeeStationInboundNumVehicles = 0;
+
+  let OceanCCSFStationOutbound = 0;
+  let OceanCCSFStationOutboundNumVehicles = 0;
+  let OceanCCSFStationInbound = 0;
+  let OceanCCSFStationInboundNumVehicles = 0;
+
+  let BalboaParkStationOutbound = 0;
+  let BalboaParkStationOutboundNumVehicles = 0;
+  let SanJoseGenevaStationInbound = 0;
+  let SanJoseGenevaStationInboundNumVehicles = 0;
+
   // Maximum and minimum average time at station for color scaling
   let maximumAverageTimeAtStation = 80;
   let minimumAverageTimeAtStation = 15;
@@ -172,7 +202,7 @@ function runAfterLoad() {
         } else if (stop.stationId === "17125" && stop.timeAtStop > 0) { // West Portal & 14th outbound
           WP14StationOutbound += stop.timeAtStop;
           WP14StationOutboundNumVehicles++;
-        } else if (stop.stationId === "16503" && stop.timeAtStop > 0) { // West Portal & St. Francis outbound
+        } else if (stop.stationId === "16503" && stop.timeAtStop > 0) { // West Portal & Sloat Blvd (Saint Francis Cir) outbound
           WPSLStationOutbound += stop.timeAtStop;
           WPSLStationOutboundNumVehicles++;
         } else if (stop.stationId === "17114" && stop.timeAtStop > 0) { // Junipero Serra Blvd & Ocean Ave outbound
@@ -184,6 +214,24 @@ function runAfterLoad() {
         } else if (stop.stationId === "15780" && stop.timeAtStop > 0) { // Ocean Ave & Aptos outbound
           OceanAptosStationOutbound += stop.timeAtStop;
           OceanAptosStationOutboundNumVehicles++;
+        } else if (stop.stationId === "15808" && stop.timeAtStop > 0) { // Ocean Ave & Victoria St outbound
+          OceanVictoriaStationOutbound += stop.timeAtStop;
+          OceanVictoriaStationOutboundNumVehicles++;
+        } else if (stop.stationId === "15793" && stop.timeAtStop > 0) { // Ocean Ave & Jules outbound
+          OceanJulesStationOutbound += stop.timeAtStop;
+          OceanJulesStationOutboundNumVehicles++;
+        } else if (stop.stationId === "15798" && stop.timeAtStop > 0) { // Ocean Ave & Fairfield Way outbound
+          OceanMiramarStationOutbound += stop.timeAtStop;
+          OceanMiramarStationOutboundNumVehicles++;
+        } else if (stop.stationId === "15795" && stop.timeAtStop > 0) { // Ocean Ave & Dorado Ter outbound
+          OceanLeeStationOutbound += stop.timeAtStop;
+          OceanLeeStationOutboundNumVehicles++;
+        } else if (stop.stationId === "15785" && stop.timeAtStop > 0) { // Ocean Ave & Dorado Ter outbound
+          OceanCCSFStationOutbound += stop.timeAtStop;
+          OceanCCSFStationOutboundNumVehicles++;
+        } else if (stop.stationId === "15418" && stop.timeAtStop > 0) { // Ocean Ave & Dorado Ter outbound
+          BalboaParkStationOutbound += stop.timeAtStop;
+          BalboaParkStationOutboundNumVehicles++;
         }
       } else { // vehicle at intersection
 
@@ -220,7 +268,7 @@ function runAfterLoad() {
         } else if (stop.stationId === "16898" && stop.timeAtStop > 0) { // West Portal & 14th inbound
           WP14StationInbound += stop.timeAtStop;
           WP14StationInboundNumVehicles++;
-        } else if (stop.stationId === "17109" && stop.timeAtStop > 0) { // West Portal & St. Francis inbound
+        } else if (stop.stationId === "17109" && stop.timeAtStop > 0) { // West Portal & Sloat Blvd (Saint Francis Cir) inbound
           WPSLStationInbound += stop.timeAtStop;
           WPSLStationInboundNumVehicles++;
         } else if (stop.stationId === "17113" && stop.timeAtStop > 0) { // Junipero Serra Blvd & Ocean Ave inbound
@@ -232,6 +280,24 @@ function runAfterLoad() {
         } else if (stop.stationId === "15779" && stop.timeAtStop > 0) { // Ocean Ave & Aptos inbound
           OceanAptosStationInbound += stop.timeAtStop;
           OceanAptosStationInboundNumVehicles++;
+        } else if (stop.stationId === "15788" && stop.timeAtStop > 0) { // Ocean Ave & Fairfield Way inbound
+          OceanFairfieldStationInbound += stop.timeAtStop;
+          OceanFairfieldStationInboundNumVehicles++;
+        } else if (stop.stationId === "15787" && stop.timeAtStop > 0) { // Ocean Ave & Jules inbound
+          OceanDoradoStationInbound += stop.timeAtStop;
+          OceanDoradoStationInboundNumVehicles++;
+        } else if (stop.stationId === "15797" && stop.timeAtStop > 0) { // Ocean Ave & Dorado Ter inbound
+          OceanMiramarStationInbound += stop.timeAtStop;
+          OceanMiramarStationInboundNumVehicles++;
+        } else if (stop.stationId === "15794" && stop.timeAtStop > 0) { // Ocean Ave & Miramar Ave inbound
+          OceanLeeStationInbound += stop.timeAtStop;
+          OceanLeeStationInboundNumVehicles++;
+        } else if (stop.stationId === "15784" && stop.timeAtStop > 0) { // Ocean Ave & Miramar Ave inbound
+          OceanCCSFStationInbound += stop.timeAtStop;
+          OceanCCSFStationInboundNumVehicles++;
+        } else if (stop.stationId === "17778" && stop.timeAtStop > 0) { // Ocean Ave & Miramar Ave inbound
+          SanJoseGenevaStationInbound += stop.timeAtStop;
+          SanJoseGenevaStationInboundNumVehicles++;
         }
       } else { // vehicle at intersection
 
@@ -239,16 +305,267 @@ function runAfterLoad() {
     }
   });
 
+  // Make array of station data
+  const stationsData = [
+    {
+      name: 'Embarcadero Station',
+      totalTime: EmbarcaderoStationOutbound,
+      numVehicles: EmbarcaderoStationOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'Embarcadero Station',
+      totalTime: EmbarcaderoStationInbound,
+      numVehicles: EmbarcaderoStationInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'Montgomery Station',
+      totalTime: MontgomeryStationOutbound,
+      numVehicles: MontgomeryStationOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'Montgomery Station',
+      totalTime: MontgomeryStationInbound,
+      numVehicles: MontgomeryStationInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'Powell Station',
+      totalTime: PowellStationOutbound,
+      numVehicles: PowellStationOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'Powell Station',
+      totalTime: PowellStationInbound,
+      numVehicles: PowellStationInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'Civic Center Station',
+      totalTime: CCStationOutbound,
+      numVehicles: CCStationOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'Civic Center Station',
+      totalTime: CCStationInbound,
+      numVehicles: CCStationInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'Van Ness Station',
+      totalTime: VNStationOutbound,
+      numVehicles: VNStationOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'Van Ness Station',
+      totalTime: VNStationInbound,
+      numVehicles: VNStationInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'Church Station',
+      totalTime: ChurchStationOutbound,
+      numVehicles: ChurchStationOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'Church Station',
+      totalTime: ChurchStationInbound,
+      numVehicles: ChurchStationInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'Castro Station',
+      totalTime: CastroStationOutbound,
+      numVehicles: CastroStationOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'Castro Station',
+      totalTime: CastroStationInbound,
+      numVehicles: CastroStationInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'Forest Hill Station',
+      totalTime: FHStationOutbound,
+      numVehicles: FHStationOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'Forest Hill Station',
+      totalTime: FHStationInbound,
+      numVehicles: FHStationInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'West Portal Station',
+      totalTime: WPStationOutbound,
+      numVehicles: WPStationOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'West Portal Station',
+      totalTime: WPStationInbound,
+      numVehicles: WPStationInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'West Portal & 14th',
+      totalTime: WP14StationOutbound,
+      numVehicles: WP14StationOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'West Portal & 14th',
+      totalTime: WP14StationInbound,
+      numVehicles: WP14StationInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'West Portal & Sloat Blvd (Saint Francis Cir)',
+      totalTime: WPSLStationOutbound,
+      numVehicles: WPSLStationOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'West Portal & Sloat Blvd (Saint Francis Cir)',
+      totalTime: WPSLStationInbound,
+      numVehicles: WPSLStationInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'Junipero Serra Blvd & Ocean Ave',
+      totalTime: JSStationOutbound,
+      numVehicles: JSStationOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'Junipero Serra Blvd & Ocean Ave',
+      totalTime: JSStationInbound,
+      numVehicles: JSStationInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'Ocean Ave & San Leandro Way',
+      totalTime: OSLStationOutbound,
+      numVehicles: OSLStationOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'Ocean Ave & San Leandro Way',
+      totalTime: OSLStationInbound,
+      numVehicles: OSLStationInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'Ocean Ave & Aptos',
+      totalTime: OceanAptosStationOutbound,
+      numVehicles: OceanAptosStationOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'Ocean Ave & Aptos',
+      totalTime: OceanAptosStationInbound,
+      numVehicles: OceanAptosStationInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'Ocean Ave & Victoria St',
+      totalTime: OceanVictoriaStationOutbound,
+      numVehicles: OceanVictoriaStationOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'Ocean Ave & Fairfield Way',
+      totalTime: OceanFairfieldStationInbound,
+      numVehicles: OceanFairfieldStationInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'Ocean Ave & Jules Ave',
+      totalTime: OceanJulesStationOutbound,
+      numVehicles: OceanJulesStationOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'Ocean Ave & Dorado Ter',
+      totalTime: OceanDoradoStationInbound,
+      numVehicles: OceanDoradoStationInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'Ocean Ave & Miramar Ave',
+      totalTime: OceanMiramarStationOutbound,
+      numVehicles: OceanMiramarStationOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'Ocean Ave & Miramar Ave',
+      totalTime: OceanMiramarStationInbound,
+      numVehicles: OceanMiramarStationInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'Ocean Ave & Lee Ave',
+      totalTime: OceanLeeStationOutbound,
+      numVehicles: OceanLeeStationOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'Ocean Ave & Lee Ave',
+      totalTime: OceanLeeStationInbound,
+      numVehicles: OceanLeeStationInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'Ocean Ave & CCSF Pedestrian Bridge',
+      totalTime: OceanCCSFStationOutbound,
+      numVehicles: OceanCCSFStationOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'Ocean Ave & CCSF Pedestrian Bridge',
+      totalTime: OceanCCSFStationInbound,
+      numVehicles: OceanCCSFStationInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'Balboa Park BART Mezzanine Level Station',
+      totalTime: BalboaParkStationOutbound,
+      numVehicles: BalboaParkStationOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'San Jose Ave & Geneva Ave Station',
+      totalTime: SanJoseGenevaStationInbound,
+      numVehicles: SanJoseGenevaStationInboundNumVehicles,
+      direction: 'inbound'
+    }
+  ];
+
   const outboundCX = 345;
   const inboundCX = 465;
   const stationCYOffset = 200;
   const radiusScaler = 0.015
 
-  // Outbound label
+  // Outbound labels
   svg.append('text')
     .attr('x', 50)
     .attr('y', 800)
     .attr('transform', 'rotate(-90, 50, 800)')
+    .attr('class', 'outbound-label')
+    .text('<-- Outbound <--');
+
+  svg.append('text')
+    .attr('x', 50)
+    .attr('y', 3300)
+    .attr('transform', 'rotate(-90, 50, 3300)')
     .attr('class', 'outbound-label')
     .text('<-- Outbound <--');
 
@@ -260,733 +577,76 @@ function runAfterLoad() {
     .attr('class', 'inbound-label')
     .text('<-- Inbound <--');
 
-  // Embarcadero Station outbound
-  let averageTimeEmbarcaderoOutbound = EmbarcaderoStationOutbound / EmbarcaderoStationOutboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', outboundCX)
-    .attr('cy', stationCYOffset)
-    .attr('r', EmbarcaderoStationOutbound * radiusScaler)
-    .attr('class', 'embarcadero-outbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeEmbarcaderoOutbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("Embarcadero Station (Outbound).<br>Total Time at Station: " + EmbarcaderoStationOutbound + " seconds<br>Total Vehicles: " + EmbarcaderoStationOutboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeEmbarcaderoOutbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-  
   svg.append('text')
-    .attr('x', outboundCX - 200)
-    .attr('y', stationCYOffset + 5)
-    .attr('class', 'station-label')
-    .text('Embarcadero Station');
+    .attr('x', 750)
+    .attr('y', 3000)
+    .attr('transform', 'rotate(90, 750, 3000)')
+    .attr('class', 'inbound-label')
+    .text('<-- Inbound <--');
 
-  // Embarcadero Station inbound
-  let averageTimeEmbarcaderoInbound = EmbarcaderoStationInbound / EmbarcaderoStationInboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', inboundCX)
-    .attr('cy', stationCYOffset)
-    .attr('r', EmbarcaderoStationInbound * radiusScaler)
-    .attr('class', 'embarcadero-inbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeEmbarcaderoInbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("Embarcadero Station (Inbound).<br>Total Time at Station: " + EmbarcaderoStationInbound + " seconds<br>Total Vehicles: " + EmbarcaderoStationInboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeEmbarcaderoInbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
+  // Loop through stations data to create circles and labels
+  stationsData.forEach((station, index) => {
+    const averageTime = station.totalTime / station.numVehicles;
+    const isOutbound = station.direction === 'outbound';
+    const cx = isOutbound ? outboundCX : inboundCX;
+    let cy
+    if (index % 2 > 0) {
+      cy = stationCYOffset + ((index - 1) * 100); // Adjust vertical position for each station
+    } else {
+      cy = stationCYOffset + (index * 100); // Adjust vertical position for each station
+    }
+    const radius = station.totalTime * radiusScaler;
 
-  svg.append('text')
-    .attr('x', inboundCX + 30)
-    .attr('y', stationCYOffset + 5)
-    .attr('class', 'station-label')
-    .text('Embarcadero Station');
+    if (isOutbound) {
+      svg.append('circle')
+        .attr('cx', cx)
+        .attr('cy', cy)
+        .attr('r', radius)
+        .attr('class', `${station.name.toLowerCase().replace(/ /g, '-')}-circle station-circle`)
+        .attr('fill', d3.interpolateRdYlGn(1 - (averageTime / maximumAverageTimeAtStation)))
+        .on("mouseover", (event, d) => {
+          tooltip.style("opacity", 1)
+            .html(`${station.name}.<br>Total Time at Station: ${station.totalTime} seconds<br>Total Vehicles: ${station.numVehicles} vehicles<br>Average Time at Station: ${averageTime.toFixed(2)} seconds`);
+        })
+        .on("mousemove", (event) => {
+          tooltip.style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 20) + "px");
+        })
+        .on("mouseout", () => {
+          tooltip.style("opacity", 0);
+        });
 
-  // Montgomery Station outbound
-  let averageTimeMontgomeryOutbound = MontgomeryStationOutbound / MontgomeryStationOutboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', outboundCX)
-    .attr('cy', stationCYOffset * 2)
-    .attr('r', MontgomeryStationOutbound * radiusScaler)
-    .attr('class', 'montgomery-outbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeMontgomeryOutbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("Montgomery Station (Outbound).<br>Total Time at Station: " + MontgomeryStationOutbound + " seconds<br>Total Vehicles: " + MontgomeryStationOutboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeMontgomeryOutbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-  
-  svg.append('text')
-    .attr('x', outboundCX - 200)
-    .attr('y', stationCYOffset * 2 + 5)
-    .attr('class', 'station-label')
-    .text('Montgomery Station');
+      svg.append('text')
+        .attr('x', cx - 200)
+        .attr('y', cy + 5)
+        .attr('class', 'station-label')
+        .text(station.name);
+    } else {
+      svg.append('circle')
+        .attr('cx', cx)
+        .attr('cy', cy)
+        .attr('r', radius)
+        .attr('class', `${station.name.toLowerCase().replace(/ /g, '-')}-circle station-circle`)
+        .attr('fill', d3.interpolateRdYlGn(1 - (averageTime / maximumAverageTimeAtStation)))
+        .on("mouseover", (event, d) => {
+          tooltip.style("opacity", 1)
+            .html(`${station.name}.<br>Total Time at Station: ${station.totalTime} seconds<br>Total Vehicles: ${station.numVehicles} vehicles<br>Average Time at Station: ${averageTime.toFixed(2)} seconds`);
+        })
+        .on("mousemove", (event) => {
+          tooltip.style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 20) + "px");
+        })
+        .on("mouseout", () => {
+          tooltip.style("opacity", 0);
+        });
 
-  // Montgomery Station inbound
-  let averageTimeMontgomeryInbound = MontgomeryStationInbound / MontgomeryStationInboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', inboundCX)
-    .attr('cy', stationCYOffset * 2)
-    .attr('r', MontgomeryStationInbound * radiusScaler)
-    .attr('class', 'montgomery-inbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeMontgomeryInbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("Montgomery Station (Inbound).<br>Total Time at Station: " + MontgomeryStationInbound + " seconds<br>Total Vehicles: " + MontgomeryStationInboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeMontgomeryInbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-
-  svg.append('text')
-    .attr('x', inboundCX + 30)
-    .attr('y', stationCYOffset * 2 + 5)
-    .attr('class', 'station-label')
-    .text('Montgomery Station');
-  
-  // Powell Station outbound
-  let averageTimePowellOutbound = PowellStationOutbound / PowellStationOutboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', outboundCX)
-    .attr('cy', stationCYOffset * 3)
-    .attr('r', PowellStationOutbound * radiusScaler)
-    .attr('class', 'powell-outbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimePowellOutbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("Powell Station (Outbound).<br>Total Time at Station: " + PowellStationOutbound + " seconds<br>Total Vehicles: " + PowellStationOutboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimePowellOutbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-  
-  svg.append('text')
-    .attr('x', outboundCX - 200)
-    .attr('y', stationCYOffset * 3 + 5)
-    .attr('class', 'station-label')
-    .text('Powell Station');
-
-  // Powell Station inbound
-  let averageTimePowellInbound = PowellStationInbound / PowellStationInboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', inboundCX)
-    .attr('cy', stationCYOffset * 3)
-    .attr('r', PowellStationInbound * radiusScaler)
-    .attr('class', 'powell-inbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimePowellInbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("Powell Station (Inbound).<br>Total Time at Station: " + PowellStationInbound + " seconds<br>Total Vehicles: " + PowellStationInboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimePowellInbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-
-  svg.append('text')
-    .attr('x', inboundCX + 30)
-    .attr('y', stationCYOffset * 3 + 5)
-    .attr('class', 'station-label')
-    .text('Powell Station');
-
-  // Civic Center Station outbound
-  let averageTimeCCOutbound = CCStationOutbound / CCStationOutboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', outboundCX)
-    .attr('cy', stationCYOffset * 4)
-    .attr('r', CCStationOutbound * radiusScaler)
-    .attr('class', 'cc-outbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeCCOutbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("Civic Center Station (Outbound).<br>Total Time at Station: " + CCStationOutbound + " seconds<br>Total Vehicles: " + CCStationOutboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeCCOutbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-  
-  svg.append('text')
-    .attr('x', outboundCX - 200)
-    .attr('y', stationCYOffset * 4 + 5)
-    .attr('class', 'station-label')
-    .text('Civic Center Station');
-
-  // Civic Center Station inbound
-  let averageTimeCCInbound = CCStationInbound / CCStationInboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', inboundCX)
-    .attr('cy', stationCYOffset * 4)
-    .attr('r', CCStationInbound * radiusScaler)
-    .attr('class', 'cc-inbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeCCInbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("Civic Center Station (Inbound).<br>Total Time at Station: " + CCStationInbound + " seconds<br>Total Vehicles: " + CCStationInboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeCCInbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-
-  svg.append('text')
-    .attr('x', inboundCX + 30)
-    .attr('y', stationCYOffset * 4 + 5)
-    .attr('class', 'station-label')
-    .text('Civic Center Station');
-
-  // Van Ness Station outbound
-  let averageTimeVNOutbound = VNStationOutbound / VNStationOutboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', outboundCX)
-    .attr('cy', stationCYOffset * 5)
-    .attr('r', VNStationOutbound * radiusScaler)
-    .attr('class', 'vn-outbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeVNOutbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("Van Ness Station (Outbound).<br>Total Time at Station: " + VNStationOutbound + " seconds<br>Total Vehicles: " + VNStationOutboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeVNOutbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-  
-  svg.append('text')
-    .attr('x', outboundCX - 200)
-    .attr('y', stationCYOffset * 5 + 5)
-    .attr('class', 'station-label')
-    .text('Van Ness Station');
-
-  // Van Ness Station inbound
-  let averageTimeVNInbound = VNStationInbound / VNStationInboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', inboundCX)
-    .attr('cy', stationCYOffset * 5)
-    .attr('r', VNStationInbound * radiusScaler)
-    .attr('class', 'vn-inbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeVNInbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("Van Ness Station (Inbound).<br>Total Time at Station: " + VNStationInbound + " seconds<br>Total Vehicles: " + VNStationInboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeVNInbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-
-  svg.append('text')
-    .attr('x', inboundCX + 30)
-    .attr('y', stationCYOffset * 5 + 5)
-    .attr('class', 'station-label')
-    .text('Van Ness Station');
-
-  // Church Station outbound
-  let averageTimeChurchOutbound = ChurchStationOutbound / ChurchStationOutboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', outboundCX)
-    .attr('cy', stationCYOffset * 6)
-    .attr('r', ChurchStationOutbound * radiusScaler)
-    .attr('class', 'church-outbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeChurchOutbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("Church Station (Outbound).<br>Total Time at Station: " + ChurchStationOutbound + " seconds<br>Total Vehicles: " + ChurchStationOutboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeChurchOutbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-
-  svg.append('text')
-    .attr('x', outboundCX - 200)
-    .attr('y', stationCYOffset * 6 + 5)
-    .attr('class', 'station-label')
-    .text('Church Station');
-
-  // Church Station inbound
-  let averageTimeChurchInbound = ChurchStationInbound / ChurchStationInboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', inboundCX)
-    .attr('cy', stationCYOffset * 6)
-    .attr('r', ChurchStationInbound * radiusScaler)
-    .attr('class', 'church-inbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeChurchInbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("Church Station (Inbound).<br>Total Time at Station: " + ChurchStationInbound + " seconds<br>Total Vehicles: " + ChurchStationInboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeChurchInbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-
-  svg.append('text')
-    .attr('x', inboundCX + 30)
-    .attr('y', stationCYOffset * 6 + 5)
-    .attr('class', 'station-label')
-    .text('Church Station');
-
-  // Castro Station outbound
-  let averageTimeCastroOutbound = CastroStationOutbound / CastroStationOutboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', outboundCX)
-    .attr('cy', stationCYOffset * 7)
-    .attr('r', CastroStationOutbound * radiusScaler)
-    .attr('class', 'castro-outbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeCastroOutbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("Castro Station (Outbound).<br>Total Time at Station: " + CastroStationOutbound + " seconds<br>Total Vehicles: " + CastroStationOutboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeCastroOutbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-
-  svg.append('text')
-    .attr('x', outboundCX - 200)
-    .attr('y', stationCYOffset * 7 + 5)
-    .attr('class', 'station-label')
-    .text('Castro Station');
-
-  // Castro Station inbound
-  let averageTimeCastroInbound = CastroStationInbound / CastroStationInboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', inboundCX)
-    .attr('cy', stationCYOffset * 7)
-    .attr('r', CastroStationInbound * radiusScaler)
-    .attr('class', 'castro-inbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeCastroInbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("Castro Station (Inbound).<br>Total Time at Station: " + CastroStationInbound + " seconds<br>Total Vehicles: " + CastroStationInboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeCastroInbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-
-  svg.append('text')
-    .attr('x', inboundCX + 30)
-    .attr('y', stationCYOffset * 7 + 5)
-    .attr('class', 'station-label')
-    .text('Castro Station');
-
-  // Forest Hill Station outbound
-  let averageTimeFHOutbound = FHStationOutbound / FHStationOutboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', outboundCX)
-    .attr('cy', stationCYOffset * 8)
-    .attr('r', FHStationOutbound * radiusScaler)
-    .attr('class', 'fh-outbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeFHOutbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("Forest Hill Station (Outbound).<br>Total Time at Station: " + FHStationOutbound + " seconds<br>Total Vehicles: " + FHStationOutboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeFHOutbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-
-  svg.append('text')
-    .attr('x', outboundCX - 200)
-    .attr('y', stationCYOffset * 8 + 5)
-    .attr('class', 'station-label')
-    .text('Forest Hill Station');
-
-  // Forest Hill Station inbound
-  let averageTimeFHInbound = FHStationInbound / FHStationInboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', inboundCX)
-    .attr('cy', stationCYOffset * 8)
-    .attr('r', FHStationInbound * radiusScaler)
-    .attr('class', 'fh-inbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeFHInbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("Forest Hill Station (Inbound).<br>Total Time at Station: " + FHStationInbound + " seconds<br>Total Vehicles: " + FHStationInboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeFHInbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-
-  svg.append('text')
-    .attr('x', inboundCX + 30)
-    .attr('y', stationCYOffset * 8 + 5)
-    .attr('class', 'station-label')
-    .text('Forest Hill Station');
-
-  // West Portal Station outbound
-  let averageTimeWPOutbound = WPStationOutbound / WPStationOutboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', outboundCX)
-    .attr('cy', stationCYOffset * 9)
-    .attr('r', WPStationOutbound * radiusScaler)
-    .attr('class', 'wp-outbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeWPOutbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("West Portal Station (Outbound).<br>Total Time at Station: " + WPStationOutbound + " seconds<br>Total Vehicles: " + WPStationOutboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeWPOutbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-
-  svg.append('text')
-    .attr('x', outboundCX - 200)
-    .attr('y', stationCYOffset * 9 + 5)
-    .attr('class', 'station-label')
-    .text('West Portal Station');
-
-  // West Portal Station inbound
-  let averageTimeWPInbound = WPStationInbound / WPStationInboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', inboundCX)
-    .attr('cy', stationCYOffset * 9)
-    .attr('r', WPStationInbound * radiusScaler)
-    .attr('class', 'wp-inbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeWPInbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("West Portal Station (Inbound).<br>Total Time at Station: " + WPStationInbound + " seconds<br>Total Vehicles: " + WPStationInboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeWPInbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-
-  svg.append('text')
-    .attr('x', inboundCX + 30)
-    .attr('y', stationCYOffset * 9 + 5)
-    .attr('class', 'station-label')
-    .text('West Portal Station');
-
-  // West Portal & 14th Station outbound
-  let averageTimeWP14Outbound = WP14StationOutbound / WP14StationOutboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', outboundCX)
-    .attr('cy', stationCYOffset * 10)
-    .attr('r', WP14StationOutbound * radiusScaler)
-    .attr('class', 'wp14-outbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeWP14Outbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("West Portal & 14th Station (Outbound).<br>Total Time at Station: " + WP14StationOutbound + " seconds<br>Total Vehicles: " + WP14StationOutboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeWP14Outbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-
-  svg.append('text')
-    .attr('x', outboundCX - 200)
-    .attr('y', stationCYOffset * 10 + 5)
-    .attr('class', 'station-label')
-    .text('West Portal & 14th Station');
-
-  // West Portal & 14th Station inbound
-  let averageTimeWP14Inbound = WP14StationInbound / WP14StationInboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', inboundCX)
-    .attr('cy', stationCYOffset * 10)
-    .attr('r', WP14StationInbound * radiusScaler)
-    .attr('class', 'wp14-inbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeWP14Inbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1) 
-        .html("West Portal & 14th Station (Inbound).<br>Total Time at Station: " + WP14StationInbound + " seconds<br>Total Vehicles: " + WP14StationInboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeWP14Inbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-
-  svg.append('text')
-    .attr('x', inboundCX + 30)
-    .attr('y', stationCYOffset * 10 + 5)
-    .attr('class', 'station-label')
-    .text('West Portal & 14th Station');
-
-  // West Portal & Sloat Blvd (Saint Francis Cir) Station outbound
-  let averageTimeWPSLOutbound = WPSLStationOutbound / WPSLStationOutboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', outboundCX)
-    .attr('cy', stationCYOffset * 11)
-    .attr('r', WPSLStationOutbound * radiusScaler)
-    .attr('class', 'wpsl-outbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeWPSLOutbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("West Portal & Sloat Blvd (Saint Francis Cir) Station (Outbound).<br>Total Time at Station: " + WPSLStationOutbound + " seconds<br>Total Vehicles: " + WPSLStationOutboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeWPSLOutbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-
-  svg.append('text')
-    .attr('x', outboundCX - 200)
-    .attr('y', stationCYOffset * 11 + 5)
-    .attr('class', 'station-label')
-    .text('West Portal & Sloat Blvd (Saint Francis Cir) Station');
-
-  // West Portal & Sloat Blvd (Saint Francis Cir) Station inbound
-  let averageTimeWPSLInbound = WPSLStationInbound / WPSLStationInboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', inboundCX)
-    .attr('cy', stationCYOffset * 11)
-    .attr('r', WPSLStationInbound * radiusScaler)
-    .attr('class', 'wpsl-inbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeWPSLInbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("West Portal & Sloat Blvd (Saint Francis Cir) Station (Inbound).<br>Total Time at Station: " + WPSLStationInbound + " seconds<br>Total Vehicles: " + WPSLStationInboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeWPSLInbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-
-  svg.append('text')
-    .attr('x', inboundCX + 30)
-    .attr('y', stationCYOffset * 11 + 5)
-    .attr('class', 'station-label')
-    .text('West Portal & Sloat Blvd (Saint Francis Cir) Station');
-
-  // Junipero Serra Blvd & Ocean Ave Station outbound
-  let averageTimeJSOutbound = JSStationOutbound / JSStationOutboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', outboundCX)
-    .attr('cy', stationCYOffset * 12)
-    .attr('r', JSStationOutbound * radiusScaler)
-    .attr('class', 'js-outbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeJSOutbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("Junipero Serra Blvd & Ocean Ave Station (Outbound).<br>Total Time at Station: " + JSStationOutbound + " seconds<br>Total Vehicles: " + JSStationOutboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeJSOutbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-
-  svg.append('text')
-    .attr('x', outboundCX - 200)
-    .attr('y', stationCYOffset * 12 + 5)
-    .attr('class', 'station-label')
-    .text('Junipero Serra Blvd & Ocean Ave Station'); 
-
-  // Junipero Serra Blvd & Ocean Ave Station inbound
-  let averageTimeJSInbound = JSStationInbound / JSStationInboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', inboundCX)
-    .attr('cy', stationCYOffset * 12)
-    .attr('r', JSStationInbound * radiusScaler)
-    .attr('class', 'js-inbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeJSInbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("Junipero Serra Blvd & Ocean Ave Station (Inbound).<br>Total Time at Station: " + JSStationInbound + " seconds<br>Total Vehicles: " + JSStationInboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeJSInbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-
-  svg.append('text')
-    .attr('x', inboundCX + 30)
-    .attr('y', stationCYOffset * 12 + 5)
-    .attr('class', 'station-label')
-    .text('Junipero Serra Blvd & Ocean Ave Station');
-
-  // Ocean Ave & San Leandro Way Station outbound
-  let averageTimeOSLOutbound = OSLStationOutbound / OSLStationOutboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', outboundCX)
-    .attr('cy', stationCYOffset * 13)
-    .attr('r', OSLStationOutbound * radiusScaler)
-    .attr('class', 'osl-outbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeOSLOutbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("Ocean Ave & San Leandro Way Station (Outbound).<br>Total Time at Station: " + OSLStationOutbound + " seconds<br>Total Vehicles: " + OSLStationOutboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeOSLOutbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-
-  svg.append('text')
-    .attr('x', outboundCX - 200)
-    .attr('y', stationCYOffset * 13 + 5)
-    .attr('class', 'station-label')
-    .text('Ocean Ave & San Leandro Way Station');
-
-  // Ocean Ave & San Leandro Way Station inbound
-  let averageTimeOSLInbound = OSLStationInbound / OSLStationInboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', inboundCX)
-    .attr('cy', stationCYOffset * 13)
-    .attr('r', OSLStationInbound * radiusScaler)
-    .attr('class', 'osl-inbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeOSLInbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("Ocean Ave & San Leandro Way Station (Inbound).<br>Total Time at Station: " + OSLStationInbound + " seconds<br>Total Vehicles: " + OSLStationInboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeOSLInbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-
-  svg.append('text')
-    .attr('x', inboundCX + 30)
-    .attr('y', stationCYOffset * 13 + 5)
-    .attr('class', 'station-label')
-    .text('Ocean Ave & San Leandro Way Station');
-
-  // Ocean Ave & Aptos Ave Station outbound
-  let averageTimeOceanAptosOutbound = OceanAptosStationOutbound / OceanAptosStationOutboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', outboundCX)
-    .attr('cy', stationCYOffset * 14)
-    .attr('r', OceanAptosStationOutbound * radiusScaler)
-    .attr('class', 'ocean-aptos-outbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeOceanAptosOutbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("Ocean Ave & Aptos Ave Station (Outbound).<br>Total Time at Station: " + OceanAptosStationOutbound + " seconds<br>Total Vehicles: " + OceanAptosStationOutboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeOceanAptosOutbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-
-  svg.append('text')
-    .attr('x', outboundCX - 200)
-    .attr('y', stationCYOffset * 14 + 5)
-    .attr('class', 'station-label')
-    .text('Ocean Ave & Aptos Ave Station');
-
-  // Ocean Ave & Aptos Ave Station inbound
-  let averageTimeOceanAptosInbound = OceanAptosStationInbound / OceanAptosStationInboundNumVehicles;
-  svg.append('circle')
-    .attr('cx', inboundCX)
-    .attr('cy', stationCYOffset * 14)
-    .attr('r', OceanAptosStationInbound * radiusScaler)
-    .attr('class', 'ocean-aptos-inbound station-circle')
-    .attr('fill', d3.interpolateRdYlGn(1 - (averageTimeOceanAptosInbound / maximumAverageTimeAtStation)))
-    .on("mouseover", (event, d) => {
-      tooltip.style("opacity", 1)
-        .html("Ocean Ave & Aptos Ave Station (Inbound).<br>Total Time at Station: " + OceanAptosStationInbound + " seconds<br>Total Vehicles: " + OceanAptosStationInboundNumVehicles + " vehicles<br>Average Time at Station: " + averageTimeOceanAptosInbound.toFixed(2) + " seconds");
-    })
-    .on("mousemove", (event) => {
-      tooltip.style("left", (event.pageX + 10) + "px")
-        .style("top", (event.pageY - 20) + "px");
-    })
-    .on("mouseout", () => {
-      tooltip.style("opacity", 0);
-    });
-
-  svg.append('text')
-    .attr('x', inboundCX + 30)
-    .attr('y', stationCYOffset * 14 + 5)
-    .attr('class', 'station-label')
-    .text('Ocean Ave & Aptos Ave Station');
+      svg.append('text')
+        .attr('x', cx + 50)
+        .attr('y', cy + 5)
+        .attr('class', 'station-label')
+        .text(station.name);
+    }
+  });
 }
 </script>
 
