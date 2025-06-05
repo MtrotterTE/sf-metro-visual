@@ -28,18 +28,22 @@ onMounted(async () => {
     data3.value = file3.default;
 
     runAfterLoad();
+    makeLabels();
   } catch (error) {
     console.error('Error loading JSON files:', error);
   }
 })
 
 function runAfterLoad() {
-  console.log('This runs after all JSONs are loaded!')
+  console.log('This runs after all JSONs are loaded!');
   // any additional logic here
 
   // svg canvas dimensions
-  const width = 800;
-  const height = 4500;
+  const width = 2000;
+  const height = 750;
+
+  const outboundCY = 250;
+  const inboundCY = 450;
 
   const svg = d3.select(chart.value)
     .append('svg')
@@ -49,17 +53,17 @@ function runAfterLoad() {
   const tooltip = d3.select("#tooltip");
 
   svg.append('rect')
-    .attr('x', 340)
-    .attr('y', 0)
-    .attr('width', 10)
-    .attr('height', height)
+    .attr('x', 0)
+    .attr('y', outboundCY)
+    .attr('width', width)
+    .attr('height', 10)
     .attr('fill', 'steelblue');
 
   svg.append('rect')
-    .attr('x', 460)
-    .attr('y', 0)
-    .attr('width', 10)
-    .attr('height', height)
+    .attr('x', 0)
+    .attr('y', inboundCY)
+    .attr('width', width)
+    .attr('height', 10)
     .attr('fill', 'steelblue');
 
   let EmbarcaderoStationOutbound = 0;
@@ -164,7 +168,7 @@ function runAfterLoad() {
 
   // Maximum and minimum average time at station for color scaling
   let maximumAverageTimeAtStation = 80;
-  let minimumAverageTimeAtStation = 15;
+  let minimumAverageTimeAtStation = 0;
 
   // Cycle through the data
   console.log(Array.isArray(data1.value));
@@ -549,61 +553,45 @@ function runAfterLoad() {
     }
   ];
 
-  const outboundCX = 345;
-  const inboundCX = 465;
-  const stationCYOffset = 200;
-  const radiusScaler = 0.015
+  stationsData.reverse(); // Reverse the order of the stations to match the SVG layout
 
   // Outbound labels
   svg.append('text')
-    .attr('x', 50)
-    .attr('y', 800)
-    .attr('transform', 'rotate(-90, 50, 800)')
-    .attr('class', 'outbound-label')
-    .text('<-- Outbound <--');
-
-  svg.append('text')
-    .attr('x', 50)
-    .attr('y', 3300)
-    .attr('transform', 'rotate(-90, 50, 3300)')
-    .attr('class', 'outbound-label')
+    .attr('x', 770)
+    .attr('y', 40)
+    .attr('class', 'outbound-label label')
     .text('<-- Outbound <--');
 
   // Inbound label
   svg.append('text')
-    .attr('x', 750)
-    .attr('y', 500)
-    .attr('transform', 'rotate(90, 750, 500)')
-    .attr('class', 'inbound-label')
-    .text('<-- Inbound <--');
-
-  svg.append('text')
-    .attr('x', 750)
-    .attr('y', 3000)
-    .attr('transform', 'rotate(90, 750, 3000)')
-    .attr('class', 'inbound-label')
-    .text('<-- Inbound <--');
+    .attr('x', 770)
+    .attr('y', height - 20)
+    .attr('class', 'inbound-label label')
+    .text('--> Inbound -->');
 
   // Loop through stations data to create circles and labels
+  const heightScalar = 0.03; // Scale the radius of the circles based on total time at station
   stationsData.forEach((station, index) => {
     const averageTime = station.totalTime / station.numVehicles;
     const isOutbound = station.direction === 'outbound';
-    const cx = isOutbound ? outboundCX : inboundCX;
-    let cy
+    const offsetX = 40;
+    const cy = isOutbound ? outboundCY : inboundCY;
+    let cx;
     if (index % 2 > 0) {
-      cy = stationCYOffset + ((index - 1) * 100); // Adjust vertical position for each station
+      cx = ((index - 1) * offsetX) + 20; // Adjust horizontal position for each station
     } else {
-      cy = stationCYOffset + (index * 100); // Adjust vertical position for each station
+      cx = (index * offsetX) + 20; // Adjust horizontal position for each station
     }
-    const radius = station.totalTime * radiusScaler;
+    const height = averageTime;
 
     if (isOutbound) {
-      svg.append('circle')
-        .attr('cx', cx)
-        .attr('cy', cy)
-        .attr('r', radius)
+      svg.append('rect')
+        .attr('x', cx)
+        .attr('y', cy - 2 - height)
+        .attr('width', offsetX - 10)
+        .attr('height', height)
         .attr('class', `${station.name.toLowerCase().replace(/ /g, '-')}-circle station-circle`)
-        .attr('fill', d3.interpolateRdYlGn(1 - (averageTime / maximumAverageTimeAtStation)))
+        .attr('fill', 'steelblue')
         .on("mouseover", (event, d) => {
           tooltip.style("opacity", 1)
             .html(`${station.name}.<br>Total Time at Station: ${station.totalTime} seconds<br>Total Vehicles: ${station.numVehicles} vehicles<br>Average Time at Station: ${averageTime.toFixed(2)} seconds`);
@@ -617,17 +605,19 @@ function runAfterLoad() {
         });
 
       svg.append('text')
-        .attr('x', cx - 200)
-        .attr('y', cy + 5)
-        .attr('class', 'station-label')
-        .text(station.name);
+        .attr('x', cx)
+        .attr('y', cy + 20)
+        .attr('class', 'station-label label')
+        .text(station.name)
+        .call(wrapText, 40);
     } else {
-      svg.append('circle')
-        .attr('cx', cx)
-        .attr('cy', cy)
-        .attr('r', radius)
+      svg.append('rect')
+        .attr('x', cx)
+        .attr('y', cy + 12)
+        .attr('width', offsetX - 10)
+        .attr('height', height)
         .attr('class', `${station.name.toLowerCase().replace(/ /g, '-')}-circle station-circle`)
-        .attr('fill', d3.interpolateRdYlGn(1 - (averageTime / maximumAverageTimeAtStation)))
+        .attr('fill', 'steelblue')
         .on("mouseover", (event, d) => {
           tooltip.style("opacity", 1)
             .html(`${station.name}.<br>Total Time at Station: ${station.totalTime} seconds<br>Total Vehicles: ${station.numVehicles} vehicles<br>Average Time at Station: ${averageTime.toFixed(2)} seconds`);
@@ -640,14 +630,83 @@ function runAfterLoad() {
           tooltip.style("opacity", 0);
         });
 
-      svg.append('text')
-        .attr('x', cx + 50)
-        .attr('y', cy + 5)
-        .attr('class', 'station-label')
-        .text(station.name);
+      const stationLabel = svg.append('text')
+        .attr('x', cx)
+        .attr('y', cy - 70)
+        .attr('class', 'station-label label')
+        .text(station.name)
+        .call(wrapText, 40);
     }
   });
 }
+
+function makeLabels() {
+  function makeBG(elem) {
+    var svgns = "http://www.w3.org/2000/svg"
+    var bounds = elem.getBBox()
+    var bg = document.createElementNS(svgns, "rect")
+    var style = getComputedStyle(elem)
+    var padding_top = parseInt(style["padding-top"])
+    var padding_left = parseInt(style["padding-left"])
+    var padding_right = parseInt(style["padding-right"])
+    var padding_bottom = parseInt(style["padding-bottom"])
+    bg.setAttribute("x", bounds.x - parseInt(style["padding-left"]))
+    bg.setAttribute("y", bounds.y - parseInt(style["padding-top"]))
+    bg.setAttribute("width", bounds.width + padding_left + padding_right)
+    bg.setAttribute("height", bounds.height + padding_top + padding_bottom)
+    bg.setAttribute("fill", style["background-color"])
+    bg.setAttribute("rx", style["border-radius"])
+    bg.setAttribute("stroke-width", style["border-top-width"])
+    bg.setAttribute("stroke", style["border-top-color"])
+    if (elem.hasAttribute("transform")) {
+      bg.setAttribute("transform", elem.getAttribute("transform"))
+    }
+    elem.parentNode.insertBefore(bg, elem)
+  }
+
+  var texts = document.querySelectorAll(".label")
+  for (var i = 0; i < texts.length; i++) {
+    makeBG(texts[i])
+  }
+}
+
+function wrapText(textSelection, width) {
+  textSelection.each(function() {
+    const text = d3.select(this);
+    const bbox = this.getBBox();
+    console.log(bbox.height);
+    const words = text.text().split(/\s+/).reverse();
+    let word;
+    let line = [];
+    let lineNumber = 0;
+    const lineHeight = 1.1; // ems
+    const y = text.attr("y");
+    const dy = parseFloat(text.attr("dy")) || 0;
+    let tspan = text.text(null)
+      .append("tspan")
+      .attr("x", text.attr("x"))
+      .attr("y", y)
+      .attr("dy", dy + "em");
+
+    let lines = 1;
+    while (word = words.pop()) {
+      line.push(word);
+      tspan.text(line.join(" "));
+      if (tspan.node().getComputedTextLength() > width) {
+        line.pop();
+        tspan.text(line.join(" "));
+        line = [word];
+        tspan = text.append("tspan")
+          .attr("x", text.attr("x"))
+          .attr("y", y)
+          .attr("dy", ++lineNumber * lineHeight + dy + "em")
+          .text(word);
+          lines++;
+      }
+    }
+  });
+}
+
 </script>
 
 <style>
@@ -667,7 +726,7 @@ function runAfterLoad() {
   justify-content: center;
   align-items: center;
   height: fit-content;
-  border: 1px solid #ccc;
+  border: 1px solid black;
 }
 
 .station-circle {
@@ -692,14 +751,25 @@ function runAfterLoad() {
 .outbound-label, .inbound-label {
   font-family: "Roboto", sans-serif;
   fill: #C3BFBA;
-  font-size: 3rem;
-  font-weight: 300;
+  font-size: 16px;
+  font-weight: 400;
+  background-color: #010101;
+  padding: 5px;
+  border-radius: 2px;
 }
 
-.station-label {
+.label {
+  background: #010101;
+  border-radius: 3px;
+  border: 1px solid #C3BFBA;
+  padding: 4px 12px;
+}
+
+.station-label.label {
   font-family: "Roboto", sans-serif;
   fill: #C3BFBA;
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 10px;
+  font-weight: 400;
+  padding: 2px;
 }
 </style>
