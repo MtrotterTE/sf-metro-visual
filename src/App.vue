@@ -19,6 +19,6 @@ header {
 }
 
 main {
-  width: 100%;
+  width: fit-content;
 }
 </style>

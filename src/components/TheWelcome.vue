@@ -35,11 +35,8 @@ onMounted(async () => {
 })
 
 function runAfterLoad() {
-  console.log('This runs after all JSONs are loaded!');
-  // any additional logic here
-
   // svg canvas dimensions
-  const width = 2000;
+  const width = 2200;
   const height = 750;
 
   const outboundCY = 250;
@@ -52,6 +49,15 @@ function runAfterLoad() {
 
   const tooltip = d3.select("#tooltip");
 
+  // Background for underground section of line
+  svg.append('rect')
+    .attr('x', 900)
+    .attr('y', 0)
+    .attr('width', width - 900)
+    .attr('height', height)
+    .attr('fill', 'darkgray');
+  
+  // Line for K Line outbound
   svg.append('rect')
     .attr('x', 0)
     .attr('y', outboundCY)
@@ -59,6 +65,7 @@ function runAfterLoad() {
     .attr('height', 10)
     .attr('fill', 'steelblue');
 
+  // Line for K Line inbound
   svg.append('rect')
     .attr('x', 0)
     .attr('y', inboundCY)
@@ -166,12 +173,21 @@ function runAfterLoad() {
   let SanJoseGenevaStationInbound = 0;
   let SanJoseGenevaStationInboundNumVehicles = 0;
 
+  let EmbarcaderoMissionIntersectionOutbound = 0;
+  let EmbarcaderoMissionIntersectionOutboundNumVehicles = 0;
+  let EmbarcaderoMissionIntersectionInbound = 0;
+  let EmbarcaderoMissionIntersectionInboundNumVehicles = 0;
+
+  let EmbarcaderoHowardIntersectionOutbound = 0;
+  let EmbarcaderoHowardIntersectionOutboundNumVehicles = 0;
+  let EmbarcaderoHowardIntersectionInbound = 0;
+  let EmbarcaderoHowardIntersectionInboundNumVehicles = 0;
+
   // Maximum and minimum average time at station for color scaling
   let maximumAverageTimeAtStation = 80;
   let minimumAverageTimeAtStation = 0;
 
   // Cycle through the data
-  console.log(Array.isArray(data1.value));
   Object.values(data1.value).forEach((stop) => {
     //console.log(stop);
     if (stop.direction_id === 0) { // outbound
@@ -237,8 +253,17 @@ function runAfterLoad() {
           BalboaParkStationOutbound += stop.timeAtStop;
           BalboaParkStationOutboundNumVehicles++;
         }
-      } else { // vehicle at intersection
-
+      } else if (stop.atIntersection) { // vehicle at intersection
+        if (stop.intersectionCrossStreet === "Embarcadero & Mission") {
+          EmbarcaderoMissionIntersectionOutbound += stop.timeAtStop;
+          EmbarcaderoMissionIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Embarcadero & Howard St") {
+          console.log(stop);
+          EmbarcaderoHowardIntersectionOutbound += stop.timeAtStop;
+          EmbarcaderoHowardIntersectionOutboundNumVehicles++;
+        } else {
+          console.log(stop.intersectionCrossStreet);
+        }
       }
     } else if (stop.direction_id === 1) { // inbound
       if (stop.atStation) { // vehicle at station
@@ -303,8 +328,17 @@ function runAfterLoad() {
           SanJoseGenevaStationInbound += stop.timeAtStop;
           SanJoseGenevaStationInboundNumVehicles++;
         }
-      } else { // vehicle at intersection
-
+      } else if (stop.atIntersection) { // vehicle at intersection
+        if (stop.intersectionCrossStreet === "Embarcadero & Mission") {
+          EmbarcaderoMissionIntersectionInbound += stop.timeAtStop;
+          EmbarcaderoMissionIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Embarcadero & Howard St") {
+          console.log(stop);
+          EmbarcaderoHowardIntersectionInbound += stop.timeAtStop;
+          EmbarcaderoHowardIntersectionInboundNumVehicles++;
+        } else {
+          console.log(stop.intersectionCrossStreet);
+        }
       }
     }
   });
@@ -555,6 +589,262 @@ function runAfterLoad() {
 
   stationsData.reverse(); // Reverse the order of the stations to match the SVG layout
 
+  // Make array of intersection data
+  const intersectionsData = [
+    {
+      name: 'Montgomery Station',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'outbound'
+    },
+    {
+      name: 'Montgomery Station',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'inbound'
+    },
+    {
+      name: 'Powell Station',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'outbound'
+    },
+    {
+      name: 'Powell Station',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'inbound'
+    },
+    {
+      name: 'Civic Center Station',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'outbound'
+    },
+    {
+      name: 'Civic Center Station',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'inbound'
+    },
+    {
+      name: 'Van Ness Station',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'outbound'
+    },
+    {
+      name: 'Van Ness Station',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'inbound'
+    },
+    {
+      name: 'Church Station',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'outbound'
+    },
+    {
+      name: 'Church Station',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'inbound'
+    },
+    {
+      name: 'Castro Station',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'outbound'
+    },
+    {
+      name: 'Castro Station',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'inbound'
+    },
+    {
+      name: 'Forest Hill Station',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'outbound'
+    },
+    {
+      name: 'Forest Hill Station',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'inbound'
+    },
+    {
+      name: 'West Portal Station',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'outbound'
+    },
+    {
+      name: 'West Portal Station',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'inbound'
+    },
+    {
+      name: 'West Portal & 14th',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'outbound'
+    },
+    {
+      name: 'West Portal & 14th',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'inbound'
+    },
+    {
+      name: 'West Portal & Sloat Blvd (Saint Francis Cir)',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'outbound'
+    },
+    {
+      name: 'West Portal & Sloat Blvd (Saint Francis Cir)',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'inbound'
+    },
+    {
+      name: 'Junipero Serra Blvd & Ocean Ave',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'outbound'
+    },
+    {
+      name: 'Junipero Serra Blvd & Ocean Ave',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'inbound'
+    },
+    {
+      name: 'Ocean Ave & San Leandro Way',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'outbound'
+    },
+    {
+      name: 'Ocean Ave & San Leandro Way',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'inbound'
+    },
+    {
+      name: 'Ocean Ave & Aptos',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'outbound'
+    },
+    {
+      name: 'Ocean Ave & Aptos',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'inbound'
+    },
+    {
+      name: 'Ocean Ave & Victoria St',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'outbound'
+    },
+    {
+      name: 'Ocean Ave & Fairfield Way',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'inbound'
+    },
+    {
+      name: 'Ocean Ave & Jules Ave',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'outbound'
+    },
+    {
+      name: 'Ocean Ave & Dorado Ter',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'inbound'
+    },
+    {
+      name: 'Ocean Ave & Miramar Ave',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'outbound'
+    },
+    {
+      name: 'Ocean Ave & Miramar Ave',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'inbound'
+    },
+    {
+      name: 'Ocean Ave & Lee Ave',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'outbound'
+    },
+    {
+      name: 'Ocean Ave & Lee Ave',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'inbound'
+    },
+    {
+      name: 'Ocean Ave & CCSF Pedestrian Bridge',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'outbound'
+    },
+    {
+      name: 'Ocean Ave & CCSF Pedestrian Bridge',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'inbound'
+    },
+    {
+      name: 'Balboa Park BART Mezzanine Level Station',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'outbound'
+    },
+    {
+      name: 'San Jose Ave & Geneva Ave Station',
+      totalTime: 1,
+      numVehicles: 1,
+      direction: 'inbound'
+    },
+    {
+      name: 'Embarcadero & Mission Intersection',
+      totalTime: EmbarcaderoMissionIntersectionOutbound,
+      numVehicles: EmbarcaderoMissionIntersectionOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'Embarcadero & Mission Intersection',
+      totalTime: EmbarcaderoMissionIntersectionInbound,
+      numVehicles: EmbarcaderoMissionIntersectionInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'Embarcadero & Howard Intersection',
+      totalTime: EmbarcaderoHowardIntersectionOutbound,
+      numVehicles: EmbarcaderoHowardIntersectionOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'Embarcadero & Howard Intersection',
+      totalTime: EmbarcaderoHowardIntersectionInbound,
+      numVehicles: EmbarcaderoHowardIntersectionInboundNumVehicles,
+      direction: 'inbound'
+    }
+  ];
+
   // Outbound labels
   svg.append('text')
     .attr('x', 770)
@@ -569,8 +859,8 @@ function runAfterLoad() {
     .attr('class', 'inbound-label label')
     .text('--> Inbound -->');
 
-  // Loop through stations data to create circles and labels
-  const heightScalar = 0.03; // Scale the radius of the circles based on total time at station
+  // Loop through stations data to create bars and labels
+  const heightScalar = 0.03; // Scale the height of the bars based on average time at station
   stationsData.forEach((station, index) => {
     const averageTime = station.totalTime / station.numVehicles;
     const isOutbound = station.direction === 'outbound';
@@ -584,59 +874,72 @@ function runAfterLoad() {
     }
     const height = averageTime;
 
-    if (isOutbound) {
-      svg.append('rect')
-        .attr('x', cx)
-        .attr('y', cy - 2 - height)
-        .attr('width', offsetX - 10)
-        .attr('height', height)
-        .attr('class', `${station.name.toLowerCase().replace(/ /g, '-')}-circle station-circle`)
-        .attr('fill', 'steelblue')
-        .on("mouseover", (event, d) => {
-          tooltip.style("opacity", 1)
-            .html(`${station.name}.<br>Total Time at Station: ${station.totalTime} seconds<br>Total Vehicles: ${station.numVehicles} vehicles<br>Average Time at Station: ${averageTime.toFixed(2)} seconds`);
-        })
-        .on("mousemove", (event) => {
-          tooltip.style("left", (event.pageX + 10) + "px")
-            .style("top", (event.pageY - 20) + "px");
-        })
-        .on("mouseout", () => {
-          tooltip.style("opacity", 0);
-        });
+    svg.append('rect')
+      .attr('x', cx)
+      .attr('y', isOutbound ? cy - 2 - height : cy + 12)
+      .attr('width', offsetX - 10)
+      .attr('height', height)
+      .attr('class', `${station.name.toLowerCase().replace(/ /g, '-')}-rect station-rect`)
+      .attr('fill', 'steelblue')
+      .on("mouseover", (event, d) => {
+        tooltip.style("opacity", 1)
+          .html(`${station.name}.<br>Total Time at Station: ${station.totalTime} seconds<br>Total Vehicles: ${station.numVehicles} vehicles<br>Average Time at Station: ${averageTime.toFixed(2)} seconds`);
+      })
+      .on("mousemove", (event) => {
+        tooltip.style("left", (event.pageX + 10) + "px")
+          .style("top", (event.pageY - 20) + "px");
+      })
+      .on("mouseout", () => {
+        tooltip.style("opacity", 0);
+      });
 
-      svg.append('text')
-        .attr('x', cx)
-        .attr('y', cy + 20)
-        .attr('class', 'station-label label')
-        .text(station.name)
-        .call(wrapText, 40);
+    svg.append('text')
+      .attr('x', cx)
+      .attr('y', isOutbound ? cy + 20 : cy - 70)
+      .attr('class', 'station-label label')
+      .text(station.name)
+      .call(wrapText, 40);
+  });
+
+  // Loop through intersections data to create bars and labels
+  intersectionsData.forEach((intersection, index) => {
+    const averageTime = intersection.totalTime / intersection.numVehicles;
+    const isOutbound = intersection.direction === 'outbound';
+    const offsetX = 40;
+    const cy = isOutbound ? outboundCY : inboundCY;
+    let cx;
+    if (index % 2 > 0) {
+      cx = ((index - 1) * offsetX) + 20; // Adjust horizontal position for each intersection
     } else {
-      svg.append('rect')
-        .attr('x', cx)
-        .attr('y', cy + 12)
-        .attr('width', offsetX - 10)
-        .attr('height', height)
-        .attr('class', `${station.name.toLowerCase().replace(/ /g, '-')}-circle station-circle`)
-        .attr('fill', 'steelblue')
-        .on("mouseover", (event, d) => {
-          tooltip.style("opacity", 1)
-            .html(`${station.name}.<br>Total Time at Station: ${station.totalTime} seconds<br>Total Vehicles: ${station.numVehicles} vehicles<br>Average Time at Station: ${averageTime.toFixed(2)} seconds`);
-        })
-        .on("mousemove", (event) => {
-          tooltip.style("left", (event.pageX + 10) + "px")
-            .style("top", (event.pageY - 20) + "px");
-        })
-        .on("mouseout", () => {
-          tooltip.style("opacity", 0);
-        });
-
-      const stationLabel = svg.append('text')
-        .attr('x', cx)
-        .attr('y', cy - 70)
-        .attr('class', 'station-label label')
-        .text(station.name)
-        .call(wrapText, 40);
+      cx = (index * offsetX) + 20; // Adjust horizontal position for each intersection
     }
+    const height = averageTime;
+    
+    svg.append('rect')
+      .attr('x', cx + 40)
+      .attr('y', isOutbound ? cy - 2 - height : cy + 12)
+      .attr('width', offsetX - 10)
+      .attr('height', height)
+      .attr('class', `${intersection.name.toLowerCase().replace(/ /g, '-')}-rect intersection-rect`)
+      .attr('fill', 'steelblue')
+      .on("mouseover", (event, d) => {
+        tooltip.style("opacity", 1)
+          .html(`${intersection.name}.<br>Total Time at Intersection: ${intersection.totalTime} seconds<br>Total Vehicles: ${intersection.numVehicles} vehicles<br>Average Time at Intersection: ${averageTime.toFixed(2)} seconds`);
+      })
+      .on("mousemove", (event) => {
+        tooltip.style("left", (event.pageX + 10) + "px")
+          .style("top", (event.pageY - 20) + "px");
+      })
+      .on("mouseout", () => {
+        tooltip.style("opacity", 0);
+      });
+    
+    svg.append('text')
+      .attr('x', cx + 40)
+      .attr('y', isOutbound ? cy + 20 : cy - 70)
+      .attr('class', 'station-label label')
+      .text(intersection.name)
+      .call(wrapText, 40);
   });
 }
 
@@ -673,8 +976,6 @@ function makeLabels() {
 function wrapText(textSelection, width) {
   textSelection.each(function() {
     const text = d3.select(this);
-    const bbox = this.getBBox();
-    console.log(bbox.height);
     const words = text.text().split(/\s+/).reverse();
     let word;
     let line = [];
@@ -716,7 +1017,7 @@ function wrapText(textSelection, width) {
   font-family: "Roboto", sans-serif;
   text-align: center;
   font-size: 2rem;
-  color: #C3BFBA;
+  color: #010101;
   text-decoration: underline;
   font-weight: 700;
 }
@@ -729,8 +1030,13 @@ function wrapText(textSelection, width) {
   border: 1px solid black;
 }
 
-.station-circle {
+.station-rect {
   stroke: #fff;
+  stroke-width: 3px;
+}
+
+.intersection-rect {
+  stroke: #010101;
   stroke-width: 3px;
 }
 
