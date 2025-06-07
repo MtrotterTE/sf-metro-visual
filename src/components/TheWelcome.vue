@@ -248,6 +248,16 @@ function runAfterLoad() {
   let WP15IntersectionInbound = 0;
   let WP15IntersectionInboundNumVehicles = 0;
 
+  let MarketBatteryIntersectionOutbound = 0;
+  let MarketBatteryIntersectionOutboundNumVehicles = 0;
+  let MarketBatteryIntersectionInbound = 0;
+  let MarketBatteryIntersectionInboundNumVehicles = 0;
+
+  let CorbetIronIntersectionOutbound = 0;
+  let CorbetIronIntersectionOutboundNumVehicles = 0;
+  let CorbetIronIntersectionInbound = 0;
+  let CorbetIronIntersectionInboundNumVehicles = 0;
+
   // Maximum and minimum average time at station for color scaling
   let maximumAverageTimeAtStation = 80;
   let minimumAverageTimeAtStation = 0;
@@ -363,6 +373,12 @@ function runAfterLoad() {
         } else if (stop.intersectionCrossStreet === "West Portal Ave & 15th Ave") {
           WP15IntersectionOutbound += stop.timeAtStop;
           WP15IntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Battery St") {
+          MarketBatteryIntersectionOutbound += stop.timeAtStop;
+          MarketBatteryIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Corbett Ave & Iron Alley") {
+          CorbetIronIntersectionOutbound += stop.timeAtStop;
+          CorbetIronIntersectionOutboundNumVehicles++;
         } else {
           console.log(stop.intersectionCrossStreet);
         }
@@ -476,6 +492,12 @@ function runAfterLoad() {
         } else if (stop.intersectionCrossStreet === "West Portal Ave & 15th Ave") {
           WP15IntersectionInbound += stop.timeAtStop;
           WP15IntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Battery St") {
+          MarketBatteryIntersectionInbound += stop.timeAtStop;
+          MarketBatteryIntersectionInboundNumVehicles++;
+        }else if (stop.intersectionCrossStreet === "Corbett Ave & Iron Alley") {
+          CorbetIronIntersectionInbound += stop.timeAtStop;
+          CorbetIronIntersectionInboundNumVehicles++;
         } else {
           console.log(stop.intersectionCrossStreet);
         }
@@ -768,15 +790,15 @@ function runAfterLoad() {
       direction: 'inbound'
     },
     {
-      name: 'Montgomery Station',
-      totalTime: 1,
-      numVehicles: 1,
+      name: 'Market St & Battery St',
+      totalTime: MarketBatteryIntersectionOutbound,
+      numVehicles: MarketBatteryIntersectionOutboundNumVehicles,
       direction: 'outbound'
     },
     {
-      name: 'Montgomery Station',
-      totalTime: 1,
-      numVehicles: 1,
+      name: 'Market St & Battery St',
+      totalTime: MarketBatteryIntersectionInbound,
+      numVehicles: MarketBatteryIntersectionInboundNumVehicles,
       direction: 'inbound'
     },
     {
@@ -840,18 +862,6 @@ function runAfterLoad() {
       direction: 'inbound'
     },
     {
-      name: 'Castro Station',
-      totalTime: 1,
-      numVehicles: 1,
-      direction: 'outbound'
-    },
-    {
-      name: 'Castro Station',
-      totalTime: 1,
-      numVehicles: 1,
-      direction: 'inbound'
-    },
-    {
       name: 'Market St & Eureka St',
       totalTime: MarketEurekaIntersectionOutbound,
       numVehicles: MarketEurekaIntersectionOutboundNumVehicles,
@@ -861,6 +871,18 @@ function runAfterLoad() {
       name: 'Market St & Eureka St',
       totalTime: MarketEurekaIntersectionInbound,
       numVehicles: MarketEurekaIntersectionInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'Corbett Ave & Iron Alley',
+      totalTime: CorbetIronIntersectionOutbound,
+      numVehicles: CorbetIronIntersectionOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'Corbett Ave & Iron Alley',
+      totalTime: CorbetIronIntersectionInbound,
+      numVehicles: CorbetIronIntersectionInboundNumVehicles,
       direction: 'inbound'
     },
     {
@@ -1053,7 +1075,7 @@ function runAfterLoad() {
     const height = averageTime;
 
     svg.append('rect')
-      .attr('x', index > 29 ? cx + 80 : index > 1 ? cx + 40 : cx)
+      .attr('x', index > 27 ? cx + 120 : index > 25 ? cx + 80 : index > 1 ? cx + 40 : cx)
       .attr('y', isOutbound ? cy - 2 - height : cy + 12)
       .attr('width', offsetX - 10)
       .attr('height', height)
@@ -1072,9 +1094,9 @@ function runAfterLoad() {
       });
 
     svg.append('text')
-      .attr('x', index > 29 ? cx + 90 : index > 1 ? cx + 50 : cx + 10)
+      .attr('x', index > 27 ? cx + 130 : index > 25 ? cx + 90 : index > 1 ? cx + 50 : cx + 10)
       .attr('y', 355)
-      .attr('transform', 'rotate(90, ' + (index > 29 ? cx + 90 : index > 1 ? cx + 50 : cx + 10) + ', 355)')
+      .attr('transform', 'rotate(90, ' + (index > 27 ? cx + 130 : index > 25 ? cx + 90 : index > 1 ? cx + 50 : cx + 10) + ', 355)')
       .attr("text-anchor", "middle")
       .attr('class', 'station-label label')
       .text(station.name);
@@ -1095,7 +1117,7 @@ function runAfterLoad() {
     const height = averageTime;
     
     svg.append('rect')
-      .attr('x', index > 29 ? cx - 40 : index > 1 ? cx : cx + 40)
+      .attr('x', index > 29 ? cx - 80 : index > 26 ? cx - 40 : index > 1 ? cx : cx + 40)
       .attr('y', isOutbound ? cy - 2 - height : cy + 12)
       .attr('width', offsetX - 10)
       .attr('height', height)
@@ -1114,9 +1136,9 @@ function runAfterLoad() {
       });
 
     svg.append('text')
-      .attr('x', index > 31 ? cx - 30 : index > 1 ? cx + 10 : cx + 50)
+      .attr('x', index > 31 ? cx - 70 : index > 27 ? cx - 30 : index > 1 ? cx + 10 : cx + 50)
       .attr('y', 355)
-      .attr('transform', 'rotate(90, ' + (index > 31 ? cx - 30 : index > 1 ? cx + 10 : cx + 50) + ', 355)')
+      .attr('transform', 'rotate(90, ' + (index > 31 ? cx - 70 : index > 27 ? cx - 30 : index > 1 ? cx + 10 : cx + 50) + ', 355)')
       .attr("text-anchor", "middle")
       .attr('class', 'intersection-label label')
       .text(intersection.name);
@@ -1197,6 +1219,7 @@ function makeLabels() {
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.2s ease;
+  min-width: 270px;
 }
 .tooltip span:nth-of-type(1) {
   text-decoration: underline;
