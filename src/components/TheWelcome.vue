@@ -183,13 +183,77 @@ function runAfterLoad() {
   let EmbarcaderoHowardIntersectionInbound = 0;
   let EmbarcaderoHowardIntersectionInboundNumVehicles = 0;
 
+  let WPDeweyIntersectionOutbound = 0;
+  let WPDeweyIntersectionOutboundNumVehicles = 0;
+  let WPDeweyIntersectionInbound = 0;
+  let WPDeweyIntersectionInboundNumVehicles = 0;
+
+  let JSMontereyIntersectionOutbound = 0;
+  let JSMontereyIntersectionOutboundNumVehicles = 0;
+  let JSMontereyIntersectionInbound = 0;
+  let JSMontereyIntersectionInboundNumVehicles = 0;
+
+  let MarketSteuartIntersectionOutbound = 0;
+  let MarketSteuartIntersectionOutboundNumVehicles = 0;
+  let MarketSteuartIntersectionInbound = 0;
+  let MarketSteuartIntersectionInboundNumVehicles = 0;
+
+  let WPVicenteIntersectionOutbound = 0;
+  let WPVicenteIntersectionOutboundNumVehicles = 0;
+  let WPVicenteIntersectionInbound = 0;
+  let WPVicenteIntersectionInboundNumVehicles = 0;
+
+  let MarketEurekaIntersectionOutbound = 0;
+  let MarketEurekaIntersectionOutboundNumVehicles = 0;
+  let MarketEurekaIntersectionInbound = 0;
+  let MarketEurekaIntersectionInboundNumVehicles = 0;
+
+  let MarketDuboceIntersectionOutbound = 0;
+  let MarketDuboceIntersectionOutboundNumVehicles = 0;
+  let MarketDuboceIntersectionInbound = 0;
+  let MarketDuboceIntersectionInboundNumVehicles = 0;
+
+  let MarketFranklinIntersectionOutbound = 0;
+  let MarketFranklinIntersectionOutboundNumVehicles = 0;
+  let MarketFranklinIntersectionInbound = 0;
+  let MarketFranklinIntersectionInboundNumVehicles = 0;
+
+  let HowlthOceanIntersectionOutbound = 0;
+  let HowlthOceanIntersectionOutboundNumVehicles = 0;
+  let HowlthOceanIntersectionInbound = 0;
+  let HowlthOceanIntersectionInboundNumVehicles = 0;
+
+  let MarketGGIntersectionOutbound = 0;
+  let MarketGGIntersectionOutboundNumVehicles = 0;
+  let MarketGGIntersectionInbound = 0;
+  let MarketGGIntersectionInboundNumVehicles = 0;
+
+  let HowlthBalboaParkIntersectionOutbound = 0;
+  let HowlthBalboaParkIntersectionOutboundNumVehicles = 0;
+  let HowlthBalboaParkIntersectionInbound = 0;
+  let HowlthBalboaParkIntersectionInboundNumVehicles = 0;
+
+  let OceanPlymouthIntersectionOutbound = 0;
+  let OceanPlymouthIntersectionOutboundNumVehicles = 0;
+  let OceanPlymouthIntersectionInbound = 0;
+  let OceanPlymouthIntersectionInboundNumVehicles = 0;
+
+  let OceanCerritosIntersectionOutbound = 0;
+  let OceanCerritosIntersectionOutboundNumVehicles = 0;
+  let OceanCerritosIntersectionInbound = 0;
+  let OceanCerritosIntersectionInboundNumVehicles = 0;
+
+  let WP15IntersectionOutbound = 0;
+  let WP15IntersectionOutboundNumVehicles = 0;
+  let WP15IntersectionInbound = 0;
+  let WP15IntersectionInboundNumVehicles = 0;
+
   // Maximum and minimum average time at station for color scaling
   let maximumAverageTimeAtStation = 80;
   let minimumAverageTimeAtStation = 0;
 
   // Cycle through the data
   Object.values(data1.value).forEach((stop) => {
-    //console.log(stop);
     if (stop.direction_id === 0) { // outbound
       if (stop.atStation) { // vehicle at station
         if (stop.stationId === "17217" && stop.timeAtStop > 0) { // Embarcadero Station outbound
@@ -258,9 +322,47 @@ function runAfterLoad() {
           EmbarcaderoMissionIntersectionOutbound += stop.timeAtStop;
           EmbarcaderoMissionIntersectionOutboundNumVehicles++;
         } else if (stop.intersectionCrossStreet === "Embarcadero & Howard St") {
-          console.log(stop);
           EmbarcaderoHowardIntersectionOutbound += stop.timeAtStop;
           EmbarcaderoHowardIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "West Portal Ave & Dewey Blvd") {
+          WPDeweyIntersectionOutbound += stop.timeAtStop;
+          WPDeweyIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Junipero Serra Blvd & Monterey Blvd") {
+          JSMontereyIntersectionOutbound += stop.timeAtStop;
+          JSMontereyIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Steuart St") {
+          MarketSteuartIntersectionOutbound += stop.timeAtStop;
+          MarketSteuartIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "West Portal Ave & Vicente St") {
+          WPVicenteIntersectionOutbound += stop.timeAtStop;
+          WPVicenteIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Eureka St") {
+          MarketEurekaIntersectionOutbound += stop.timeAtStop;
+          MarketEurekaIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Duboce Ave") {
+          MarketDuboceIntersectionOutbound += stop.timeAtStop;
+          MarketDuboceIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Franklin St") {
+          MarketFranklinIntersectionOutbound += stop.timeAtStop;
+          MarketFranklinIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Howlth St & Ocean Ave") {
+          HowlthOceanIntersectionOutbound += stop.timeAtStop;
+          HowlthOceanIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Golden Gate Ave") {
+          MarketGGIntersectionOutbound += stop.timeAtStop;
+          MarketGGIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Ocean Ave & Balboa Park") {
+          HowlthBalboaParkIntersectionOutbound += stop.timeAtStop;
+          HowlthBalboaParkIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Ocean Ave & Plymouth Ave") {
+          OceanPlymouthIntersectionOutbound += stop.timeAtStop;
+          OceanPlymouthIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Ocean Ave & Cerritos Ave") {
+          OceanCerritosIntersectionOutbound += stop.timeAtStop;
+          OceanCerritosIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "West Portal Ave & 15th Ave") {
+          WP15IntersectionOutbound += stop.timeAtStop;
+          WP15IntersectionOutboundNumVehicles++;
         } else {
           console.log(stop.intersectionCrossStreet);
         }
@@ -333,9 +435,47 @@ function runAfterLoad() {
           EmbarcaderoMissionIntersectionInbound += stop.timeAtStop;
           EmbarcaderoMissionIntersectionInboundNumVehicles++;
         } else if (stop.intersectionCrossStreet === "Embarcadero & Howard St") {
-          console.log(stop);
           EmbarcaderoHowardIntersectionInbound += stop.timeAtStop;
           EmbarcaderoHowardIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "West Portal Ave & Dewey Blvd") {
+          WPDeweyIntersectionInbound += stop.timeAtStop;
+          WPDeweyIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Junipero Serra Blvd & Monterey Blvd") {
+          JSMontereyIntersectionInbound += stop.timeAtStop;
+          JSMontereyIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Steuart St") {
+          MarketSteuartIntersectionInbound += stop.timeAtStop;
+          MarketSteuartIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "West Portal Ave & Vicente St") {
+          WPVicenteIntersectionInbound += stop.timeAtStop;
+          WPVicenteIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Eureka St") {
+          MarketEurekaIntersectionInbound += stop.timeAtStop;
+          MarketEurekaIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Duboce Ave") {
+          MarketDuboceIntersectionInbound += stop.timeAtStop;
+          MarketDuboceIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Franklin St") {
+          MarketFranklinIntersectionInbound += stop.timeAtStop;
+          MarketFranklinIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Howlth St & Ocean Ave") {
+          HowlthOceanIntersectionInbound += stop.timeAtStop;
+          HowlthOceanIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Golden Gate Ave") {
+          MarketGGIntersectionInbound += stop.timeAtStop;
+          MarketGGIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Ocean Ave & Balboa Park") {
+          HowlthBalboaParkIntersectionInbound += stop.timeAtStop;
+          HowlthBalboaParkIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Ocean Ave & Plymouth Ave") {
+          OceanPlymouthIntersectionInbound += stop.timeAtStop;
+          OceanPlymouthIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Ocean Ave & Cerritos Ave") {
+          OceanCerritosIntersectionInbound += stop.timeAtStop;
+          OceanCerritosIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "West Portal Ave & 15th Ave") {
+          WP15IntersectionInbound += stop.timeAtStop;
+          WP15IntersectionInboundNumVehicles++;
         } else {
           console.log(stop.intersectionCrossStreet);
         }
@@ -592,6 +732,42 @@ function runAfterLoad() {
   // Make array of intersection data
   const intersectionsData = [
     {
+      name: 'Embarcadero & Howard Intersection',
+      totalTime: EmbarcaderoHowardIntersectionOutbound,
+      numVehicles: EmbarcaderoHowardIntersectionOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'Embarcadero & Howard Intersection',
+      totalTime: EmbarcaderoHowardIntersectionInbound,
+      numVehicles: EmbarcaderoHowardIntersectionInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'Embarcadero & Mission Intersection',
+      totalTime: EmbarcaderoMissionIntersectionOutbound,
+      numVehicles: EmbarcaderoMissionIntersectionOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'Embarcadero & Mission Intersection',
+      totalTime: EmbarcaderoMissionIntersectionInbound,
+      numVehicles: EmbarcaderoMissionIntersectionInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'Market St & Steuart St',
+      totalTime: MarketSteuartIntersectionOutbound,
+      numVehicles: MarketSteuartIntersectionOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'Market St & Steuart St',
+      totalTime: MarketSteuartIntersectionInbound,
+      numVehicles: MarketSteuartIntersectionInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
       name: 'Montgomery Station',
       totalTime: 1,
       numVehicles: 1,
@@ -616,15 +792,15 @@ function runAfterLoad() {
       direction: 'inbound'
     },
     {
-      name: 'Civic Center Station',
-      totalTime: 1,
-      numVehicles: 1,
+      name: 'Market St & Golden Gate Ave',
+      totalTime: MarketGGIntersectionOutbound,
+      numVehicles: MarketGGIntersectionOutboundNumVehicles,
       direction: 'outbound'
     },
     {
-      name: 'Civic Center Station',
-      totalTime: 1,
-      numVehicles: 1,
+      name: 'Market St & Golden Gate Ave',
+      totalTime: MarketGGIntersectionInbound,
+      numVehicles: MarketGGIntersectionInboundNumVehicles,
       direction: 'inbound'
     },
     {
@@ -640,15 +816,27 @@ function runAfterLoad() {
       direction: 'inbound'
     },
     {
-      name: 'Church Station',
-      totalTime: 1,
-      numVehicles: 1,
+      name: 'Market St & Franklin St',
+      totalTime: MarketFranklinIntersectionOutbound,
+      numVehicles: MarketFranklinIntersectionOutboundNumVehicles,
       direction: 'outbound'
     },
     {
-      name: 'Church Station',
-      totalTime: 1,
-      numVehicles: 1,
+      name: 'Market St & Franklin St',
+      totalTime: MarketFranklinIntersectionInbound,
+      numVehicles: MarketFranklinIntersectionInboundNumVehicles,
+      direction: 'inbound'
+    },
+    {
+      name: 'Market St & Duboce Ave',
+      totalTime: MarketDuboceIntersectionOutbound,
+      numVehicles: MarketDuboceIntersectionOutboundNumVehicles,
+      direction: 'outbound'
+    },
+    {
+      name: 'Market St & Duboce Ave',
+      totalTime: MarketDuboceIntersectionInbound,
+      numVehicles: MarketDuboceIntersectionInboundNumVehicles,
       direction: 'inbound'
     },
     {
@@ -664,63 +852,63 @@ function runAfterLoad() {
       direction: 'inbound'
     },
     {
-      name: 'Forest Hill Station',
-      totalTime: 1,
-      numVehicles: 1,
+      name: 'Market St & Eureka St',
+      totalTime: MarketEurekaIntersectionOutbound,
+      numVehicles: MarketEurekaIntersectionOutboundNumVehicles,
       direction: 'outbound'
     },
     {
-      name: 'Forest Hill Station',
-      totalTime: 1,
-      numVehicles: 1,
+      name: 'Market St & Eureka St',
+      totalTime: MarketEurekaIntersectionInbound,
+      numVehicles: MarketEurekaIntersectionInboundNumVehicles,
       direction: 'inbound'
     },
     {
-      name: 'West Portal Station',
-      totalTime: 1,
-      numVehicles: 1,
+      name: 'West Portal Ave & Dewey Blvd',
+      totalTime: WPDeweyIntersectionOutbound,
+      numVehicles: WPDeweyIntersectionOutboundNumVehicles,
       direction: 'outbound'
     },
     {
-      name: 'West Portal Station',
-      totalTime: 1,
-      numVehicles: 1,
+      name: 'West Portal Ave & Dewey Blvd',
+      totalTime: WPDeweyIntersectionInbound,
+      numVehicles: WPDeweyIntersectionInboundNumVehicles,
       direction: 'inbound'
     },
     {
-      name: 'West Portal & 14th',
-      totalTime: 1,
-      numVehicles: 1,
+      name: 'West Portal Ave & Vicente St',
+      totalTime: WPVicenteIntersectionOutbound,
+      numVehicles: WPVicenteIntersectionOutboundNumVehicles,
       direction: 'outbound'
     },
     {
-      name: 'West Portal & 14th',
-      totalTime: 1,
-      numVehicles: 1,
+      name: 'West Portal Ave & Vicente St',
+      totalTime: WPVicenteIntersectionInbound,
+      numVehicles: WPVicenteIntersectionInboundNumVehicles,
       direction: 'inbound'
     },
     {
-      name: 'West Portal & Sloat Blvd (Saint Francis Cir)',
-      totalTime: 1,
-      numVehicles: 1,
+      name: 'West Portal Ave & 15th Ave',
+      totalTime: WP15IntersectionOutbound,
+      numVehicles: WP15IntersectionOutboundNumVehicles,
       direction: 'outbound'
     },
     {
-      name: 'West Portal & Sloat Blvd (Saint Francis Cir)',
-      totalTime: 1,
-      numVehicles: 1,
+      name: 'West Portal Ave & 15th Ave',
+      totalTime: WP15IntersectionInbound,
+      numVehicles: WP15IntersectionInboundNumVehicles,
       direction: 'inbound'
     },
     {
-      name: 'Junipero Serra Blvd & Ocean Ave',
-      totalTime: 1,
-      numVehicles: 1,
+      name: 'Junipero Serra Blvd & Monterey Blvd',
+      totalTime: JSMontereyIntersectionOutbound,
+      numVehicles: JSMontereyIntersectionOutboundNumVehicles,
       direction: 'outbound'
     },
     {
-      name: 'Junipero Serra Blvd & Ocean Ave',
-      totalTime: 1,
-      numVehicles: 1,
+      name: 'Junipero Serra Blvd & Monterey Blvd',
+      totalTime: JSMontereyIntersectionInbound,
+      numVehicles: JSMontereyIntersectionInboundNumVehicles,
       direction: 'inbound'
     },
     {
@@ -748,15 +936,15 @@ function runAfterLoad() {
       direction: 'inbound'
     },
     {
-      name: 'Ocean Ave & Victoria St',
-      totalTime: 1,
-      numVehicles: 1,
+      name: 'Ocean Ave & Cerritos Ave',
+      totalTime: OceanCerritosIntersectionOutbound,
+      numVehicles: OceanCerritosIntersectionOutboundNumVehicles,
       direction: 'outbound'
     },
     {
-      name: 'Ocean Ave & Fairfield Way',
-      totalTime: 1,
-      numVehicles: 1,
+      name: 'Ocean Ave & Cerritos Ave',
+      totalTime: OceanCerritosIntersectionInbound,
+      numVehicles: OceanCerritosIntersectionInboundNumVehicles,
       direction: 'inbound'
     },
     {
@@ -784,15 +972,15 @@ function runAfterLoad() {
       direction: 'inbound'
     },
     {
-      name: 'Ocean Ave & Lee Ave',
-      totalTime: 1,
-      numVehicles: 1,
+      name: 'Ocean Ave & Plymouth Ave',
+      totalTime: OceanPlymouthIntersectionOutbound,
+      numVehicles: OceanPlymouthIntersectionOutboundNumVehicles,
       direction: 'outbound'
     },
     {
-      name: 'Ocean Ave & Lee Ave',
-      totalTime: 1,
-      numVehicles: 1,
+      name: 'Ocean Ave & Plymouth Ave',
+      totalTime: OceanPlymouthIntersectionInbound,
+      numVehicles: OceanPlymouthIntersectionInboundNumVehicles,
       direction: 'inbound'
     },
     {
@@ -808,42 +996,32 @@ function runAfterLoad() {
       direction: 'inbound'
     },
     {
-      name: 'Balboa Park BART Mezzanine Level Station',
-      totalTime: 1,
-      numVehicles: 1,
+      name: 'Howlth St & Ocean Ave',
+      totalTime: HowlthOceanIntersectionOutbound,
+      numVehicles: HowlthOceanIntersectionOutboundNumVehicles,
       direction: 'outbound'
     },
     {
-      name: 'San Jose Ave & Geneva Ave Station',
-      totalTime: 1,
-      numVehicles: 1,
+      name: 'Howlth St & Ocean Ave',
+      totalTime: HowlthOceanIntersectionInbound,
+      numVehicles: HowlthOceanIntersectionInboundNumVehicles,
       direction: 'inbound'
     },
     {
-      name: 'Embarcadero & Mission Intersection',
-      totalTime: EmbarcaderoMissionIntersectionOutbound,
-      numVehicles: EmbarcaderoMissionIntersectionOutboundNumVehicles,
+      name: 'Ocean Ave & Balboa Park',
+      totalTime: HowlthBalboaParkIntersectionOutbound,
+      numVehicles: HowlthBalboaParkIntersectionOutboundNumVehicles,
       direction: 'outbound'
     },
     {
-      name: 'Embarcadero & Mission Intersection',
-      totalTime: EmbarcaderoMissionIntersectionInbound,
-      numVehicles: EmbarcaderoMissionIntersectionInboundNumVehicles,
-      direction: 'inbound'
-    },
-    {
-      name: 'Embarcadero & Howard Intersection',
-      totalTime: EmbarcaderoHowardIntersectionOutbound,
-      numVehicles: EmbarcaderoHowardIntersectionOutboundNumVehicles,
-      direction: 'outbound'
-    },
-    {
-      name: 'Embarcadero & Howard Intersection',
-      totalTime: EmbarcaderoHowardIntersectionInbound,
-      numVehicles: EmbarcaderoHowardIntersectionInboundNumVehicles,
+      name: 'Ocean Ave & Balboa Park',
+      totalTime: HowlthBalboaParkIntersectionInbound,
+      numVehicles: HowlthBalboaParkIntersectionInboundNumVehicles,
       direction: 'inbound'
     }
   ];
+
+  intersectionsData.reverse(); // Reverse the order of the intersections to match the SVG layout
 
   // Outbound labels
   svg.append('text')
@@ -875,7 +1053,7 @@ function runAfterLoad() {
     const height = averageTime;
 
     svg.append('rect')
-      .attr('x', cx)
+      .attr('x', index > 29 ? cx + 80 : index > 1 ? cx + 40 : cx)
       .attr('y', isOutbound ? cy - 2 - height : cy + 12)
       .attr('width', offsetX - 10)
       .attr('height', height)
@@ -883,7 +1061,7 @@ function runAfterLoad() {
       .attr('fill', 'steelblue')
       .on("mouseover", (event, d) => {
         tooltip.style("opacity", 1)
-          .html(`${station.name}.<br>Total Time at Station: ${station.totalTime} seconds<br>Total Vehicles: ${station.numVehicles} vehicles<br>Average Time at Station: ${averageTime.toFixed(2)} seconds`);
+          .html(`<span>${station.name}.</span><br>Total Time at Station: <span>${station.totalTime}</span> seconds<br>Total Vehicles: <span>${station.numVehicles}</span> vehicles<br>Average Time at Station: <span>${averageTime.toFixed(2)}</span> seconds`);
       })
       .on("mousemove", (event) => {
         tooltip.style("left", (event.pageX + 10) + "px")
@@ -894,16 +1072,17 @@ function runAfterLoad() {
       });
 
     svg.append('text')
-      .attr('x', cx)
-      .attr('y', isOutbound ? cy + 20 : cy - 70)
+      .attr('x', index > 29 ? cx + 90 : index > 1 ? cx + 50 : cx + 10)
+      .attr('y', 355)
+      .attr('transform', 'rotate(90, ' + (index > 29 ? cx + 90 : index > 1 ? cx + 50 : cx + 10) + ', 355)')
+      .attr("text-anchor", "middle")
       .attr('class', 'station-label label')
-      .text(station.name)
-      .call(wrapText, 40);
+      .text(station.name);
   });
 
   // Loop through intersections data to create bars and labels
   intersectionsData.forEach((intersection, index) => {
-    const averageTime = intersection.totalTime / intersection.numVehicles;
+    const averageTime = intersection.totalTime > 0 ? intersection.totalTime / intersection.numVehicles : 0;
     const isOutbound = intersection.direction === 'outbound';
     const offsetX = 40;
     const cy = isOutbound ? outboundCY : inboundCY;
@@ -916,7 +1095,7 @@ function runAfterLoad() {
     const height = averageTime;
     
     svg.append('rect')
-      .attr('x', cx + 40)
+      .attr('x', index > 29 ? cx - 40 : index > 1 ? cx : cx + 40)
       .attr('y', isOutbound ? cy - 2 - height : cy + 12)
       .attr('width', offsetX - 10)
       .attr('height', height)
@@ -924,7 +1103,7 @@ function runAfterLoad() {
       .attr('fill', 'steelblue')
       .on("mouseover", (event, d) => {
         tooltip.style("opacity", 1)
-          .html(`${intersection.name}.<br>Total Time at Intersection: ${intersection.totalTime} seconds<br>Total Vehicles: ${intersection.numVehicles} vehicles<br>Average Time at Intersection: ${averageTime.toFixed(2)} seconds`);
+          .html(`<span>${intersection.name}.</span><br>Total Time at Intersection: <span>${intersection.totalTime}</span> seconds<br>Total Vehicles: <span>${intersection.numVehicles}</span> vehicles<br>Average Time at Intersection: <span>${averageTime.toFixed(2)}</span> seconds`);
       })
       .on("mousemove", (event) => {
         tooltip.style("left", (event.pageX + 10) + "px")
@@ -933,13 +1112,14 @@ function runAfterLoad() {
       .on("mouseout", () => {
         tooltip.style("opacity", 0);
       });
-    
+
     svg.append('text')
-      .attr('x', cx + 40)
-      .attr('y', isOutbound ? cy + 20 : cy - 70)
-      .attr('class', 'station-label label')
-      .text(intersection.name)
-      .call(wrapText, 40);
+      .attr('x', index > 31 ? cx - 30 : index > 1 ? cx + 10 : cx + 50)
+      .attr('y', 355)
+      .attr('transform', 'rotate(90, ' + (index > 31 ? cx - 30 : index > 1 ? cx + 10 : cx + 50) + ', 355)')
+      .attr("text-anchor", "middle")
+      .attr('class', 'intersection-label label')
+      .text(intersection.name);
   });
 }
 
@@ -971,41 +1151,6 @@ function makeLabels() {
   for (var i = 0; i < texts.length; i++) {
     makeBG(texts[i])
   }
-}
-
-function wrapText(textSelection, width) {
-  textSelection.each(function() {
-    const text = d3.select(this);
-    const words = text.text().split(/\s+/).reverse();
-    let word;
-    let line = [];
-    let lineNumber = 0;
-    const lineHeight = 1.1; // ems
-    const y = text.attr("y");
-    const dy = parseFloat(text.attr("dy")) || 0;
-    let tspan = text.text(null)
-      .append("tspan")
-      .attr("x", text.attr("x"))
-      .attr("y", y)
-      .attr("dy", dy + "em");
-
-    let lines = 1;
-    while (word = words.pop()) {
-      line.push(word);
-      tspan.text(line.join(" "));
-      if (tspan.node().getComputedTextLength() > width) {
-        line.pop();
-        tspan.text(line.join(" "));
-        line = [word];
-        tspan = text.append("tspan")
-          .attr("x", text.attr("x"))
-          .attr("y", y)
-          .attr("dy", ++lineNumber * lineHeight + dy + "em")
-          .text(word);
-          lines++;
-      }
-    }
-  });
 }
 
 </script>
@@ -1043,7 +1188,7 @@ function wrapText(textSelection, width) {
 .tooltip {
   font-family: "Roboto", sans-serif;
   position: absolute;
-  text-align: center;
+  text-align: right;
   padding: 6px;
   font-size: 12px;
   background: #333;
@@ -1053,29 +1198,45 @@ function wrapText(textSelection, width) {
   opacity: 0;
   transition: opacity 0.2s ease;
 }
+.tooltip span:nth-of-type(1) {
+  text-decoration: underline;
+  line-height: 2.5;
+}
+
+.tooltip span {
+  font-weight: 700;
+  text-align: center;
+}
 
 .outbound-label, .inbound-label {
   font-family: "Roboto", sans-serif;
-  fill: #C3BFBA;
+  fill: #010101;
   font-size: 16px;
   font-weight: 400;
-  background-color: #010101;
   padding: 5px;
   border-radius: 2px;
 }
 
 .label {
-  background: #010101;
-  border-radius: 3px;
-  border: 1px solid #C3BFBA;
+  background: rgba(250, 250, 250);
+  border-radius: 4px;
+  border: 1px solid #010101;
   padding: 4px 12px;
 }
 
-.station-label.label {
+.station-label.label, .intersection-label.label {
   font-family: "Roboto", sans-serif;
-  fill: #C3BFBA;
-  font-size: 10px;
+  fill: #010101;
+  font-size: 11px;
   font-weight: 400;
-  padding: 2px;
+  letter-spacing: 0.2px;
+  padding: 2px 8px;
+}
+
+.intersection-label.label {
+  background-color: #010101;
+  font-weight: 300;
+  stroke: #fff;
+  letter-spacing: 1px;
 }
 </style>
