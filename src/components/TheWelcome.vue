@@ -1434,6 +1434,13 @@ function runAfterLoad() {
       });
 
     svg.append('text')
+      .attr('x', cx + 15)
+      .attr('y', isOutbound ? cy - 10 - height: cy + 30 + height)
+      .attr("text-anchor", "middle")
+      .attr('class', 'height-label')
+      .text(Math.round(height));
+
+    svg.append('text')
       .attr('x', cx + 10)
       .attr('y', 355)
       .attr('transform', 'rotate(90, ' + (cx + 10) + ', 355)')
@@ -1552,6 +1559,12 @@ function makeLabels() {
   font-weight: 400;
   letter-spacing: 0.2px;
   padding: 2px 8px;
+}
+
+.height-label {
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
+  font-size: 12px;
 }
 
 .intersection-label.label {
