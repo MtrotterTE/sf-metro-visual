@@ -64,6 +64,7 @@ function runAfterLoad() {
     .attr('y', 0)
     .attr('width', width - 900)
     .attr('height', height)
+    .attr('class', 'underground')
     .attr('fill', 'darkgray');
   
   // Line for K Line outbound
@@ -338,7 +339,7 @@ function runAfterLoad() {
   let SutroReservoirIntersectionInboundNumVehicles = 0;
 
   // Cycle through the data
-  Object.values(data6.value).forEach((stop) => {
+  Object.values(data3.value).forEach((stop) => {
     if (stop.direction_id === 0) { // outbound
       if (stop.atStation) { // vehicle at station
         if (stop.stationId === "17217" && stop.timeAtStop > 0) { // Embarcadero Station outbound
@@ -1398,9 +1399,24 @@ function runAfterLoad() {
     .attr('class', 'inbound-label label')
     .text('--> Inbound -->');
 
+  // Loop through stations to remove zero-height rectangles
+  let stationsDataCurated = [];
+  stationsData.forEach((station, index) => {
+    const isOutbound = station.direction === 'outbound';
+    console.log(station);
+    console.log(isOutbound && station.totalTime === 0 && stationsData[index - 1].totalTime === 0)
+    if (isOutbound && station.totalTime === 0 && stationsData[index - 1].totalTime === 0) {
+      console.log(station.totalTime, stationsData[index - 1].totalTime);
+      //stationsData.splice(index - 1, 2); // Remove the current and previous station if both have zero height
+    } else if (isOutbound) {
+      stationsDataCurated.push(stationsData[index - 1]);
+      stationsDataCurated.push(station);
+    }
+  });
+
   // Loop through stations data to create bars and labels
   const heightScalar = 0.03; // Scale the height of the bars based on average time at station
-  stationsData.forEach((station, index) => {
+  stationsDataCurated.forEach((station, index) => {
     const averageTime =  station.numVehicles > 0 ? station.totalTime / station.numVehicles : 0;
     const isOutbound = station.direction === 'outbound';
     const isStation = station.isStation;
@@ -1448,6 +1464,10 @@ function runAfterLoad() {
       .attr('class', isStation ? 'station-label label' : 'intersection-label label')
       .text(station.name);
   });
+
+  // Move underground rectangle to align with the west portal station rectangle
+  const undergroundX = d3.select('.west-portal-station-rect').attr('x');
+  d3.select('.underground').attr('x', undergroundX);
 }
 
 function makeLabels() {
