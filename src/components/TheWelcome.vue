@@ -11,21 +11,30 @@ import { ref, onMounted } from 'vue';
 import * as d3 from 'd3';
 
 const chart = ref(null);
-const data1 = ref(null)
-const data2 = ref(null)
-const data3 = ref(null)
+const data1 = ref(null);
+const data2 = ref(null);
+const data3 = ref(null);
+const data4 = ref(null);
+const data5 = ref(null);
+const data6 = ref(null);
 
 onMounted(async () => {
   try {
-    const [file1, file2, file3] = await Promise.all([
+    const [file1, file2, file3, file4, file5, file6] = await Promise.all([
       import('../data/stopData-Curated-05-16.json'),
       import('../data/stopData-Curated-05-15.json'),
-      import('../data/stopData-Curated-05-14.json')
+      import('../data/stopData-Curated-05-14.json'),
+      import('../data/stopData-Curated-05-13.json'),
+      import('../data/stopData-Curated-05-12.json'),
+      import('../data/stopData-Curated-05-11.json')
     ]);
 
     data1.value = file1.default;
     data2.value = file2.default;
     data3.value = file3.default;
+    data4.value = file4.default;
+    data5.value = file5.default;
+    data6.value = file6.default;
 
     runAfterLoad();
     makeLabels();
@@ -258,12 +267,78 @@ function runAfterLoad() {
   let CorbetIronIntersectionInbound = 0;
   let CorbetIronIntersectionInboundNumVehicles = 0;
 
-  // Maximum and minimum average time at station for color scaling
-  let maximumAverageTimeAtStation = 80;
-  let minimumAverageTimeAtStation = 0;
+  let MarketSanchezIntersectionOutbound = 0;
+  let MarketSanchezIntersectionOutboundNumVehicles = 0;
+  let MarketSanchezIntersectionInbound = 0;
+  let MarketSanchezIntersectionInboundNumVehicles = 0;
+
+  let MarketMontgomeryIntersectionOutbound = 0;
+  let MarketMontgomeryIntersectionOutboundNumVehicles = 0;
+  let MarketMontgomeryIntersectionInbound = 0;
+  let MarketMontgomeryIntersectionInboundNumVehicles = 0;
+
+  let MarketNoeIntersectionOutbound = 0;
+  let MarketNoeIntersectionOutboundNumVehicles = 0;
+  let MarketNoeIntersectionInbound = 0;
+  let MarketNoeIntersectionInboundNumVehicles = 0;
+
+  let MarketHydeIntersectionOutbound = 0;
+  let MarketHydeIntersectionOutboundNumVehicles = 0;
+  let MarketHydeIntersectionInbound = 0;
+  let MarketHydeIntersectionInboundNumVehicles = 0;
+
+  let TwinPeaksIntersectionOutbound = 0;
+  let TwinPeaksIntersectionOutboundNumVehicles = 0;
+  let TwinPeaksIntersectionInbound = 0;
+  let TwinPeaksIntersectionInboundNumVehicles = 0;
+
+  let MarketJonesIntersectionOutbound = 0;
+  let MarketJonesIntersectionOutboundNumVehicles = 0;
+  let MarketJonesIntersectionInbound = 0;
+  let MarketJonesIntersectionInboundNumVehicles = 0;
+
+  let MarketStorrieIntersectionOutbound = 0;
+  let MarketStorrieIntersectionOutboundNumVehicles = 0;
+  let MarketStorrieIntersectionInbound = 0;
+  let MarketStorrieIntersectionInboundNumVehicles = 0;
+
+  let MarketMasonIntersectionOutbound = 0;
+  let MarketMasonIntersectionOutboundNumVehicles = 0;
+  let MarketMasonIntersectionInbound = 0;
+  let MarketMasonIntersectionInboundNumVehicles = 0;
+
+  let EmbarcaderoFolsomIntersectionOutbound = 0;
+  let EmbarcaderoFolsomIntersectionOutboundNumVehicles = 0;
+  let EmbarcaderoFolsomIntersectionInbound = 0;
+  let EmbarcaderoFolsomIntersectionInboundNumVehicles = 0;
+
+  let BettyIntersectionOutbound = 0;
+  let BettyIntersectionOutboundNumVehicles = 0;
+  let BettyIntersectionInbound = 0;
+  let BettyIntersectionInboundNumVehicles = 0;
+
+  let DeweyPachecoIntersectionOutbound = 0;
+  let DeweyPachecoIntersectionOutboundNumVehicles = 0;
+  let DeweyPachecoIntersectionInbound = 0;
+  let DeweyPachecoIntersectionInboundNumVehicles = 0;
+
+  let MarketLagunaIntersectionOutbound = 0;
+  let MarketLagunaIntersectionOutboundNumVehicles = 0;
+  let MarketLagunaIntersectionInbound = 0;
+  let MarketLagunaIntersectionInboundNumVehicles = 0;
+
+  let MarketLarkinIntersectionOutbound = 0;
+  let MarketLarkinIntersectionOutboundNumVehicles = 0;
+  let MarketLarkinIntersectionInbound = 0;
+  let MarketLarkinIntersectionInboundNumVehicles = 0;
+
+  let SutroReservoirIntersectionOutbound = 0;
+  let SutroReservoirIntersectionOutboundNumVehicles = 0;
+  let SutroReservoirIntersectionInbound = 0;
+  let SutroReservoirIntersectionInboundNumVehicles = 0;
 
   // Cycle through the data
-  Object.values(data1.value).forEach((stop) => {
+  Object.values(data6.value).forEach((stop) => {
     if (stop.direction_id === 0) { // outbound
       if (stop.atStation) { // vehicle at station
         if (stop.stationId === "17217" && stop.timeAtStop > 0) { // Embarcadero Station outbound
@@ -379,6 +454,48 @@ function runAfterLoad() {
         } else if (stop.intersectionCrossStreet === "Corbett Ave & Iron Alley") {
           CorbetIronIntersectionOutbound += stop.timeAtStop;
           CorbetIronIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Sanchez St") {
+          MarketSanchezIntersectionOutbound += stop.timeAtStop;
+          MarketSanchezIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Montgomery St") {
+          MarketMontgomeryIntersectionOutbound += stop.timeAtStop;
+          MarketMontgomeryIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Noe St") {
+          MarketNoeIntersectionOutbound += stop.timeAtStop;
+          MarketNoeIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Hyde St") {
+          MarketHydeIntersectionOutbound += stop.timeAtStop;
+          MarketHydeIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Twin Peaks Blvd") {
+          TwinPeaksIntersectionOutbound += stop.timeAtStop;
+          TwinPeaksIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Jones St") {
+          MarketJonesIntersectionOutbound += stop.timeAtStop;
+          MarketJonesIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Storrie St") {
+          MarketStorrieIntersectionOutbound += stop.timeAtStop;
+          MarketStorrieIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Mason St") {
+          MarketMasonIntersectionOutbound += stop.timeAtStop;
+          MarketMasonIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Embarcadero & Folsom St") {
+          EmbarcaderoFolsomIntersectionOutbound += stop.timeAtStop;
+          EmbarcaderoFolsomIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Betty Sutro Meadow") {
+          BettyIntersectionOutbound += stop.timeAtStop;
+          BettyIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Dewey Blvd & Pacheco St") {
+          DeweyPachecoIntersectionOutbound += stop.timeAtStop;
+          DeweyPachecoIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Laguna St") {
+          MarketLagunaIntersectionOutbound += stop.timeAtStop;
+          MarketLagunaIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Larkin St") {
+          MarketLarkinIntersectionOutbound += stop.timeAtStop;
+          MarketLarkinIntersectionOutboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Sutro Reservoir") {
+          SutroReservoirIntersectionOutbound += stop.timeAtStop;
+          SutroReservoirIntersectionOutboundNumVehicles++;
         } else {
           console.log(stop.intersectionCrossStreet);
         }
@@ -495,9 +612,51 @@ function runAfterLoad() {
         } else if (stop.intersectionCrossStreet === "Market St & Battery St") {
           MarketBatteryIntersectionInbound += stop.timeAtStop;
           MarketBatteryIntersectionInboundNumVehicles++;
-        }else if (stop.intersectionCrossStreet === "Corbett Ave & Iron Alley") {
+        } else if (stop.intersectionCrossStreet === "Corbett Ave & Iron Alley") {
           CorbetIronIntersectionInbound += stop.timeAtStop;
           CorbetIronIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Sanchez St") {
+          MarketSanchezIntersectionInbound += stop.timeAtStop;
+          MarketSanchezIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Montgomery St") {
+          MarketMontgomeryIntersectionInbound += stop.timeAtStop;
+          MarketMontgomeryIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Noe St") {
+          MarketNoeIntersectionInbound += stop.timeAtStop;
+          MarketNoeIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Hyde St") {
+          MarketHydeIntersectionInbound += stop.timeAtStop;
+          MarketHydeIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Twin Peaks Blvd") {
+          TwinPeaksIntersectionInbound += stop.timeAtStop;
+          TwinPeaksIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Jones St") {
+          MarketJonesIntersectionInbound += stop.timeAtStop;
+          MarketJonesIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Storrie St") {
+          MarketStorrieIntersectionInbound += stop.timeAtStop;
+          MarketStorrieIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Mason St") {
+          MarketMasonIntersectionInbound += stop.timeAtStop;
+          MarketMasonIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Embarcadero & Folsom St") {
+          EmbarcaderoFolsomIntersectionInbound += stop.timeAtStop;
+          EmbarcaderoFolsomIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Betty Sutro Meadow") {
+          BettyIntersectionInbound += stop.timeAtStop;
+          BettyIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Dewey Blvd & Pacheco St") {
+          DeweyPachecoIntersectionInbound += stop.timeAtStop;
+          DeweyPachecoIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Laguna St") {
+          MarketLagunaIntersectionInbound += stop.timeAtStop;
+          MarketLagunaIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Market St & Larkin St") {
+          MarketLarkinIntersectionInbound += stop.timeAtStop;
+          MarketLarkinIntersectionInboundNumVehicles++;
+        } else if (stop.intersectionCrossStreet === "Sutro Reservoir") {
+          SutroReservoirIntersectionInbound += stop.timeAtStop;
+          SutroReservoirIntersectionInboundNumVehicles++;
         } else {
           console.log(stop.intersectionCrossStreet);
         }
@@ -507,7 +666,21 @@ function runAfterLoad() {
 
   // Make array of station data
   const stationsData = [
-  {
+    {
+      name: 'Embarcadero & Folsom St',
+      totalTime: EmbarcaderoFolsomIntersectionOutbound,
+      numVehicles: EmbarcaderoFolsomIntersectionOutboundNumVehicles,
+      direction: 'outbound',
+      isStation: false
+    },
+    {
+      name: 'Embarcadero & Folsom St',
+      totalTime: EmbarcaderoFolsomIntersectionInbound,
+      numVehicles: EmbarcaderoFolsomIntersectionInboundNumVehicles,
+      direction: 'inbound',
+      isStation: false
+    },
+    {
       name: 'Embarcadero & Howard',
       totalTime: EmbarcaderoHowardIntersectionOutbound,
       numVehicles: EmbarcaderoHowardIntersectionOutboundNumVehicles,
@@ -592,6 +765,20 @@ function runAfterLoad() {
       isStation: true
     },
     {
+      name: 'Market St & Kearny St',
+      totalTime: MarketMontgomeryIntersectionOutbound,
+      numVehicles: MarketMontgomeryIntersectionOutboundNumVehicles,
+      direction: 'outbound',
+      isStation: false
+    },
+    {
+      name: 'Market St & Kearny St',
+      totalTime: MarketMontgomeryIntersectionInbound,
+      numVehicles: MarketMontgomeryIntersectionInboundNumVehicles,
+      direction: 'inbound',
+      isStation: false
+    },
+    {
       name: 'Powell Station',
       totalTime: PowellStationOutbound,
       numVehicles: PowellStationOutboundNumVehicles,
@@ -604,6 +791,20 @@ function runAfterLoad() {
       numVehicles: PowellStationInboundNumVehicles,
       direction: 'inbound',
       isStation: true
+    },
+    {
+      name: 'Market St & Mason St',
+      totalTime: MarketMasonIntersectionOutbound,
+      numVehicles: MarketMasonIntersectionOutboundNumVehicles,
+      direction: 'outbound',
+      isStation: false
+    },
+    {
+      name: 'Market St & Mason St',
+      totalTime: MarketMasonIntersectionInbound,
+      numVehicles: MarketMasonIntersectionInboundNumVehicles,
+      direction: 'inbound',
+      isStation: false
     },
     {
       name: 'Market St & Golden Gate Ave',
@@ -620,6 +821,20 @@ function runAfterLoad() {
       isStation: false
     },
     {
+      name: 'Market St & Jones St',
+      totalTime: MarketJonesIntersectionOutbound,
+      numVehicles: MarketJonesIntersectionOutboundNumVehicles,
+      direction: 'outbound',
+      isStation: false
+    },
+    {
+      name: 'Market St & Jones St',
+      totalTime: MarketJonesIntersectionInbound,
+      numVehicles: MarketJonesIntersectionInboundNumVehicles,
+      direction: 'inbound',
+      isStation: false
+    },
+    {
       name: 'Civic Center Station',
       totalTime: CCStationOutbound,
       numVehicles: CCStationOutboundNumVehicles,
@@ -632,6 +847,34 @@ function runAfterLoad() {
       numVehicles: CCStationInboundNumVehicles,
       direction: 'inbound',
       isStation: true
+    },
+    {
+      name: 'Market St & Hyde St',
+      totalTime: MarketHydeIntersectionOutbound,
+      numVehicles: MarketHydeIntersectionOutboundNumVehicles,
+      direction: 'outbound',
+      isStation: false
+    },
+    {
+      name: 'Market St & Hyde St',
+      totalTime: MarketHydeIntersectionInbound,
+      numVehicles: MarketHydeIntersectionInboundNumVehicles,
+      direction: 'inbound',
+      isStation: false
+    },
+    {
+      name: 'Market St & Larkin St',
+      totalTime: MarketLarkinIntersectionOutbound,
+      numVehicles: MarketLarkinIntersectionOutboundNumVehicles,
+      direction: 'outbound',
+      isStation: false
+    },
+    {
+      name: 'Market St & Larkin St',
+      totalTime: MarketLarkinIntersectionInbound,
+      numVehicles: MarketLarkinIntersectionInboundNumVehicles,
+      direction: 'inbound',
+      isStation: false
     },
     {
       name: 'Van Ness Station',
@@ -658,6 +901,20 @@ function runAfterLoad() {
       name: 'Market St & Franklin St',
       totalTime: MarketFranklinIntersectionInbound,
       numVehicles: MarketFranklinIntersectionInboundNumVehicles,
+      direction: 'inbound',
+      isStation: false
+    },
+    {
+      name: 'Market St & Laguna St',
+      totalTime: MarketLagunaIntersectionOutbound,
+      numVehicles: MarketLagunaIntersectionOutboundNumVehicles,
+      direction: 'outbound',
+      isStation: false
+    },
+    {
+      name: 'Market St & Laguna St',
+      totalTime: MarketLagunaIntersectionInbound,
+      numVehicles: MarketLagunaIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
@@ -690,6 +947,34 @@ function runAfterLoad() {
       isStation: true
     },
     {
+      name: 'Market St & Sanchez St',
+      totalTime: MarketSanchezIntersectionOutbound,
+      numVehicles: MarketSanchezIntersectionOutboundNumVehicles,
+      direction: 'outbound',
+      isStation: false
+    },
+    {
+      name: 'Market St & Sanchez St',
+      totalTime: MarketSanchezIntersectionInbound,
+      numVehicles: MarketSanchezIntersectionInboundNumVehicles,
+      direction: 'inbound',
+      isStation: false
+    },
+    {
+      name: 'Market St & Noe St',
+      totalTime: MarketNoeIntersectionOutbound,
+      numVehicles: MarketNoeIntersectionOutboundNumVehicles,
+      direction: 'outbound',
+      isStation: false
+    },
+    {
+      name: 'Market St & Noe St',
+      totalTime: MarketNoeIntersectionInbound,
+      numVehicles: MarketNoeIntersectionInboundNumVehicles,
+      direction: 'inbound',
+      isStation: false
+    },
+    {
       name: 'Castro Station',
       totalTime: CastroStationOutbound,
       numVehicles: CastroStationOutboundNumVehicles,
@@ -718,6 +1003,20 @@ function runAfterLoad() {
       isStation: false
     },
     {
+      name: 'Market St & Storrie St',
+      totalTime: MarketStorrieIntersectionOutbound,
+      numVehicles: MarketStorrieIntersectionOutboundNumVehicles,
+      direction: 'outbound',
+      isStation: false
+    },
+    {
+      name: 'Market St & Storrie St',
+      totalTime: MarketStorrieIntersectionInbound,
+      numVehicles: MarketStorrieIntersectionInboundNumVehicles,
+      direction: 'inbound',
+      isStation: false
+    },
+    {
       name: 'Corbett Ave & Iron Alley',
       totalTime: CorbetIronIntersectionOutbound,
       numVehicles: CorbetIronIntersectionOutboundNumVehicles,
@@ -728,6 +1027,48 @@ function runAfterLoad() {
       name: 'Corbett Ave & Iron Alley',
       totalTime: CorbetIronIntersectionInbound,
       numVehicles: CorbetIronIntersectionInboundNumVehicles,
+      direction: 'inbound',
+      isStation: false
+    },
+    {
+      name: 'Twin Peaks Blvd',
+      totalTime: TwinPeaksIntersectionOutbound,
+      numVehicles: TwinPeaksIntersectionOutboundNumVehicles,
+      direction: 'outbound',
+      isStation: false
+    },
+    {
+      name: 'Twin Peaks Blvd',
+      totalTime: TwinPeaksIntersectionInbound,
+      numVehicles: TwinPeaksIntersectionInboundNumVehicles,
+      direction: 'inbound',
+      isStation: false
+    },
+    {
+      name: 'Sutro Reservoir',
+      totalTime: SutroReservoirIntersectionOutbound,
+      numVehicles: SutroReservoirIntersectionOutboundNumVehicles,
+      direction: 'outbound',
+      isStation: false
+    },
+    {
+      name: 'Sutro Reservoir',
+      totalTime: SutroReservoirIntersectionInbound,
+      numVehicles: SutroReservoirIntersectionInboundNumVehicles,
+      direction: 'inbound',
+      isStation: false
+    },
+    {
+      name: 'Betty Sutro Meadow',
+      totalTime: BettyIntersectionOutbound,
+      numVehicles: BettyIntersectionOutboundNumVehicles,
+      direction: 'outbound',
+      isStation: false
+    },
+    {
+      name: 'Betty Sutro Meadow',
+      totalTime: BettyIntersectionInbound,
+      numVehicles: BettyIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
@@ -744,6 +1085,20 @@ function runAfterLoad() {
       numVehicles: FHStationInboundNumVehicles,
       direction: 'inbound',
       isStation: true
+    },
+    {
+      name: 'Dewey Blvd & Pacheco St',
+      totalTime: DeweyPachecoIntersectionOutbound,
+      numVehicles: DeweyPachecoIntersectionOutboundNumVehicles,
+      direction: 'outbound',
+      isStation: false
+    },
+    {
+      name: 'Dewey Blvd & Pacheco St',
+      totalTime: DeweyPachecoIntersectionInbound,
+      numVehicles: DeweyPachecoIntersectionInboundNumVehicles,
+      direction: 'inbound',
+      isStation: false
     },
     {
       name: 'West Portal Ave & Dewey Blvd',
@@ -1046,7 +1401,7 @@ function runAfterLoad() {
   // Loop through stations data to create bars and labels
   const heightScalar = 0.03; // Scale the height of the bars based on average time at station
   stationsData.forEach((station, index) => {
-    const averageTime = station.totalTime / station.numVehicles;
+    const averageTime =  station.numVehicles > 0 ? station.totalTime / station.numVehicles : 0;
     const isOutbound = station.direction === 'outbound';
     const isStation = station.isStation;
     const offsetX = 20;
