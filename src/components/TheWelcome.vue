@@ -1,6 +1,17 @@
 <template>
   <div class="welcome">
     <h1 class="page-title">Tenco CityScale K Line Visualization</h1>
+    <div class="time-filter-controls">
+      <label class="date-selector-label" for="timeFilter">Select Time:</label>
+      <select id="timeFilter" v-model="selectedTime" @change="changeData(selectedTime)">
+        <option value="05-16">May 16</option>
+        <option value="05-15">May 15</option>
+        <option value="05-14">May 14</option>
+        <option value="05-13">May 13</option>
+        <option value="05-12">May 12</option>
+        <option value="05-11">May 11</option>
+      </select>
+    </div>
     <div ref="chart" class="svg-area"></div>
     <div class="tooltip" id="tooltip"></div>
   </div>  
@@ -17,6 +28,7 @@ const data3 = ref(null);
 const data4 = ref(null);
 const data5 = ref(null);
 const data6 = ref(null);
+const selectedTime = ref('05-16'); // Default selected value
 
 onMounted(async () => {
   try {
@@ -36,16 +48,16 @@ onMounted(async () => {
     data5.value = file5.default;
     data6.value = file6.default;
 
-    runAfterLoad();
+    runAfterLoad(data1.value); // Default to the latest data
     makeLabels();
   } catch (error) {
     console.error('Error loading JSON files:', error);
   }
 })
 
-function runAfterLoad() {
+function runAfterLoad(dataFile) {
   // svg canvas dimensions
-  const width = 2200;
+  const width = 1800;
   const height = 750;
 
   const outboundCY = 250;
@@ -62,7 +74,7 @@ function runAfterLoad() {
   svg.append('rect')
     .attr('x', 900)
     .attr('y', 0)
-    .attr('width', width - 900)
+    .attr('width', width)
     .attr('height', height)
     .attr('class', 'underground')
     .attr('fill', 'darkgray');
@@ -339,7 +351,7 @@ function runAfterLoad() {
   let SutroReservoirIntersectionInboundNumVehicles = 0;
 
   // Cycle through the data
-  Object.values(data3.value).forEach((stop) => {
+  Object.values(dataFile).forEach((stop) => {
     if (stop.direction_id === 0) { // outbound
       if (stop.atStation) { // vehicle at station
         if (stop.stationId === "17217" && stop.timeAtStop > 0) { // Embarcadero Station outbound
@@ -1403,11 +1415,8 @@ function runAfterLoad() {
   let stationsDataCurated = [];
   stationsData.forEach((station, index) => {
     const isOutbound = station.direction === 'outbound';
-    console.log(station);
-    console.log(isOutbound && station.totalTime === 0 && stationsData[index - 1].totalTime === 0)
     if (isOutbound && station.totalTime === 0 && stationsData[index - 1].totalTime === 0) {
-      console.log(station.totalTime, stationsData[index - 1].totalTime);
-      //stationsData.splice(index - 1, 2); // Remove the current and previous station if both have zero height
+      // do nothing
     } else if (isOutbound) {
       stationsDataCurated.push(stationsData[index - 1]);
       stationsDataCurated.push(station);
@@ -1497,6 +1506,30 @@ function makeLabels() {
   var texts = document.querySelectorAll(".label")
   for (var i = 0; i < texts.length; i++) {
     makeBG(texts[i])
+  }
+}
+
+function changeData(selectedValue) {
+  clearChart();
+  if (selectedValue === "05-16") {
+    runAfterLoad(data1.value);
+  } else if (selectedValue === "05-15") {
+    runAfterLoad(data2.value);
+  } else if (selectedValue === "05-14") {
+    runAfterLoad(data3.value);
+  } else if (selectedValue === "05-13") {
+    runAfterLoad(data4.value);
+  } else if (selectedValue === "05-12") {
+    runAfterLoad(data5.value);
+  } else if (selectedValue === "05-11") {
+    runAfterLoad(data6.value);
+  }
+  makeLabels();
+}
+
+function clearChart() {
+  if (chart.value) {
+    chart.value.innerHTML = ''; // Removes all content inside the div
   }
 }
 
@@ -1592,5 +1625,20 @@ function makeLabels() {
   font-weight: 300;
   stroke: #fff;
   letter-spacing: 1px;
+}
+
+.date-selector-label {
+  color: #010101;
+  font-family: "Roboto", sans-serif;
+  margin-right: 8px;
+}
+
+#timeFilter {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  border: 1px solid #010101;
+  background-color: #fff;
 }
 </style>
