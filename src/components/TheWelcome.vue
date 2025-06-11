@@ -12,6 +12,42 @@
         <option value="05-11">May 11</option>
       </select>
     </div>
+    <div class="hour-filter-controls">
+      <label class="hour-selector-label" for="startHourFilter">Start Hour:</label>
+      <select id="startHourFilter" v-model="selectedStartHour" @change="filterByHour(selectedStartHour, selectedEndHour)">
+        <option value="all">All Hours</option>
+        <option value="8">8:00 PDT</option>
+        <option value="9">9:00 PDT</option>
+        <option value="10">10:00 PDT</option>
+        <option value="11">11:00 PDT</option>
+        <option value="12">12:00 PDT</option>
+        <option value="13">1:00 PM PDT</option>
+        <option value="14">2:00 PM PDT</option>
+        <option value="15">3:00 PM PDT</option>
+        <option value="16">4:00 PM PDT</option>
+        <option value="17">5:00 PM PDT</option>
+        <option value="18">6:00 PM PDT</option>
+        <option value="19">7:00 PM PDT</option>
+        <option value="20">8:00 PM PDT</option>
+      </select>
+      <label class="hour-selector-label" for="endHourFilter">End Hour:</label>
+      <select id="endHourFilter" v-model="selectedEndHour" @change="filterByHour(selectedStartHour, selectedEndHour)">
+        <option value="all">All Hours</option>
+        <option value="8">8:00 PDT</option>
+        <option value="9">9:00 PDT</option>
+        <option value="10">10:00 PDT</option>
+        <option value="11">11:00 PDT</option>
+        <option value="12">12:00 PDT</option>
+        <option value="13">1:00 PM PDT</option>
+        <option value="14">2:00 PM PDT</option>
+        <option value="15">3:00 PM PDT</option>
+        <option value="16">4:00 PM PDT</option>
+        <option value="17">5:00 PM PDT</option>
+        <option value="18">6:00 PM PDT</option>
+        <option value="19">7:00 PM PDT</option>
+        <option value="20">8:00 PM PDT</option>
+      </select>
+    </div>
     <div ref="chart" class="svg-area"></div>
     <div class="tooltip" id="tooltip"></div>
   </div>  
@@ -29,6 +65,12 @@ const data4 = ref(null);
 const data5 = ref(null);
 const data6 = ref(null);
 const selectedTime = ref('05-16'); // Default selected value
+const selectedStartHour = ref('all'); // Default to 'all'
+const selectedEndHour = ref('all'); // Default to 'all'
+
+let startHour = "all";
+let endHour = "all";
+let dataToBeRendered; // Default to the latest data
 
 onMounted(async () => {
   try {
@@ -48,14 +90,20 @@ onMounted(async () => {
     data5.value = file5.default;
     data6.value = file6.default;
 
-    runAfterLoad(data1.value); // Default to the latest data
+    dataToBeRendered = data1.value;
+    runAfterLoad(dataToBeRendered, startHour, endHour);
     makeLabels();
   } catch (error) {
     console.error('Error loading JSON files:', error);
   }
 })
 
-function runAfterLoad(dataFile) {
+function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
+  console.log("start of runAfterLoad console");
+  console.log("startHourFilter: " + startHourFilter);
+  console.log("endHourFilter: " + endHourFilter);
+  console.log(parseInt(startHourFilter) < parseInt(endHourFilter));
+
   // svg canvas dimensions
   const width = 1800;
   const height = 750;
@@ -352,326 +400,334 @@ function runAfterLoad(dataFile) {
 
   // Cycle through the data
   Object.values(dataFile).forEach((stop) => {
-    if (stop.direction_id === 0) { // outbound
-      if (stop.atStation) { // vehicle at station
-        if (stop.stationId === "17217" && stop.timeAtStop > 0) { // Embarcadero Station outbound
-          EmbarcaderoStationOutbound += stop.timeAtStop;
-          EmbarcaderoStationOutboundNumVehicles++;
-        } else if (stop.stationId === "16994" && stop.timeAtStop > 0) { // Montgomery Station outbound
-          MontgomeryStationOutbound += stop.timeAtStop;
-          MontgomeryStationOutboundNumVehicles++;
-        } else if (stop.stationId === "16995" && stop.timeAtStop > 0) { // Powell Station outbound
-          PowellStationOutbound += stop.timeAtStop;
-          PowellStationOutboundNumVehicles++;
-        } else if (stop.stationId === "16997" && stop.timeAtStop > 0) { // Civic Center Station outbound
-          CCStationOutbound += stop.timeAtStop;
-          CCStationOutboundNumVehicles++;
-        } else if (stop.stationId === "16996" && stop.timeAtStop > 0) { // Van Ness Station outbound
-          VNStationOutbound += stop.timeAtStop;
-          VNStationOutboundNumVehicles++;
-        } else if (stop.stationId === "16998" && stop.timeAtStop > 0) { // Church Station outbound
-          ChurchStationOutbound += stop.timeAtStop;
-          ChurchStationOutboundNumVehicles++;
-        } else if (stop.stationId === "16991" && stop.timeAtStop > 0) { // Castro Station outbound
-          CastroStationOutbound += stop.timeAtStop;
-          CastroStationOutboundNumVehicles++;
-        } else if (stop.stationId === "16993" && stop.timeAtStop > 0) { // Forest Hill Station outbound
-          FHStationOutbound += stop.timeAtStop;
-          FHStationOutboundNumVehicles++;
-        } else if (stop.stationId === "16739" && stop.timeAtStop > 0) { // West Portal Station outbound
-          WPStationOutbound += stop.timeAtStop;
-          WPStationOutboundNumVehicles++;
-        } else if (stop.stationId === "17125" && stop.timeAtStop > 0) { // West Portal & 14th outbound
-          WP14StationOutbound += stop.timeAtStop;
-          WP14StationOutboundNumVehicles++;
-        } else if (stop.stationId === "16503" && stop.timeAtStop > 0) { // West Portal & Sloat Blvd (Saint Francis Cir) outbound
-          WPSLStationOutbound += stop.timeAtStop;
-          WPSLStationOutboundNumVehicles++;
-        } else if (stop.stationId === "17114" && stop.timeAtStop > 0) { // Junipero Serra Blvd & Ocean Ave outbound
-          JSStationOutbound += stop.timeAtStop;
-          JSStationOutboundNumVehicles++;
-        } else if (stop.stationId === "15807" && stop.timeAtStop > 0) { // Ocean Ave & San Leandro Way outbound
-          OSLStationOutbound += stop.timeAtStop;
-          OSLStationOutboundNumVehicles++;
-        } else if (stop.stationId === "15780" && stop.timeAtStop > 0) { // Ocean Ave & Aptos outbound
-          OceanAptosStationOutbound += stop.timeAtStop;
-          OceanAptosStationOutboundNumVehicles++;
-        } else if (stop.stationId === "15808" && stop.timeAtStop > 0) { // Ocean Ave & Victoria St outbound
-          OceanVictoriaStationOutbound += stop.timeAtStop;
-          OceanVictoriaStationOutboundNumVehicles++;
-        } else if (stop.stationId === "15793" && stop.timeAtStop > 0) { // Ocean Ave & Jules outbound
-          OceanJulesStationOutbound += stop.timeAtStop;
-          OceanJulesStationOutboundNumVehicles++;
-        } else if (stop.stationId === "15798" && stop.timeAtStop > 0) { // Ocean Ave & Fairfield Way outbound
-          OceanMiramarStationOutbound += stop.timeAtStop;
-          OceanMiramarStationOutboundNumVehicles++;
-        } else if (stop.stationId === "15795" && stop.timeAtStop > 0) { // Ocean Ave & Dorado Ter outbound
-          OceanLeeStationOutbound += stop.timeAtStop;
-          OceanLeeStationOutboundNumVehicles++;
-        } else if (stop.stationId === "15785" && stop.timeAtStop > 0) { // Ocean Ave & Dorado Ter outbound
-          OceanCCSFStationOutbound += stop.timeAtStop;
-          OceanCCSFStationOutboundNumVehicles++;
-        } else if (stop.stationId === "15418" && stop.timeAtStop > 0) { // Ocean Ave & Dorado Ter outbound
-          BalboaParkStationOutbound += stop.timeAtStop;
-          BalboaParkStationOutboundNumVehicles++;
+    //console.log(stop.timestamp)
+    const date = new Date(stop.timestamp);
+    const pdtDate = new Date(convertUTCToPDT(date));
+    const hour = pdtDate.getHours();
+    if ((startHourFilter === "all" || endHourFilter === "all") || ((parseInt(startHourFilter) <= parseInt(hour)) && (parseInt(hour) < parseInt(endHourFilter)))) {
+      console.log(stop.timestamp);
+      console.log(hour);
+      if (stop.direction_id === 0) { // outbound
+        if (stop.atStation) { // vehicle at station
+          if (stop.stationId === "17217" && stop.timeAtStop > 0) { // Embarcadero Station outbound
+            EmbarcaderoStationOutbound += stop.timeAtStop;
+            EmbarcaderoStationOutboundNumVehicles++;
+          } else if (stop.stationId === "16994" && stop.timeAtStop > 0) { // Montgomery Station outbound
+            MontgomeryStationOutbound += stop.timeAtStop;
+            MontgomeryStationOutboundNumVehicles++;
+          } else if (stop.stationId === "16995" && stop.timeAtStop > 0) { // Powell Station outbound
+            PowellStationOutbound += stop.timeAtStop;
+            PowellStationOutboundNumVehicles++;
+          } else if (stop.stationId === "16997" && stop.timeAtStop > 0) { // Civic Center Station outbound
+            CCStationOutbound += stop.timeAtStop;
+            CCStationOutboundNumVehicles++;
+          } else if (stop.stationId === "16996" && stop.timeAtStop > 0) { // Van Ness Station outbound
+            VNStationOutbound += stop.timeAtStop;
+            VNStationOutboundNumVehicles++;
+          } else if (stop.stationId === "16998" && stop.timeAtStop > 0) { // Church Station outbound
+            ChurchStationOutbound += stop.timeAtStop;
+            ChurchStationOutboundNumVehicles++;
+          } else if (stop.stationId === "16991" && stop.timeAtStop > 0) { // Castro Station outbound
+            CastroStationOutbound += stop.timeAtStop;
+            CastroStationOutboundNumVehicles++;
+          } else if (stop.stationId === "16993" && stop.timeAtStop > 0) { // Forest Hill Station outbound
+            FHStationOutbound += stop.timeAtStop;
+            FHStationOutboundNumVehicles++;
+          } else if (stop.stationId === "16739" && stop.timeAtStop > 0) { // West Portal Station outbound
+            WPStationOutbound += stop.timeAtStop;
+            WPStationOutboundNumVehicles++;
+          } else if (stop.stationId === "17125" && stop.timeAtStop > 0) { // West Portal & 14th outbound
+            WP14StationOutbound += stop.timeAtStop;
+            WP14StationOutboundNumVehicles++;
+          } else if (stop.stationId === "16503" && stop.timeAtStop > 0) { // West Portal & Sloat Blvd (Saint Francis Cir) outbound
+            WPSLStationOutbound += stop.timeAtStop;
+            WPSLStationOutboundNumVehicles++;
+          } else if (stop.stationId === "17114" && stop.timeAtStop > 0) { // Junipero Serra Blvd & Ocean Ave outbound
+            JSStationOutbound += stop.timeAtStop;
+            JSStationOutboundNumVehicles++;
+          } else if (stop.stationId === "15807" && stop.timeAtStop > 0) { // Ocean Ave & San Leandro Way outbound
+            OSLStationOutbound += stop.timeAtStop;
+            OSLStationOutboundNumVehicles++;
+          } else if (stop.stationId === "15780" && stop.timeAtStop > 0) { // Ocean Ave & Aptos outbound
+            OceanAptosStationOutbound += stop.timeAtStop;
+            OceanAptosStationOutboundNumVehicles++;
+          } else if (stop.stationId === "15808" && stop.timeAtStop > 0) { // Ocean Ave & Victoria St outbound
+            OceanVictoriaStationOutbound += stop.timeAtStop;
+            OceanVictoriaStationOutboundNumVehicles++;
+          } else if (stop.stationId === "15793" && stop.timeAtStop > 0) { // Ocean Ave & Jules outbound
+            OceanJulesStationOutbound += stop.timeAtStop;
+            OceanJulesStationOutboundNumVehicles++;
+          } else if (stop.stationId === "15798" && stop.timeAtStop > 0) { // Ocean Ave & Fairfield Way outbound
+            OceanMiramarStationOutbound += stop.timeAtStop;
+            OceanMiramarStationOutboundNumVehicles++;
+          } else if (stop.stationId === "15795" && stop.timeAtStop > 0) { // Ocean Ave & Dorado Ter outbound
+            OceanLeeStationOutbound += stop.timeAtStop;
+            OceanLeeStationOutboundNumVehicles++;
+          } else if (stop.stationId === "15785" && stop.timeAtStop > 0) { // Ocean Ave & Dorado Ter outbound
+            OceanCCSFStationOutbound += stop.timeAtStop;
+            OceanCCSFStationOutboundNumVehicles++;
+          } else if (stop.stationId === "15418" && stop.timeAtStop > 0) { // Ocean Ave & Dorado Ter outbound
+            BalboaParkStationOutbound += stop.timeAtStop;
+            BalboaParkStationOutboundNumVehicles++;
+          }
+        } else if (stop.atIntersection) { // vehicle at intersection
+          if (stop.intersectionCrossStreet === "Embarcadero & Mission") {
+            EmbarcaderoMissionIntersectionOutbound += stop.timeAtStop;
+            EmbarcaderoMissionIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Embarcadero & Howard St") {
+            EmbarcaderoHowardIntersectionOutbound += stop.timeAtStop;
+            EmbarcaderoHowardIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "West Portal Ave & Dewey Blvd") {
+            WPDeweyIntersectionOutbound += stop.timeAtStop;
+            WPDeweyIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Junipero Serra Blvd & Monterey Blvd") {
+            JSMontereyIntersectionOutbound += stop.timeAtStop;
+            JSMontereyIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Steuart St") {
+            MarketSteuartIntersectionOutbound += stop.timeAtStop;
+            MarketSteuartIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "West Portal Ave & Vicente St") {
+            WPVicenteIntersectionOutbound += stop.timeAtStop;
+            WPVicenteIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Eureka St") {
+            MarketEurekaIntersectionOutbound += stop.timeAtStop;
+            MarketEurekaIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Duboce Ave") {
+            MarketDuboceIntersectionOutbound += stop.timeAtStop;
+            MarketDuboceIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Franklin St") {
+            MarketFranklinIntersectionOutbound += stop.timeAtStop;
+            MarketFranklinIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Howlth St & Ocean Ave") {
+            HowlthOceanIntersectionOutbound += stop.timeAtStop;
+            HowlthOceanIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Golden Gate Ave") {
+            MarketGGIntersectionOutbound += stop.timeAtStop;
+            MarketGGIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Ocean Ave & Balboa Park") {
+            HowlthBalboaParkIntersectionOutbound += stop.timeAtStop;
+            HowlthBalboaParkIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Ocean Ave & Plymouth Ave") {
+            OceanPlymouthIntersectionOutbound += stop.timeAtStop;
+            OceanPlymouthIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Ocean Ave & Cerritos Ave") {
+            OceanCerritosIntersectionOutbound += stop.timeAtStop;
+            OceanCerritosIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "West Portal Ave & 15th Ave") {
+            WP15IntersectionOutbound += stop.timeAtStop;
+            WP15IntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Battery St") {
+            MarketBatteryIntersectionOutbound += stop.timeAtStop;
+            MarketBatteryIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Corbett Ave & Iron Alley") {
+            CorbetIronIntersectionOutbound += stop.timeAtStop;
+            CorbetIronIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Sanchez St") {
+            MarketSanchezIntersectionOutbound += stop.timeAtStop;
+            MarketSanchezIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Montgomery St") {
+            MarketMontgomeryIntersectionOutbound += stop.timeAtStop;
+            MarketMontgomeryIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Noe St") {
+            MarketNoeIntersectionOutbound += stop.timeAtStop;
+            MarketNoeIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Hyde St") {
+            MarketHydeIntersectionOutbound += stop.timeAtStop;
+            MarketHydeIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Twin Peaks Blvd") {
+            TwinPeaksIntersectionOutbound += stop.timeAtStop;
+            TwinPeaksIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Jones St") {
+            MarketJonesIntersectionOutbound += stop.timeAtStop;
+            MarketJonesIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Storrie St") {
+            MarketStorrieIntersectionOutbound += stop.timeAtStop;
+            MarketStorrieIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Mason St") {
+            MarketMasonIntersectionOutbound += stop.timeAtStop;
+            MarketMasonIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Embarcadero & Folsom St") {
+            EmbarcaderoFolsomIntersectionOutbound += stop.timeAtStop;
+            EmbarcaderoFolsomIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Betty Sutro Meadow") {
+            BettyIntersectionOutbound += stop.timeAtStop;
+            BettyIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Dewey Blvd & Pacheco St") {
+            DeweyPachecoIntersectionOutbound += stop.timeAtStop;
+            DeweyPachecoIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Laguna St") {
+            MarketLagunaIntersectionOutbound += stop.timeAtStop;
+            MarketLagunaIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Larkin St") {
+            MarketLarkinIntersectionOutbound += stop.timeAtStop;
+            MarketLarkinIntersectionOutboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Sutro Reservoir") {
+            SutroReservoirIntersectionOutbound += stop.timeAtStop;
+            SutroReservoirIntersectionOutboundNumVehicles++;
+          } else {
+            console.log(stop.intersectionCrossStreet);
+          }
         }
-      } else if (stop.atIntersection) { // vehicle at intersection
-        if (stop.intersectionCrossStreet === "Embarcadero & Mission") {
-          EmbarcaderoMissionIntersectionOutbound += stop.timeAtStop;
-          EmbarcaderoMissionIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Embarcadero & Howard St") {
-          EmbarcaderoHowardIntersectionOutbound += stop.timeAtStop;
-          EmbarcaderoHowardIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "West Portal Ave & Dewey Blvd") {
-          WPDeweyIntersectionOutbound += stop.timeAtStop;
-          WPDeweyIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Junipero Serra Blvd & Monterey Blvd") {
-          JSMontereyIntersectionOutbound += stop.timeAtStop;
-          JSMontereyIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Steuart St") {
-          MarketSteuartIntersectionOutbound += stop.timeAtStop;
-          MarketSteuartIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "West Portal Ave & Vicente St") {
-          WPVicenteIntersectionOutbound += stop.timeAtStop;
-          WPVicenteIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Eureka St") {
-          MarketEurekaIntersectionOutbound += stop.timeAtStop;
-          MarketEurekaIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Duboce Ave") {
-          MarketDuboceIntersectionOutbound += stop.timeAtStop;
-          MarketDuboceIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Franklin St") {
-          MarketFranklinIntersectionOutbound += stop.timeAtStop;
-          MarketFranklinIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Howlth St & Ocean Ave") {
-          HowlthOceanIntersectionOutbound += stop.timeAtStop;
-          HowlthOceanIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Golden Gate Ave") {
-          MarketGGIntersectionOutbound += stop.timeAtStop;
-          MarketGGIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Ocean Ave & Balboa Park") {
-          HowlthBalboaParkIntersectionOutbound += stop.timeAtStop;
-          HowlthBalboaParkIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Ocean Ave & Plymouth Ave") {
-          OceanPlymouthIntersectionOutbound += stop.timeAtStop;
-          OceanPlymouthIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Ocean Ave & Cerritos Ave") {
-          OceanCerritosIntersectionOutbound += stop.timeAtStop;
-          OceanCerritosIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "West Portal Ave & 15th Ave") {
-          WP15IntersectionOutbound += stop.timeAtStop;
-          WP15IntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Battery St") {
-          MarketBatteryIntersectionOutbound += stop.timeAtStop;
-          MarketBatteryIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Corbett Ave & Iron Alley") {
-          CorbetIronIntersectionOutbound += stop.timeAtStop;
-          CorbetIronIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Sanchez St") {
-          MarketSanchezIntersectionOutbound += stop.timeAtStop;
-          MarketSanchezIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Montgomery St") {
-          MarketMontgomeryIntersectionOutbound += stop.timeAtStop;
-          MarketMontgomeryIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Noe St") {
-          MarketNoeIntersectionOutbound += stop.timeAtStop;
-          MarketNoeIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Hyde St") {
-          MarketHydeIntersectionOutbound += stop.timeAtStop;
-          MarketHydeIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Twin Peaks Blvd") {
-          TwinPeaksIntersectionOutbound += stop.timeAtStop;
-          TwinPeaksIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Jones St") {
-          MarketJonesIntersectionOutbound += stop.timeAtStop;
-          MarketJonesIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Storrie St") {
-          MarketStorrieIntersectionOutbound += stop.timeAtStop;
-          MarketStorrieIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Mason St") {
-          MarketMasonIntersectionOutbound += stop.timeAtStop;
-          MarketMasonIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Embarcadero & Folsom St") {
-          EmbarcaderoFolsomIntersectionOutbound += stop.timeAtStop;
-          EmbarcaderoFolsomIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Betty Sutro Meadow") {
-          BettyIntersectionOutbound += stop.timeAtStop;
-          BettyIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Dewey Blvd & Pacheco St") {
-          DeweyPachecoIntersectionOutbound += stop.timeAtStop;
-          DeweyPachecoIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Laguna St") {
-          MarketLagunaIntersectionOutbound += stop.timeAtStop;
-          MarketLagunaIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Larkin St") {
-          MarketLarkinIntersectionOutbound += stop.timeAtStop;
-          MarketLarkinIntersectionOutboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Sutro Reservoir") {
-          SutroReservoirIntersectionOutbound += stop.timeAtStop;
-          SutroReservoirIntersectionOutboundNumVehicles++;
-        } else {
-          console.log(stop.intersectionCrossStreet);
-        }
-      }
-    } else if (stop.direction_id === 1) { // inbound
-      if (stop.atStation) { // vehicle at station
-        if (stop.stationId === "16992" && stop.timeAtStop > 0) { // Embarcadero Station inbound
-          EmbarcaderoStationInbound += stop.timeAtStop;
-          EmbarcaderoStationInboundNumVehicles++;
-        } else if (stop.stationId === "15731" && stop.timeAtStop > 0) { // Montgomery Station inbound
-          MontgomeryStationInbound += stop.timeAtStop;
-          MontgomeryStationInboundNumVehicles++;
-        } else if (stop.stationId === "15417" && stop.timeAtStop > 0) { // Powell Station inbound
-          PowellStationInbound += stop.timeAtStop;
-          PowellStationInboundNumVehicles++;
-        } else if (stop.stationId === "15727" && stop.timeAtStop > 0) { // Civic Center Station inbound
-          CCStationInbound += stop.timeAtStop;
-          CCStationInboundNumVehicles++;
-        } else if (stop.stationId === "15419" && stop.timeAtStop > 0) { // Van Ness Station inbound
-          VNStationInbound += stop.timeAtStop;
-          VNStationInboundNumVehicles++;
-        } else if (stop.stationId === "15726" && stop.timeAtStop > 0) { // Church Station inbound
-          ChurchStationInbound += stop.timeAtStop;
-          ChurchStationInboundNumVehicles++;
-        } else if (stop.stationId === "15728" && stop.timeAtStop > 0) { // Castro Station inbound
-          CastroStationInbound += stop.timeAtStop;
-          CastroStationInboundNumVehicles++;
-        } else if (stop.stationId === "15730" && stop.timeAtStop > 0) { // Forest Hill Station inbound
-          FHStationInbound += stop.timeAtStop;
-          FHStationInboundNumVehicles++;
-        } else if (stop.stationId === "16740" && stop.timeAtStop > 0) { // West Portal Station inbound
-          WPStationInbound += stop.timeAtStop;
-          WPStationInboundNumVehicles++;
-        } else if (stop.stationId === "16898" && stop.timeAtStop > 0) { // West Portal & 14th inbound
-          WP14StationInbound += stop.timeAtStop;
-          WP14StationInboundNumVehicles++;
-        } else if (stop.stationId === "17109" && stop.timeAtStop > 0) { // West Portal & Sloat Blvd (Saint Francis Cir) inbound
-          WPSLStationInbound += stop.timeAtStop;
-          WPSLStationInboundNumVehicles++;
-        } else if (stop.stationId === "17113" && stop.timeAtStop > 0) { // Junipero Serra Blvd & Ocean Ave inbound
-          JSStationInbound += stop.timeAtStop;
-          JSStationInboundNumVehicles++;
-        } else if (stop.stationId === "15806" && stop.timeAtStop > 0) { // Ocean Ave & San Leandro Way inbound
-          OSLStationInbound += stop.timeAtStop;
-          OSLStationInboundNumVehicles++;
-        } else if (stop.stationId === "15779" && stop.timeAtStop > 0) { // Ocean Ave & Aptos inbound
-          OceanAptosStationInbound += stop.timeAtStop;
-          OceanAptosStationInboundNumVehicles++;
-        } else if (stop.stationId === "15788" && stop.timeAtStop > 0) { // Ocean Ave & Fairfield Way inbound
-          OceanFairfieldStationInbound += stop.timeAtStop;
-          OceanFairfieldStationInboundNumVehicles++;
-        } else if (stop.stationId === "15787" && stop.timeAtStop > 0) { // Ocean Ave & Jules inbound
-          OceanDoradoStationInbound += stop.timeAtStop;
-          OceanDoradoStationInboundNumVehicles++;
-        } else if (stop.stationId === "15797" && stop.timeAtStop > 0) { // Ocean Ave & Dorado Ter inbound
-          OceanMiramarStationInbound += stop.timeAtStop;
-          OceanMiramarStationInboundNumVehicles++;
-        } else if (stop.stationId === "15794" && stop.timeAtStop > 0) { // Ocean Ave & Miramar Ave inbound
-          OceanLeeStationInbound += stop.timeAtStop;
-          OceanLeeStationInboundNumVehicles++;
-        } else if (stop.stationId === "15784" && stop.timeAtStop > 0) { // Ocean Ave & Miramar Ave inbound
-          OceanCCSFStationInbound += stop.timeAtStop;
-          OceanCCSFStationInboundNumVehicles++;
-        } else if (stop.stationId === "17778" && stop.timeAtStop > 0) { // Ocean Ave & Miramar Ave inbound
-          SanJoseGenevaStationInbound += stop.timeAtStop;
-          SanJoseGenevaStationInboundNumVehicles++;
-        }
-      } else if (stop.atIntersection) { // vehicle at intersection
-        if (stop.intersectionCrossStreet === "Embarcadero & Mission") {
-          EmbarcaderoMissionIntersectionInbound += stop.timeAtStop;
-          EmbarcaderoMissionIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Embarcadero & Howard St") {
-          EmbarcaderoHowardIntersectionInbound += stop.timeAtStop;
-          EmbarcaderoHowardIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "West Portal Ave & Dewey Blvd") {
-          WPDeweyIntersectionInbound += stop.timeAtStop;
-          WPDeweyIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Junipero Serra Blvd & Monterey Blvd") {
-          JSMontereyIntersectionInbound += stop.timeAtStop;
-          JSMontereyIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Steuart St") {
-          MarketSteuartIntersectionInbound += stop.timeAtStop;
-          MarketSteuartIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "West Portal Ave & Vicente St") {
-          WPVicenteIntersectionInbound += stop.timeAtStop;
-          WPVicenteIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Eureka St") {
-          MarketEurekaIntersectionInbound += stop.timeAtStop;
-          MarketEurekaIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Duboce Ave") {
-          MarketDuboceIntersectionInbound += stop.timeAtStop;
-          MarketDuboceIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Franklin St") {
-          MarketFranklinIntersectionInbound += stop.timeAtStop;
-          MarketFranklinIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Howlth St & Ocean Ave") {
-          HowlthOceanIntersectionInbound += stop.timeAtStop;
-          HowlthOceanIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Golden Gate Ave") {
-          MarketGGIntersectionInbound += stop.timeAtStop;
-          MarketGGIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Ocean Ave & Balboa Park") {
-          HowlthBalboaParkIntersectionInbound += stop.timeAtStop;
-          HowlthBalboaParkIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Ocean Ave & Plymouth Ave") {
-          OceanPlymouthIntersectionInbound += stop.timeAtStop;
-          OceanPlymouthIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Ocean Ave & Cerritos Ave") {
-          OceanCerritosIntersectionInbound += stop.timeAtStop;
-          OceanCerritosIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "West Portal Ave & 15th Ave") {
-          WP15IntersectionInbound += stop.timeAtStop;
-          WP15IntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Battery St") {
-          MarketBatteryIntersectionInbound += stop.timeAtStop;
-          MarketBatteryIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Corbett Ave & Iron Alley") {
-          CorbetIronIntersectionInbound += stop.timeAtStop;
-          CorbetIronIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Sanchez St") {
-          MarketSanchezIntersectionInbound += stop.timeAtStop;
-          MarketSanchezIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Montgomery St") {
-          MarketMontgomeryIntersectionInbound += stop.timeAtStop;
-          MarketMontgomeryIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Noe St") {
-          MarketNoeIntersectionInbound += stop.timeAtStop;
-          MarketNoeIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Hyde St") {
-          MarketHydeIntersectionInbound += stop.timeAtStop;
-          MarketHydeIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Twin Peaks Blvd") {
-          TwinPeaksIntersectionInbound += stop.timeAtStop;
-          TwinPeaksIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Jones St") {
-          MarketJonesIntersectionInbound += stop.timeAtStop;
-          MarketJonesIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Storrie St") {
-          MarketStorrieIntersectionInbound += stop.timeAtStop;
-          MarketStorrieIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Mason St") {
-          MarketMasonIntersectionInbound += stop.timeAtStop;
-          MarketMasonIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Embarcadero & Folsom St") {
-          EmbarcaderoFolsomIntersectionInbound += stop.timeAtStop;
-          EmbarcaderoFolsomIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Betty Sutro Meadow") {
-          BettyIntersectionInbound += stop.timeAtStop;
-          BettyIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Dewey Blvd & Pacheco St") {
-          DeweyPachecoIntersectionInbound += stop.timeAtStop;
-          DeweyPachecoIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Laguna St") {
-          MarketLagunaIntersectionInbound += stop.timeAtStop;
-          MarketLagunaIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Market St & Larkin St") {
-          MarketLarkinIntersectionInbound += stop.timeAtStop;
-          MarketLarkinIntersectionInboundNumVehicles++;
-        } else if (stop.intersectionCrossStreet === "Sutro Reservoir") {
-          SutroReservoirIntersectionInbound += stop.timeAtStop;
-          SutroReservoirIntersectionInboundNumVehicles++;
-        } else {
-          console.log(stop.intersectionCrossStreet);
+      } else if (stop.direction_id === 1) { // inbound
+        if (stop.atStation) { // vehicle at station
+          if (stop.stationId === "16992" && stop.timeAtStop > 0) { // Embarcadero Station inbound
+            EmbarcaderoStationInbound += stop.timeAtStop;
+            EmbarcaderoStationInboundNumVehicles++;
+          } else if (stop.stationId === "15731" && stop.timeAtStop > 0) { // Montgomery Station inbound
+            MontgomeryStationInbound += stop.timeAtStop;
+            MontgomeryStationInboundNumVehicles++;
+          } else if (stop.stationId === "15417" && stop.timeAtStop > 0) { // Powell Station inbound
+            PowellStationInbound += stop.timeAtStop;
+            PowellStationInboundNumVehicles++;
+          } else if (stop.stationId === "15727" && stop.timeAtStop > 0) { // Civic Center Station inbound
+            CCStationInbound += stop.timeAtStop;
+            CCStationInboundNumVehicles++;
+          } else if (stop.stationId === "15419" && stop.timeAtStop > 0) { // Van Ness Station inbound
+            VNStationInbound += stop.timeAtStop;
+            VNStationInboundNumVehicles++;
+          } else if (stop.stationId === "15726" && stop.timeAtStop > 0) { // Church Station inbound
+            ChurchStationInbound += stop.timeAtStop;
+            ChurchStationInboundNumVehicles++;
+          } else if (stop.stationId === "15728" && stop.timeAtStop > 0) { // Castro Station inbound
+            CastroStationInbound += stop.timeAtStop;
+            CastroStationInboundNumVehicles++;
+          } else if (stop.stationId === "15730" && stop.timeAtStop > 0) { // Forest Hill Station inbound
+            FHStationInbound += stop.timeAtStop;
+            FHStationInboundNumVehicles++;
+          } else if (stop.stationId === "16740" && stop.timeAtStop > 0) { // West Portal Station inbound
+            WPStationInbound += stop.timeAtStop;
+            WPStationInboundNumVehicles++;
+          } else if (stop.stationId === "16898" && stop.timeAtStop > 0) { // West Portal & 14th inbound
+            WP14StationInbound += stop.timeAtStop;
+            WP14StationInboundNumVehicles++;
+          } else if (stop.stationId === "17109" && stop.timeAtStop > 0) { // West Portal & Sloat Blvd (Saint Francis Cir) inbound
+            WPSLStationInbound += stop.timeAtStop;
+            WPSLStationInboundNumVehicles++;
+          } else if (stop.stationId === "17113" && stop.timeAtStop > 0) { // Junipero Serra Blvd & Ocean Ave inbound
+            JSStationInbound += stop.timeAtStop;
+            JSStationInboundNumVehicles++;
+          } else if (stop.stationId === "15806" && stop.timeAtStop > 0) { // Ocean Ave & San Leandro Way inbound
+            OSLStationInbound += stop.timeAtStop;
+            OSLStationInboundNumVehicles++;
+          } else if (stop.stationId === "15779" && stop.timeAtStop > 0) { // Ocean Ave & Aptos inbound
+            OceanAptosStationInbound += stop.timeAtStop;
+            OceanAptosStationInboundNumVehicles++;
+          } else if (stop.stationId === "15788" && stop.timeAtStop > 0) { // Ocean Ave & Fairfield Way inbound
+            OceanFairfieldStationInbound += stop.timeAtStop;
+            OceanFairfieldStationInboundNumVehicles++;
+          } else if (stop.stationId === "15787" && stop.timeAtStop > 0) { // Ocean Ave & Jules inbound
+            OceanDoradoStationInbound += stop.timeAtStop;
+            OceanDoradoStationInboundNumVehicles++;
+          } else if (stop.stationId === "15797" && stop.timeAtStop > 0) { // Ocean Ave & Dorado Ter inbound
+            OceanMiramarStationInbound += stop.timeAtStop;
+            OceanMiramarStationInboundNumVehicles++;
+          } else if (stop.stationId === "15794" && stop.timeAtStop > 0) { // Ocean Ave & Miramar Ave inbound
+            OceanLeeStationInbound += stop.timeAtStop;
+            OceanLeeStationInboundNumVehicles++;
+          } else if (stop.stationId === "15784" && stop.timeAtStop > 0) { // Ocean Ave & Miramar Ave inbound
+            OceanCCSFStationInbound += stop.timeAtStop;
+            OceanCCSFStationInboundNumVehicles++;
+          } else if (stop.stationId === "17778" && stop.timeAtStop > 0) { // Ocean Ave & Miramar Ave inbound
+            SanJoseGenevaStationInbound += stop.timeAtStop;
+            SanJoseGenevaStationInboundNumVehicles++;
+          }
+        } else if (stop.atIntersection) { // vehicle at intersection
+          if (stop.intersectionCrossStreet === "Embarcadero & Mission") {
+            EmbarcaderoMissionIntersectionInbound += stop.timeAtStop;
+            EmbarcaderoMissionIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Embarcadero & Howard St") {
+            EmbarcaderoHowardIntersectionInbound += stop.timeAtStop;
+            EmbarcaderoHowardIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "West Portal Ave & Dewey Blvd") {
+            WPDeweyIntersectionInbound += stop.timeAtStop;
+            WPDeweyIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Junipero Serra Blvd & Monterey Blvd") {
+            JSMontereyIntersectionInbound += stop.timeAtStop;
+            JSMontereyIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Steuart St") {
+            MarketSteuartIntersectionInbound += stop.timeAtStop;
+            MarketSteuartIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "West Portal Ave & Vicente St") {
+            WPVicenteIntersectionInbound += stop.timeAtStop;
+            WPVicenteIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Eureka St") {
+            MarketEurekaIntersectionInbound += stop.timeAtStop;
+            MarketEurekaIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Duboce Ave") {
+            MarketDuboceIntersectionInbound += stop.timeAtStop;
+            MarketDuboceIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Franklin St") {
+            MarketFranklinIntersectionInbound += stop.timeAtStop;
+            MarketFranklinIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Howlth St & Ocean Ave") {
+            HowlthOceanIntersectionInbound += stop.timeAtStop;
+            HowlthOceanIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Golden Gate Ave") {
+            MarketGGIntersectionInbound += stop.timeAtStop;
+            MarketGGIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Ocean Ave & Balboa Park") {
+            HowlthBalboaParkIntersectionInbound += stop.timeAtStop;
+            HowlthBalboaParkIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Ocean Ave & Plymouth Ave") {
+            OceanPlymouthIntersectionInbound += stop.timeAtStop;
+            OceanPlymouthIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Ocean Ave & Cerritos Ave") {
+            OceanCerritosIntersectionInbound += stop.timeAtStop;
+            OceanCerritosIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "West Portal Ave & 15th Ave") {
+            WP15IntersectionInbound += stop.timeAtStop;
+            WP15IntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Battery St") {
+            MarketBatteryIntersectionInbound += stop.timeAtStop;
+            MarketBatteryIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Corbett Ave & Iron Alley") {
+            CorbetIronIntersectionInbound += stop.timeAtStop;
+            CorbetIronIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Sanchez St") {
+            MarketSanchezIntersectionInbound += stop.timeAtStop;
+            MarketSanchezIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Montgomery St") {
+            MarketMontgomeryIntersectionInbound += stop.timeAtStop;
+            MarketMontgomeryIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Noe St") {
+            MarketNoeIntersectionInbound += stop.timeAtStop;
+            MarketNoeIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Hyde St") {
+            MarketHydeIntersectionInbound += stop.timeAtStop;
+            MarketHydeIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Twin Peaks Blvd") {
+            TwinPeaksIntersectionInbound += stop.timeAtStop;
+            TwinPeaksIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Jones St") {
+            MarketJonesIntersectionInbound += stop.timeAtStop;
+            MarketJonesIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Storrie St") {
+            MarketStorrieIntersectionInbound += stop.timeAtStop;
+            MarketStorrieIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Mason St") {
+            MarketMasonIntersectionInbound += stop.timeAtStop;
+            MarketMasonIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Embarcadero & Folsom St") {
+            EmbarcaderoFolsomIntersectionInbound += stop.timeAtStop;
+            EmbarcaderoFolsomIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Betty Sutro Meadow") {
+            BettyIntersectionInbound += stop.timeAtStop;
+            BettyIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Dewey Blvd & Pacheco St") {
+            DeweyPachecoIntersectionInbound += stop.timeAtStop;
+            DeweyPachecoIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Laguna St") {
+            MarketLagunaIntersectionInbound += stop.timeAtStop;
+            MarketLagunaIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Market St & Larkin St") {
+            MarketLarkinIntersectionInbound += stop.timeAtStop;
+            MarketLarkinIntersectionInboundNumVehicles++;
+          } else if (stop.intersectionCrossStreet === "Sutro Reservoir") {
+            SutroReservoirIntersectionInbound += stop.timeAtStop;
+            SutroReservoirIntersectionInboundNumVehicles++;
+          } else {
+            console.log(stop.intersectionCrossStreet);
+          }
         }
       }
     }
@@ -1512,18 +1568,19 @@ function makeLabels() {
 function changeData(selectedValue) {
   clearChart();
   if (selectedValue === "05-16") {
-    runAfterLoad(data1.value);
+    dataToBeRendered = data1.value;
   } else if (selectedValue === "05-15") {
-    runAfterLoad(data2.value);
+    dataToBeRendered = data2.value;
   } else if (selectedValue === "05-14") {
-    runAfterLoad(data3.value);
+    dataToBeRendered = data3.value;
   } else if (selectedValue === "05-13") {
-    runAfterLoad(data4.value);
+    dataToBeRendered = data4.value;
   } else if (selectedValue === "05-12") {
-    runAfterLoad(data5.value);
+    dataToBeRendered = data5.value;
   } else if (selectedValue === "05-11") {
-    runAfterLoad(data6.value);
+    dataToBeRendered = data6.value;
   }
+  runAfterLoad(dataToBeRendered, startHour, endHour);
   makeLabels();
 }
 
@@ -1531,6 +1588,50 @@ function clearChart() {
   if (chart.value) {
     chart.value.innerHTML = ''; // Removes all content inside the div
   }
+}
+
+function filterByHour(firstHour, lastHour) {
+  if (parseInt(firstHour) >= parseInt(lastHour)) {
+    alert("Start hour must be less than end hour.");
+    return;
+  }
+  clearChart();
+  console.log("First Hour: " + firstHour);
+  console.log("Last Hour: " + lastHour);
+  console.log(parseInt(firstHour) < parseInt(lastHour));
+  startHour = firstHour;
+  endHour = lastHour;
+  runAfterLoad(dataToBeRendered, startHour, endHour);
+  makeLabels();
+}
+
+function convertUTCToPDT(utcTimestamp) {
+  // Create a Date object from the UTC timestamp
+  const utcDate = new Date(utcTimestamp + 'Z'); // ensure UTC interpretation
+
+  // Convert to PDT using 'America/Los_Angeles' timezone parts
+  const options = {
+    timeZone: 'America/Los_Angeles',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  };
+
+  const formatter = new Intl.DateTimeFormat('en-US', options);
+  const parts = formatter.formatToParts(utcDate);
+
+  // Extract parts into an object
+  const dateParts = {};
+  parts.forEach(({ type, value }) => {
+    dateParts[type] = value;
+  });
+
+  // Assemble the ISO-like string
+  return `${dateParts.year}-${dateParts.month}-${dateParts.day}T${dateParts.hour}:${dateParts.minute}:${dateParts.second}`;
 }
 
 </script>
@@ -1627,18 +1728,31 @@ function clearChart() {
   letter-spacing: 1px;
 }
 
-.date-selector-label {
+.date-selector-label, .hour-filter-controls label {
   color: #010101;
   font-family: "Roboto", sans-serif;
   margin-right: 8px;
 }
 
-#timeFilter {
+#timeFilter, #startHourFilter, #endHourFilter {
   font-family: "Roboto", sans-serif;
   font-size: 14px;
   border-radius: 4px;
   margin-bottom: 4px;
   border: 1px solid #010101;
   background-color: #fff;
+}
+
+.time-filter-controls, .hour-filter-controls {
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.hour-filter-controls label:nth-of-type(2) {
+  margin-left: 8px;
+}
+
+.hour-filter-controls button {
+  margin: 0 8px;
 }
 </style>
