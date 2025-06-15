@@ -100,9 +100,6 @@ onMounted(async () => {
 
 function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
   console.log("start of runAfterLoad console");
-  console.log("startHourFilter: " + startHourFilter);
-  console.log("endHourFilter: " + endHourFilter);
-  console.log(parseInt(startHourFilter) < parseInt(endHourFilter));
 
   // svg canvas dimensions
   const width = 1800;
@@ -398,17 +395,71 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
   let SutroReservoirIntersectionInbound = 0;
   let SutroReservoirIntersectionInboundNumVehicles = 0;
 
+  let outboundAverageDurationArrayStart = [];
+  let outboundAverageIndexStart = 0;
+
+  let outboundAverageDurationArrayEnd = [];
+  let outboundAverageIndexEnd = 0;
+
+  let inboundAverageDurationArrayStart = [];
+  let inboundAverageIndexStart = 0;
+
+  let inboundAverageDurationArrayEnd = [];
+  let inboundAverageIndexEnd = 0;
+
   // Cycle through the data
   Object.values(dataFile).forEach((stop) => {
-    //console.log(stop.timestamp)
     const date = new Date(stop.timestamp);
     const pdtDate = new Date(convertUTCToPDT(date));
     const hour = pdtDate.getHours();
+    // if timestamp falls between hour filters (or any hour if at least one hour is "all")
     if ((startHourFilter === "all" || endHourFilter === "all") || ((parseInt(startHourFilter) <= parseInt(hour)) && (parseInt(hour) < parseInt(endHourFilter)))) {
-      console.log(stop.timestamp);
-      console.log(hour);
       if (stop.direction_id === 0) { // outbound
         if (stop.atStation) { // vehicle at station
+          if (stop.stationId === "17217") {// start of trip outbound
+            const tripStart = {
+              "timestamp": stop.timestamp,
+              "trip_id": stop.trip_id,
+              "timeAtStop": stop.timeAtStop,
+            };
+
+            let tripStartExists = false
+
+            outboundAverageDurationArrayStart.forEach((averageItem, index) => {
+              if (averageItem.trip_id === stop.trip_id) {
+                // replace averageItem with tripStart
+                outboundAverageDurationArrayStart.splice(index, 1, tripStart);
+                tripStartExists = true;
+              }
+            });
+
+            if (!tripStartExists) {
+              outboundAverageDurationArrayStart[outboundAverageIndexStart] = tripStart;
+              outboundAverageIndexStart++;
+            }
+          }
+          if (stop.stationId === "15418") {// end of trip outbound
+            const tripStart = {
+              "timestamp": stop.timestamp,
+              "trip_id": stop.trip_id,
+              "timeAtStop": stop.timeAtStop,
+            };
+
+            let tripEndExists = false;
+
+            outboundAverageDurationArrayEnd.forEach((averageItem, index) => {
+              if (averageItem.trip_id === stop.trip_id) {
+                // replace averageItem with tripStart
+                outboundAverageDurationArrayEnd.splice(index, 1, tripStart);
+                tripEndExists = true;
+              }
+            });
+
+            if (!tripEndExists) {
+              outboundAverageDurationArrayEnd[outboundAverageIndexEnd] = tripStart;
+              outboundAverageIndexEnd++;
+            }
+          }
           if (stop.stationId === "17217" && stop.timeAtStop > 0) { // Embarcadero Station outbound
             EmbarcaderoStationOutbound += stop.timeAtStop;
             EmbarcaderoStationOutboundNumVehicles++;
@@ -457,16 +508,16 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
           } else if (stop.stationId === "15793" && stop.timeAtStop > 0) { // Ocean Ave & Jules outbound
             OceanJulesStationOutbound += stop.timeAtStop;
             OceanJulesStationOutboundNumVehicles++;
-          } else if (stop.stationId === "15798" && stop.timeAtStop > 0) { // Ocean Ave & Fairfield Way outbound
+          } else if (stop.stationId === "15798" && stop.timeAtStop > 0) { // Ocean Ave & Miramar Way outbound
             OceanMiramarStationOutbound += stop.timeAtStop;
             OceanMiramarStationOutboundNumVehicles++;
-          } else if (stop.stationId === "15795" && stop.timeAtStop > 0) { // Ocean Ave & Dorado Ter outbound
+          } else if (stop.stationId === "15795" && stop.timeAtStop > 0) { // Ocean Ave & Lee outbound
             OceanLeeStationOutbound += stop.timeAtStop;
             OceanLeeStationOutboundNumVehicles++;
-          } else if (stop.stationId === "15785" && stop.timeAtStop > 0) { // Ocean Ave & Dorado Ter outbound
+          } else if (stop.stationId === "15785" && stop.timeAtStop > 0) { // Ocean Ave & CCSF Pedestrian Bridge
             OceanCCSFStationOutbound += stop.timeAtStop;
             OceanCCSFStationOutboundNumVehicles++;
-          } else if (stop.stationId === "15418" && stop.timeAtStop > 0) { // Ocean Ave & Dorado Ter outbound
+          } else if (stop.stationId === "15418" && stop.timeAtStop > 0) { // Balboa Park BART Mezzanine Level Station
             BalboaParkStationOutbound += stop.timeAtStop;
             BalboaParkStationOutboundNumVehicles++;
           }
@@ -570,6 +621,50 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
         }
       } else if (stop.direction_id === 1) { // inbound
         if (stop.atStation) { // vehicle at station
+          if (stop.stationId === "17778") {// start of trip inbound
+            const tripStart = {
+              "timestamp": stop.timestamp,
+              "trip_id": stop.trip_id,
+              "timeAtStop": stop.timeAtStop,
+            };
+
+            let tripStartExists = false
+
+            inboundAverageDurationArrayStart.forEach((averageItem, index) => {
+              if (averageItem.trip_id === stop.trip_id) {
+                // replace averageItem with tripStart
+                inboundAverageDurationArrayStart.splice(index, 1, tripStart);
+                tripStartExists = true;
+              }
+            });
+
+            if (!tripStartExists) {
+              inboundAverageDurationArrayStart[inboundAverageIndexStart] = tripStart;
+              inboundAverageIndexStart++;
+            }
+          }
+          if (stop.stationId === "16992") {// end of trip inbound
+            const tripStart = {
+              "timestamp": stop.timestamp,
+              "trip_id": stop.trip_id,
+              "timeAtStop": stop.timeAtStop,
+            };
+
+            let tripEndExists = false;
+
+            inboundAverageDurationArrayEnd.forEach((averageItem, index) => {
+              if (averageItem.trip_id === stop.trip_id) {
+                // replace averageItem with tripStart
+                inboundAverageDurationArrayEnd.splice(index, 1, tripStart);
+                tripEndExists = true;
+              }
+            });
+
+            if (!tripEndExists) {
+              inboundAverageDurationArrayEnd[inboundAverageIndexEnd] = tripStart;
+              inboundAverageIndexEnd++;
+            }
+          }
           if (stop.stationId === "16992" && stop.timeAtStop > 0) { // Embarcadero Station inbound
             EmbarcaderoStationInbound += stop.timeAtStop;
             EmbarcaderoStationInboundNumVehicles++;
@@ -615,19 +710,19 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
           } else if (stop.stationId === "15788" && stop.timeAtStop > 0) { // Ocean Ave & Fairfield Way inbound
             OceanFairfieldStationInbound += stop.timeAtStop;
             OceanFairfieldStationInboundNumVehicles++;
-          } else if (stop.stationId === "15787" && stop.timeAtStop > 0) { // Ocean Ave & Jules inbound
+          } else if (stop.stationId === "15787" && stop.timeAtStop > 0) { // Ocean Ave & Dorado Ter inbound
             OceanDoradoStationInbound += stop.timeAtStop;
             OceanDoradoStationInboundNumVehicles++;
-          } else if (stop.stationId === "15797" && stop.timeAtStop > 0) { // Ocean Ave & Dorado Ter inbound
+          } else if (stop.stationId === "15797" && stop.timeAtStop > 0) { // Ocean Ave & Miramar inbound
             OceanMiramarStationInbound += stop.timeAtStop;
             OceanMiramarStationInboundNumVehicles++;
-          } else if (stop.stationId === "15794" && stop.timeAtStop > 0) { // Ocean Ave & Miramar Ave inbound
+          } else if (stop.stationId === "15794" && stop.timeAtStop > 0) { // Ocean Ave & Lee Ave inbound
             OceanLeeStationInbound += stop.timeAtStop;
             OceanLeeStationInboundNumVehicles++;
-          } else if (stop.stationId === "15784" && stop.timeAtStop > 0) { // Ocean Ave & Miramar Ave inbound
+          } else if (stop.stationId === "15784" && stop.timeAtStop > 0) { // Ocean Ave & CCSF inbound
             OceanCCSFStationInbound += stop.timeAtStop;
             OceanCCSFStationInboundNumVehicles++;
-          } else if (stop.stationId === "17778" && stop.timeAtStop > 0) { // Ocean Ave & Miramar Ave inbound
+          } else if (stop.stationId === "17778" && stop.timeAtStop > 0) { // San Jose & Geneva inbound
             SanJoseGenevaStationInbound += stop.timeAtStop;
             SanJoseGenevaStationInboundNumVehicles++;
           }
@@ -732,6 +827,48 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
       }
     }
   });
+
+  let outboundTotalTripTimeArray = [];
+
+  // calculate averages
+  outboundAverageDurationArrayEnd.forEach((endVehicle) => {
+    outboundAverageDurationArrayStart.forEach((startVehicle) => {
+      if (endVehicle.trip_id === startVehicle.trip_id) {
+        let totalTripTime = getTimeDifferenceInSeconds(startVehicle.timestamp, endVehicle.timestamp);
+        totalTripTime = totalTripTime - startVehicle.timeAtStop; // subtract time at first stop
+        outboundTotalTripTimeArray.push(totalTripTime);
+      }
+    });
+  });
+  let outboundTotalTime = 0;
+  let outboundTotalIndex = 0;
+  outboundTotalTripTimeArray.forEach((totalTime) => {
+    outboundTotalTime += parseInt(totalTime);
+    outboundTotalIndex++;
+  });
+  let outboundAverageTimeInSeconds = outboundTotalTime / outboundTotalIndex;
+  let outboundAverageTimeInMinutes = convertSecondsToMinutes(outboundAverageTimeInSeconds);
+
+  let inboundTotalTripTimeArray = [];
+
+  // calculate averages
+  inboundAverageDurationArrayEnd.forEach((endVehicle) => {
+    inboundAverageDurationArrayStart.forEach((startVehicle) => {
+      if (endVehicle.trip_id === startVehicle.trip_id) {
+        let totalTripTime = getTimeDifferenceInSeconds(startVehicle.timestamp, endVehicle.timestamp);
+        totalTripTime = totalTripTime - startVehicle.timeAtStop; // subtract time at first stop
+        inboundTotalTripTimeArray.push(totalTripTime);
+      }
+    });
+  });
+  let inboundTotalTime = 0;
+  let inboundTotalIndex = 0;
+  inboundTotalTripTimeArray.forEach((totalTime) => {
+    inboundTotalTime += parseInt(totalTime);
+    inboundTotalIndex++;
+  });
+  let inboundAverageTimeInSeconds = inboundTotalTime / inboundTotalIndex;
+  let inboundAverageTimeInMinutes = convertSecondsToMinutes(inboundAverageTimeInSeconds);
 
   // Make array of station data
   const stationsData = [
@@ -1459,13 +1596,25 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
     .attr('y', 40)
     .attr('class', 'outbound-label label')
     .text('<-- Outbound <--');
+  // Outbound Average
+  svg.append('text')
+    .attr('x', 770)
+    .attr('y', 70)
+    .attr('class', 'outbound-average-label label')
+    .text('Average Trip Duration: ' + outboundAverageTimeInMinutes + ' minutes');
 
   // Inbound label
   svg.append('text')
     .attr('x', 770)
-    .attr('y', height - 20)
+    .attr('y', height - 50)
     .attr('class', 'inbound-label label')
     .text('--> Inbound -->');
+  // Inbound average
+  svg.append('text')
+    .attr('x', 770)
+    .attr('y', height - 20)
+    .attr('class', 'inbound-average-label label')
+    .text('Average Trip Duration: ' + inboundAverageTimeInMinutes + ' minutes');
 
   // Loop through stations to remove zero-height rectangles
   let stationsDataCurated = [];
@@ -1596,9 +1745,6 @@ function filterByHour(firstHour, lastHour) {
     return;
   }
   clearChart();
-  console.log("First Hour: " + firstHour);
-  console.log("Last Hour: " + lastHour);
-  console.log(parseInt(firstHour) < parseInt(lastHour));
   startHour = firstHour;
   endHour = lastHour;
   runAfterLoad(dataToBeRendered, startHour, endHour);
@@ -1632,6 +1778,17 @@ function convertUTCToPDT(utcTimestamp) {
 
   // Assemble the ISO-like string
   return `${dateParts.year}-${dateParts.month}-${dateParts.day}T${dateParts.hour}:${dateParts.minute}:${dateParts.second}`;
+}
+
+function getTimeDifferenceInSeconds(timestamp1, timestamp2) {
+    const time1 = new Date(timestamp1).getTime();
+    const time2 = new Date(timestamp2).getTime();
+    const differenceInMilliseconds = Math.abs(time2 - time1);
+    return differenceInMilliseconds / 1000;
+}
+
+function convertSecondsToMinutes(seconds) {
+  return (seconds / 60).toFixed(2);
 }
 
 </script>
