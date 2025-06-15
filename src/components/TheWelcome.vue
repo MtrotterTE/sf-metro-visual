@@ -50,6 +50,31 @@
     </div>
     <div ref="chart" class="svg-area"></div>
     <div class="tooltip" id="tooltip"></div>
+    <div class="legend-container" :class="{ expanded: isLegendExpanded }">
+      <div class="legend-content" v-if="isLegendExpanded">
+        <div class="legend-header">Rectangle:</div>
+        <div class="legend-item">
+          <span class="legend-color station-color"></span> Station
+        </div>
+        <div class="legend-item">
+          <span class="legend-color intersection-color"></span> Intersection
+        </div>
+        <div class="legend-header">Background:</div>
+        <div class="legend-item">
+          <span class="legend-color surface-color"></span> Surface
+        </div>
+        <div class="legend-item">
+          <span class="legend-color underground-color"></span> Underground
+        </div>
+        <div class="legend-header">Label:</div>
+        <div class="legend-item">
+          <span class="legend-text rectangle-height-label">31</span> Average time at station/intersection (height of rectangle)
+        </div>
+      </div>
+      <button class="legend-toggle" @click="toggleLegend">
+        {{ isLegendExpanded ? 'Hide Legend' : 'Show Legend' }}
+      </button>
+    </div>
   </div>  
 </template>
 
@@ -67,6 +92,7 @@ const data6 = ref(null);
 const selectedTime = ref('05-16'); // Default selected value
 const selectedStartHour = ref('all'); // Default to 'all'
 const selectedEndHour = ref('all'); // Default to 'all'
+const isLegendExpanded = ref(false);
 
 let startHour = "all";
 let endHour = "all";
@@ -1791,6 +1817,10 @@ function convertSecondsToMinutes(seconds) {
   return (seconds / 60).toFixed(2);
 }
 
+function toggleLegend() {
+  isLegendExpanded.value = !isLegendExpanded.value;
+}
+
 </script>
 
 <style>
@@ -1872,10 +1902,14 @@ function convertSecondsToMinutes(seconds) {
   padding: 2px 8px;
 }
 
-.height-label {
+.height-label, .rectangle-height-label {
   font-family: "Roboto", sans-serif;
   font-weight: 600;
   font-size: 12px;
+}
+
+.rectangle-height-label {
+  padding: 0 8px;
 }
 
 .intersection-label.label {
@@ -1911,5 +1945,87 @@ function convertSecondsToMinutes(seconds) {
 
 .hour-filter-controls button {
   margin: 0 8px;
+}
+
+.legend-container {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  background: #D3D3D3;
+  border: 1px solid #010101;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: height 0.3s ease, width 0.3s ease;
+}
+
+.legend-container.expanded {
+  width: 200px;
+  height: auto;
+}
+
+.legend-container:not(.expanded) {
+  width: 120px;
+  height: 34px;
+}
+
+.legend-toggle {
+  width: 100%;
+  background: #010101;
+  color: #fff;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  text-align: center;
+}
+
+.legend-content {
+  padding: 8px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+  color: #010101;
+}
+
+.legend-color, .legend-text {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin-right: 8px;
+  border-radius: 4px;
+}
+
+.station-color {
+  background: steelblue;
+  border-radius: 0;
+  border: 3px solid white;
+}
+
+.intersection-color {
+  background: steelblue;
+  border-radius: 0;
+  border: 3px solid black;
+}
+
+.surface-color {
+  background: #D3D3D3;
+  border-radius: 0;
+  border: 1px dashed #010101;
+}
+
+.underground-color {
+  background: darkgray;
+  border-radius: 0;
+  border: 1px dashed #010101;
+}
+
+.legend-header {
+  color: #010101;
+  text-decoration: underline;
 }
 </style>
