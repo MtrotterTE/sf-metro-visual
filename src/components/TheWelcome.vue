@@ -59,6 +59,13 @@
         <div class="legend-item">
           <span class="legend-color intersection-color"></span> Intersection
         </div>
+        <div class="terminal-note">Note: Train sits at terminal stations/intersections between trips for operator change, schedule, bathroom break, etc.</div>
+        <div class="legend-item">
+          <span class="legend-color terminal-color"></span> Terminal Station
+        </div>
+        <div class="legend-item">
+          <span class="legend-color terminal-intersection-color"></span> Terminal Intersection
+        </div>
         <div class="legend-header">Background:</div>
         <div class="legend-item">
           <span class="legend-color surface-color"></span> Surface
@@ -2012,6 +2019,18 @@ function toggleLegend() {
   border: 3px solid black;
 }
 
+.terminal-color {
+  background: lightblue;
+  border-radius: 0;
+  border: 3px solid white;
+}
+
+.terminal-intersection-color {
+  background: lightblue;
+  border-radius: 0;
+  border: 3px solid #010101;
+}
+
 .surface-color {
   background: #D3D3D3;
   border-radius: 0;
@@ -2027,5 +2046,13 @@ function toggleLegend() {
 .legend-header {
   color: #010101;
   text-decoration: underline;
+}
+
+.terminal-note {
+  color: #010101;
+}
+
+.balboa-park-bart-mezzanine-level-station-rect, .san-jose-ave-\&-geneva-ave-station-rect, .market-st-\&-steuart-st-rect, .embarcadero-\&-mission-rect, .embarcadero-\&-howard-rect {
+  fill: lightblue;
 }
 </style>
