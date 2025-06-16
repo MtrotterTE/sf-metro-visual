@@ -59,13 +59,13 @@
         <div class="legend-item">
           <span class="legend-color intersection-color"></span> Intersection
         </div>
-        <div class="terminal-note">Note: Train sits at terminal stations/intersections between trips for operator change, schedule, bathroom break, etc.</div>
         <div class="legend-item">
           <span class="legend-color terminal-color"></span> Terminal Station
         </div>
         <div class="legend-item">
           <span class="legend-color terminal-intersection-color"></span> Terminal Intersection
         </div>
+        <div class="terminal-note">Note: Train sits at terminal stations/intersections between trips for operator change, schedule, bathroom break, etc.</div>
         <div class="legend-header">Background:</div>
         <div class="legend-item">
           <span class="legend-color surface-color"></span> Surface
@@ -1494,28 +1494,28 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
       isStation: false
     },
     {
-      name: 'Ocean Ave & Victoria St',
+      name: 'Ocean Ave and Victoria St',
       totalTime: OceanVictoriaStationOutbound,
       numVehicles: OceanVictoriaStationOutboundNumVehicles,
       direction: 'outbound',
       isStation: true
     },
     {
-      name: 'Ocean Ave & Fairfield Way',
+      name: 'Ocean Ave and Fairfield Way',
       totalTime: OceanFairfieldStationInbound,
       numVehicles: OceanFairfieldStationInboundNumVehicles,
       direction: 'inbound',
       isStation: true
     },
     {
-      name: 'Ocean Ave & Jules Ave',
+      name: 'Ocean Ave and Jules Ave',
       totalTime: OceanJulesStationOutbound,
       numVehicles: OceanJulesStationOutboundNumVehicles,
       direction: 'outbound',
       isStation: true
     },
     {
-      name: 'Ocean Ave & Dorado Ter',
+      name: 'Ocean Ave and Dorado Ter',
       totalTime: OceanDoradoStationInbound,
       numVehicles: OceanDoradoStationInboundNumVehicles,
       direction: 'inbound',
@@ -1606,14 +1606,14 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
       isStation: false
     },
     {
-      name: 'Balboa Park BART Mezzanine Level Station',
+      name: 'Balboa Park BART Station',
       totalTime: BalboaParkStationOutbound,
       numVehicles: BalboaParkStationOutboundNumVehicles,
       direction: 'outbound',
       isStation: true
     },
     {
-      name: 'San Jose Ave & Geneva Ave Station',
+      name: 'San Jose Ave and Geneva Ave Station',
       totalTime: SanJoseGenevaStationInbound,
       numVehicles: SanJoseGenevaStationInboundNumVehicles,
       direction: 'inbound',
@@ -1708,13 +1708,81 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
       .attr('y', 355)
       .attr('transform', 'rotate(90, ' + (cx + 10) + ', 355)')
       .attr("text-anchor", "middle")
-      .attr('class', isStation ? 'station-label label' : 'intersection-label label')
+      .attr('class', isStation ? `${station.name.toLowerCase().replace(/ /g, '-')}-label station-label label` : `${station.name.toLowerCase().replace(/ /g, '-')}-label intersection-label label`)
       .text(station.name);
   });
 
   // Move underground rectangle to align with the west portal station rectangle
   const undergroundX = d3.select('.west-portal-station-rect').attr('x');
   d3.select('.underground').attr('x', undergroundX);
+
+  // Move labels with differnt inbound and outbound names
+  d3.select('.balboa-park-bart-station-label')
+    .text(null) // Clear any existing text
+    .append('tspan')
+    .attr('x', -30) // Set x position for the first line
+    .attr('y', 347)
+    .attr('dy', '0em') // Set y offset for the first line
+    .text('Balboa Park')
+    .append('tspan')
+    .attr('x', -30) // Set x position for the second line
+    .attr('dy', '1.2em') // Set y offset for the second line
+    .text('BART Station');
+  d3.select('.san-jose-ave-and-geneva-ave-station-label')
+    .text(null) // Clear any existing text
+    .append('tspan')
+    .attr('x', 80) // Set x position for the first line
+    .attr('y', 347)
+    .attr('dy', '0em') // Set y offset for the first line
+    .text('San Jose Ave &')
+    .append('tspan')
+    .attr('x', 80) // Set x position for the second line
+    .attr('dy', '1.2em') // Set y offset for the second line
+    .text('Geneva Ave Station');
+  d3.select('.ocean-ave-and-jules-ave-label')
+    .text(null) // Clear any existing text
+    .append('tspan')
+    .attr('x', 260) // Set x position for the first line
+    .attr('y', 347)
+    .attr('dy', '0em') // Set y offset for the first line
+    .text('Ocean Ave &')
+    .append('tspan')
+    .attr('x', 260) // Set x position for the second line
+    .attr('dy', '1.2em') // Set y offset for the second line
+    .text('Jules Ave');
+  d3.select('.ocean-ave-and-dorado-ter-label')
+    .text(null) // Clear any existing text
+    .append('tspan')
+    .attr('x', 360) // Set x position for the first line
+    .attr('y', 347)
+    .attr('dy', '0em') // Set y offset for the first line
+    .text('Ocean Ave &')
+    .append('tspan')
+    .attr('x', 360) // Set x position for the second line
+    .attr('dy', '1.2em') // Set y offset for the second line
+    .text('Dorado Ter');
+  d3.select('.ocean-ave-and-victoria-st-label')
+    .text(null) // Clear any existing text
+    .append('tspan')
+    .attr('x', 300) // Set x position for the first line
+    .attr('y', 347)
+    .attr('dy', '0em') // Set y offset for the first line
+    .text('Ocean Ave &')
+    .append('tspan')
+    .attr('x', 300) // Set x position for the second line
+    .attr('dy', '1.2em') // Set y offset for the second line
+    .text('Victoria St');
+  d3.select('.ocean-ave-and-fairfield-way-label')
+    .text(null) // Clear any existing text
+    .append('tspan')
+    .attr('x', 400) // Set x position for the first line
+    .attr('y', 347)
+    .attr('dy', '0em') // Set y offset for the first line
+    .text('Ocean Ave &')
+    .append('tspan')
+    .attr('x', 400) // Set x position for the second line
+    .attr('dy', '1.2em') // Set y offset for the second line
+    .text('Fairfield Way');
 }
 
 function makeLabels() {
@@ -2052,7 +2120,7 @@ function toggleLegend() {
   color: #010101;
 }
 
-.balboa-park-bart-mezzanine-level-station-rect, .san-jose-ave-\&-geneva-ave-station-rect, .market-st-\&-steuart-st-rect, .embarcadero-\&-mission-rect, .embarcadero-\&-howard-rect {
+.balboa-park-bart-station-rect, .san-jose-ave-and-geneva-ave-station-rect, .market-st-\&-steuart-st-rect, .embarcadero-\&-mission-rect, .embarcadero-\&-howard-rect, .embarcadero-\&-folsom-st-rect {
   fill: lightblue;
 }
 </style>
