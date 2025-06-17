@@ -4,6 +4,7 @@
     <div class="time-filter-controls">
       <label class="date-selector-label" for="timeFilter">Select Time:</label>
       <select id="timeFilter" v-model="selectedTime" @change="changeData(selectedTime)">
+        <option value="combined">All Dates</option>
         <option value="05-16">May 16</option>
         <option value="05-15">May 15</option>
         <option value="05-14">May 14</option>
@@ -103,7 +104,8 @@ const data3 = ref(null);
 const data4 = ref(null);
 const data5 = ref(null);
 const data6 = ref(null);
-const selectedTime = ref('05-16'); // Default selected value
+const combinedData = ref(null);
+const selectedTime = ref('combined'); // Default selected value
 const selectedStartHour = ref('all'); // Default to 'all'
 const selectedEndHour = ref('all'); // Default to 'all'
 
@@ -129,7 +131,18 @@ onMounted(async () => {
     data5.value = file5.default;
     data6.value = file6.default;
 
-    dataToBeRendered = data1.value;
+    // Combine all data into one array
+    combinedData.value = [
+      ...Object.values(data1.value),
+      ...Object.values(data2.value),
+      ...Object.values(data3.value),
+      ...Object.values(data4.value),
+      ...Object.values(data5.value),
+      ...Object.values(data6.value)
+    ];
+
+    //console.log(data1.value);
+    dataToBeRendered = combinedData.value;
     runAfterLoad(dataToBeRendered, startHour, endHour);
     makeLabels();
   } catch (error) {
@@ -446,6 +459,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
   let inboundAverageDurationArrayEnd = [];
   let inboundAverageIndexEnd = 0;
 
+  let currentDate = 0;
   // Cycle through the data
   Object.values(dataFile).forEach((stop) => {
     const date = new Date(stop.timestamp);
@@ -460,6 +474,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
               "timestamp": stop.timestamp,
               "trip_id": stop.trip_id,
               "timeAtStop": stop.timeAtStop,
+              "trip_day": pdtDate.getDate(),
             };
 
             let tripStartExists = false
@@ -482,6 +497,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
               "timestamp": stop.timestamp,
               "trip_id": stop.trip_id,
               "timeAtStop": stop.timeAtStop,
+              "trip_day": pdtDate.getDate(),
             };
 
             let tripEndExists = false;
@@ -665,6 +681,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
               "timestamp": stop.timestamp,
               "trip_id": stop.trip_id,
               "timeAtStop": stop.timeAtStop,
+              "trip_day": pdtDate.getDate(),
             };
 
             let tripStartExists = false
@@ -687,6 +704,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
               "timestamp": stop.timestamp,
               "trip_id": stop.trip_id,
               "timeAtStop": stop.timeAtStop,
+              "trip_day": pdtDate.getDate(),
             };
 
             let tripEndExists = false;
@@ -872,7 +890,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
   // calculate averages
   outboundAverageDurationArrayEnd.forEach((endVehicle) => {
     outboundAverageDurationArrayStart.forEach((startVehicle) => {
-      if (endVehicle.trip_id === startVehicle.trip_id) {
+      if (endVehicle.trip_id === startVehicle.trip_id && endVehicle.trip_day === startVehicle.trip_day) {
         let totalTripTime = getTimeDifferenceInSeconds(startVehicle.timestamp, endVehicle.timestamp);
         totalTripTime = totalTripTime - startVehicle.timeAtStop; // subtract time at first stop
         outboundTotalTripTimeArray.push(totalTripTime);
@@ -893,7 +911,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
   // calculate averages
   inboundAverageDurationArrayEnd.forEach((endVehicle) => {
     inboundAverageDurationArrayStart.forEach((startVehicle) => {
-      if (endVehicle.trip_id === startVehicle.trip_id) {
+      if (endVehicle.trip_id === startVehicle.trip_id && endVehicle.trip_day === startVehicle.trip_day) {
         let totalTripTime = getTimeDifferenceInSeconds(startVehicle.timestamp, endVehicle.timestamp);
         totalTripTime = totalTripTime - startVehicle.timeAtStop; // subtract time at first stop
         inboundTotalTripTimeArray.push(totalTripTime);
@@ -1918,6 +1936,8 @@ function changeData(selectedValue) {
     dataToBeRendered = data5.value;
   } else if (selectedValue === "05-11") {
     dataToBeRendered = data6.value;
+  } else if (selectedValue === "combined") {
+    dataToBeRendered = combinedData.value;
   }
   runAfterLoad(dataToBeRendered, startHour, endHour);
   makeLabels();
