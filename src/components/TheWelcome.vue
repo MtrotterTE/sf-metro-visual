@@ -1629,6 +1629,100 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
 
   stationsData.reverse(); // Reverse the order of the stations to match the SVG layout
 
+  // make axis
+  svg.append('rect')
+      .attr('x', 20)
+      .attr('y', 0)
+      .attr('width', 1)
+      .attr('height', 750)
+      .attr('fill', "#71797E");
+
+  svg.append('rect')
+    .attr('x', 0)
+    .attr('y', outboundCY - 60 - 3)
+    .attr('width', 2400)
+    .attr('height', 1)
+    .attr('fill', "#71797E");
+
+  svg.append('text')
+    .attr('x', 22)
+    .attr('y', outboundCY - 60 - 3)
+    .attr('class', 'minute-label')
+    .text('1 min');
+
+  svg.append('rect')
+    .attr('x', 0)
+    .attr('y', outboundCY - 120 - 3)
+    .attr('width', 2400)
+    .attr('height', 1)
+    .attr('fill', "#71797E");
+
+  svg.append('text')
+    .attr('x', 22)
+    .attr('y', outboundCY - 120 - 3)
+    .attr('class', 'minute-label')
+    .text('2 min');
+
+  svg.append('rect')
+    .attr('x', 0)
+    .attr('y', outboundCY - 180 - 3)
+    .attr('width', 2400)
+    .attr('height', 1)
+    .attr('fill', "#71797E");
+
+  svg.append('text')
+    .attr('x', 22)
+    .attr('y', outboundCY - 180 - 3)
+    .attr('class', 'minute-label')
+    .text('3 min');
+
+  svg.append('rect')
+    .attr('x', 0)
+    .attr('y', inboundCY + 60 + 12)
+    .attr('width', 2400)
+    .attr('height', 1)
+    .attr('fill', "#71797E");
+
+  svg.append('text')
+    .attr('x', 22)
+    .attr('y', inboundCY + 60 + 12)
+    .attr('class', 'minute-label')
+    .text('1 min');
+
+  svg.append('rect')
+    .attr('x', 0)
+    .attr('y', inboundCY + 120 + 12)
+    .attr('width', 2400)
+    .attr('height', 1)
+    .attr('fill', "#71797E");
+
+  svg.append('text')
+    .attr('x', 22)
+    .attr('y', inboundCY + 120 + 12)
+    .attr('class', 'minute-label')
+    .text('2 min');
+
+  svg.append('rect')
+    .attr('x', 0)
+    .attr('y', inboundCY + 180 + 12)
+    .attr('width', 2400)
+    .attr('height', 1)
+    .attr('fill', "#71797E");
+  
+  svg.append('text')
+    .attr('x', 22)
+    .attr('y', inboundCY + 180 + 12)
+    .attr('class', 'minute-label')
+    .text('3 min');
+
+  svg.append('text')
+    .attr('x', 22)
+    .attr('y', 355)
+    .attr('class', 'minute-label time-axis-label')
+    .attr('transform', 'rotate(90, 22, 355)')
+    .attr("text-anchor", "middle")
+    .text('Average Time in Seconds')
+
   // Outbound labels
   svg.append('text')
     .attr('x', 770)
@@ -1669,6 +1763,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
     } else {
       cx = (index * offsetX) + 20; // Adjust horizontal position for each station
     }
+    cx += 60; // push out right to make room for axis
     const height = averageTime;
 
     svg.append('rect')
@@ -1714,37 +1809,48 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
   d3.select('.balboa-park-bart-station-label')
     .text(null) // Clear any existing text
     .append('tspan')
-    .attr('x', -30) // Set x position for the first line
+    .attr('x', 25) // Set x position for the first line
     .attr('y', 347)
     .attr('dy', '0em') // Set y offset for the first line
     .text('Balboa Park')
     .append('tspan')
-    .attr('x', -30) // Set x position for the second line
+    .attr('x', 25) // Set x position for the second line
     .attr('dy', '1.2em') // Set y offset for the second line
     .text('BART Station');
   d3.select('.san-jose-ave-and-geneva-ave-station-label')
     .text(null) // Clear any existing text
     .append('tspan')
-    .attr('x', 80) // Set x position for the first line
+    .attr('x', 135) // Set x position for the first line
     .attr('y', 347)
     .attr('dy', '0em') // Set y offset for the first line
     .text('San Jose Ave &')
     .append('tspan')
-    .attr('x', 80) // Set x position for the second line
+    .attr('x', 135) // Set x position for the second line
     .attr('dy', '1.2em') // Set y offset for the second line
     .text('Geneva Ave Station');
   d3.select('.ocean-ave-and-jules-ave-label')
     .text(null) // Clear any existing text
     .append('tspan')
-    .attr('x', 260) // Set x position for the first line
+    .attr('x', 320) // Set x position for the first line
     .attr('y', 347)
     .attr('dy', '0em') // Set y offset for the first line
     .text('Ocean Ave &')
     .append('tspan')
-    .attr('x', 260) // Set x position for the second line
+    .attr('x', 320) // Set x position for the second line
     .attr('dy', '1.2em') // Set y offset for the second line
     .text('Jules Ave');
   d3.select('.ocean-ave-and-dorado-ter-label')
+    .text(null) // Clear any existing text
+    .append('tspan')
+    .attr('x', 420) // Set x position for the first line
+    .attr('y', 347)
+    .attr('dy', '0em') // Set y offset for the first line
+    .text('Ocean Ave &')
+    .append('tspan')
+    .attr('x', 420) // Set x position for the second line
+    .attr('dy', '1.2em') // Set y offset for the second line
+    .text('Dorado Ter');
+  d3.select('.ocean-ave-and-victoria-st-label')
     .text(null) // Clear any existing text
     .append('tspan')
     .attr('x', 360) // Set x position for the first line
@@ -1754,27 +1860,16 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
     .append('tspan')
     .attr('x', 360) // Set x position for the second line
     .attr('dy', '1.2em') // Set y offset for the second line
-    .text('Dorado Ter');
-  d3.select('.ocean-ave-and-victoria-st-label')
-    .text(null) // Clear any existing text
-    .append('tspan')
-    .attr('x', 300) // Set x position for the first line
-    .attr('y', 347)
-    .attr('dy', '0em') // Set y offset for the first line
-    .text('Ocean Ave &')
-    .append('tspan')
-    .attr('x', 300) // Set x position for the second line
-    .attr('dy', '1.2em') // Set y offset for the second line
     .text('Victoria St');
   d3.select('.ocean-ave-and-fairfield-way-label')
     .text(null) // Clear any existing text
     .append('tspan')
-    .attr('x', 400) // Set x position for the first line
+    .attr('x', 460) // Set x position for the first line
     .attr('y', 347)
     .attr('dy', '0em') // Set y offset for the first line
     .text('Ocean Ave &')
     .append('tspan')
-    .attr('x', 400) // Set x position for the second line
+    .attr('x', 460) // Set x position for the second line
     .attr('dy', '1.2em') // Set y offset for the second line
     .text('Fairfield Way');
 }
@@ -1971,7 +2066,7 @@ function convertSecondsToMinutes(seconds) {
   padding: 2px 8px;
 }
 
-.height-label, .rectangle-height-label {
+.height-label, .rectangle-height-label, .minute-label {
   font-family: "Roboto", sans-serif;
   font-weight: 600;
   font-size: 12px;
@@ -2019,7 +2114,7 @@ function convertSecondsToMinutes(seconds) {
 .legend-container {
   position: fixed;
   bottom: 16px;
-  left: 16px;
+  right: 16px;
   background: #F5F4F3;
   border: 1px solid #010101;
   border-radius: 8px;
