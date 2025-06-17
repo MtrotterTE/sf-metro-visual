@@ -50,37 +50,44 @@
     </div>
     <div ref="chart" class="svg-area"></div>
     <div class="tooltip" id="tooltip"></div>
-    <div class="legend-container" :class="{ expanded: isLegendExpanded }">
-      <div class="legend-content" v-if="isLegendExpanded">
+    <div class="legend-container">
+      <div class="legend-content">
         <div class="legend-header">Rectangle:</div>
-        <div class="legend-item">
-          <span class="legend-color station-color"></span> Station
-        </div>
-        <div class="legend-item">
-          <span class="legend-color intersection-color"></span> Intersection
-        </div>
-        <div class="legend-item">
-          <span class="legend-color terminal-color"></span> Terminal Station
-        </div>
-        <div class="legend-item">
-          <span class="legend-color terminal-intersection-color"></span> Terminal Intersection
+        <div class="legend-grid-container">
+          <div class="legend-item">
+            <span class="legend-color station-color"></span> Station
+          </div>
+          <div class="legend-item">
+            <span class="legend-color intersection-color"></span> Intersection
+          </div>
+          <div class="legend-item">
+            <span class="legend-color terminal-color"></span> Terminal Station
+          </div>
+          <div class="legend-item">
+            <span class="legend-color terminal-intersection-color"></span> Terminal Intersection
+          </div>
         </div>
         <div class="terminal-note">Note: Train sits at terminal stations/intersections between trips for operator change, schedule, bathroom break, etc.</div>
-        <div class="legend-header">Background:</div>
-        <div class="legend-item">
-          <span class="legend-color surface-color"></span> Surface
-        </div>
-        <div class="legend-item">
-          <span class="legend-color underground-color"></span> Underground
-        </div>
-        <div class="legend-header">Label:</div>
-        <div class="legend-item">
-          <span class="legend-text rectangle-height-label">31</span> Average time at station/intersection (height of rectangle)
+        <div class="legend-grid-container-bottom-content">
+          <div class="bottom-legend-left">
+            <div class="legend-header">Background:</div>
+            <div class="legend-grid-container">
+              <div class="legend-item">
+                <span class="legend-color surface-color"></span> Surface
+              </div>
+              <div class="legend-item">
+                <span class="legend-color underground-color"></span> Underground
+              </div>
+            </div>
+          </div>
+          <div class="bottom-legend-right">
+            <div class="legend-header">Label:</div>
+            <div class="legend-item">
+              <span class="legend-text rectangle-height-label">31</span> Average time, in seconds, at station/intersection (height of rectangle)
+            </div>
+          </div>
         </div>
       </div>
-      <button class="legend-toggle" @click="toggleLegend">
-        {{ isLegendExpanded ? 'Hide Legend' : 'Show Legend' }}
-      </button>
     </div>
   </div>  
 </template>
@@ -99,7 +106,6 @@ const data6 = ref(null);
 const selectedTime = ref('05-16'); // Default selected value
 const selectedStartHour = ref('all'); // Default to 'all'
 const selectedEndHour = ref('all'); // Default to 'all'
-const isLegendExpanded = ref(false);
 
 let startHour = "all";
 let endHour = "all";
@@ -135,7 +141,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
   console.log("start of runAfterLoad console");
 
   // svg canvas dimensions
-  const width = 1800;
+  const width = 2400;
   const height = 750;
 
   const outboundCY = 250;
@@ -554,7 +560,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
             BalboaParkStationOutbound += stop.timeAtStop;
             BalboaParkStationOutboundNumVehicles++;
           }
-        } else if (stop.atIntersection) { // vehicle at intersection
+        } else if (stop.atIntersection && stop.timeAtStop > 0) { // vehicle at intersection
           if (stop.intersectionCrossStreet === "Embarcadero & Mission") {
             EmbarcaderoMissionIntersectionOutbound += stop.timeAtStop;
             EmbarcaderoMissionIntersectionOutboundNumVehicles++;
@@ -759,7 +765,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
             SanJoseGenevaStationInbound += stop.timeAtStop;
             SanJoseGenevaStationInboundNumVehicles++;
           }
-        } else if (stop.atIntersection) { // vehicle at intersection
+        } else if (stop.atIntersection && stop.timeAtStop > 0) { // vehicle at intersection
           if (stop.intersectionCrossStreet === "Embarcadero & Mission") {
             EmbarcaderoMissionIntersectionInbound += stop.timeAtStop;
             EmbarcaderoMissionIntersectionInboundNumVehicles++;
@@ -1649,21 +1655,9 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
     .attr('class', 'inbound-average-label label')
     .text('Average Trip Duration: ' + inboundAverageTimeInMinutes + ' minutes');
 
-  // Loop through stations to remove zero-height rectangles
-  let stationsDataCurated = [];
-  stationsData.forEach((station, index) => {
-    const isOutbound = station.direction === 'outbound';
-    if (isOutbound && station.totalTime === 0 && stationsData[index - 1].totalTime === 0) {
-      // do nothing
-    } else if (isOutbound) {
-      stationsDataCurated.push(stationsData[index - 1]);
-      stationsDataCurated.push(station);
-    }
-  });
-
   // Loop through stations data to create bars and labels
   const heightScalar = 0.03; // Scale the height of the bars based on average time at station
-  stationsDataCurated.forEach((station, index) => {
+  stationsData.forEach((station, index) => {
     const averageTime =  station.numVehicles > 0 ? station.totalTime / station.numVehicles : 0;
     const isOutbound = station.direction === 'outbound';
     const isStation = station.isStation;
@@ -1892,10 +1886,6 @@ function convertSecondsToMinutes(seconds) {
   return (seconds / 60).toFixed(2);
 }
 
-function toggleLegend() {
-  isLegendExpanded.value = !isLegendExpanded.value;
-}
-
 </script>
 
 <style>
@@ -1916,16 +1906,19 @@ function toggleLegend() {
   align-items: center;
   height: fit-content;
   border: 1px solid black;
+  background: #D3D3D3;
 }
 
 .station-rect {
-  stroke: #fff;
+  stroke: lightblue;
   stroke-width: 3px;
+  fill: lightblue;
 }
 
 .intersection-rect {
-  stroke: #010101;
+  stroke: steelblue;
   stroke-width: 3px;
+  fill: steelblue
 }
 
 .tooltip {
@@ -1942,6 +1935,7 @@ function toggleLegend() {
   transition: opacity 0.2s ease;
   min-width: 270px;
 }
+
 .tooltip span:nth-of-type(1) {
   text-decoration: underline;
   line-height: 2.5;
@@ -2026,22 +2020,14 @@ function toggleLegend() {
   position: fixed;
   bottom: 16px;
   left: 16px;
-  background: #D3D3D3;
+  background: #F5F4F3;
   border: 1px solid #010101;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: height 0.3s ease, width 0.3s ease;
-}
-
-.legend-container.expanded {
-  width: 200px;
+  width: 600px;
   height: auto;
-}
-
-.legend-container:not(.expanded) {
-  width: 120px;
-  height: 34px;
 }
 
 .legend-toggle {
@@ -2076,25 +2062,25 @@ function toggleLegend() {
 }
 
 .station-color {
-  background: steelblue;
+  background: lightblue;
   border-radius: 0;
-  border: 3px solid white;
+  border: 3px solid lightblue;
 }
 
 .intersection-color {
   background: steelblue;
   border-radius: 0;
-  border: 3px solid black;
+  border: 3px solid steelblue;
 }
 
 .terminal-color {
   background: lightblue;
   border-radius: 0;
-  border: 3px solid white;
+  border: 3px solid #010101;
 }
 
 .terminal-intersection-color {
-  background: lightblue;
+  background: steelblue;
   border-radius: 0;
   border: 3px solid #010101;
 }
@@ -2114,13 +2100,37 @@ function toggleLegend() {
 .legend-header {
   color: #010101;
   text-decoration: underline;
+  font-weight: 700;
 }
 
 .terminal-note {
   color: #010101;
+  font-size: 12px;
 }
 
 .balboa-park-bart-station-rect, .san-jose-ave-and-geneva-ave-station-rect, .market-st-\&-steuart-st-rect, .embarcadero-\&-mission-rect, .embarcadero-\&-howard-rect, .embarcadero-\&-folsom-st-rect {
-  fill: lightblue;
+  stroke: #010101;
+}
+
+.legend-grid-container {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.bottom-legend-right .legend-item {
+  font-size: 12px;
+}
+
+.legend-grid-container .legend-item {
+  width: 50%;
+}
+
+.legend-grid-container-bottom-content {
+  display: flex;
+}
+
+.bottom-legend-left, .bottom-legend-right {
+  width: 50%;
 }
 </style>
