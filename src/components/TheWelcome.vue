@@ -986,20 +986,6 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
       isStation: false
     },
     {
-      name: 'Embarcadero Station',
-      totalTime: EmbarcaderoStationOutbound,
-      numVehicles: EmbarcaderoStationOutboundNumVehicles,
-      direction: 'outbound',
-      isStation: true
-    },
-    {
-      name: 'Embarcadero Station',
-      totalTime: EmbarcaderoStationInbound,
-      numVehicles: EmbarcaderoStationInboundNumVehicles,
-      direction: 'inbound',
-      isStation: true
-    },
-    {
       name: 'Market St & Battery St',
       totalTime: MarketBatteryIntersectionOutbound,
       numVehicles: MarketBatteryIntersectionOutboundNumVehicles,
@@ -1014,20 +1000,6 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
       isStation: false
     },
     {
-      name: 'Montgomery Station',
-      totalTime: MontgomeryStationOutbound,
-      numVehicles: MontgomeryStationOutboundNumVehicles,
-      direction: 'outbound',
-      isStation: true
-    },
-    {
-      name: 'Montgomery Station',
-      totalTime: MontgomeryStationInbound,
-      numVehicles: MontgomeryStationInboundNumVehicles,
-      direction: 'inbound',
-      isStation: true
-    },
-    {
       name: 'Market St & Kearny St',
       totalTime: MarketMontgomeryIntersectionOutbound,
       numVehicles: MarketMontgomeryIntersectionOutboundNumVehicles,
@@ -1040,20 +1012,6 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
       numVehicles: MarketMontgomeryIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
-    },
-    {
-      name: 'Powell Station',
-      totalTime: PowellStationOutbound,
-      numVehicles: PowellStationOutboundNumVehicles,
-      direction: 'outbound',
-      isStation: true
-    },
-    {
-      name: 'Powell Station',
-      totalTime: PowellStationInbound,
-      numVehicles: PowellStationInboundNumVehicles,
-      direction: 'inbound',
-      isStation: true
     },
     {
       name: 'Market St & Mason St',
@@ -1098,20 +1056,6 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
       isStation: false
     },
     {
-      name: 'Civic Center Station',
-      totalTime: CCStationOutbound,
-      numVehicles: CCStationOutboundNumVehicles,
-      direction: 'outbound',
-      isStation: true
-    },
-    {
-      name: 'Civic Center Station',
-      totalTime: CCStationInbound,
-      numVehicles: CCStationInboundNumVehicles,
-      direction: 'inbound',
-      isStation: true
-    },
-    {
       name: 'Market St & Hyde St',
       totalTime: MarketHydeIntersectionOutbound,
       numVehicles: MarketHydeIntersectionOutboundNumVehicles,
@@ -1138,20 +1082,6 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
       numVehicles: MarketLarkinIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
-    },
-    {
-      name: 'Van Ness Station',
-      totalTime: VNStationOutbound,
-      numVehicles: VNStationOutboundNumVehicles,
-      direction: 'outbound',
-      isStation: true
-    },
-    {
-      name: 'Van Ness Station',
-      totalTime: VNStationInbound,
-      numVehicles: VNStationInboundNumVehicles,
-      direction: 'inbound',
-      isStation: true
     },
     {
       name: 'Market St & Franklin St',
@@ -1196,20 +1126,6 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
       isStation: false
     },
     {
-      name: 'Church Station',
-      totalTime: ChurchStationOutbound,
-      numVehicles: ChurchStationOutboundNumVehicles,
-      direction: 'outbound',
-      isStation: true
-    },
-    {
-      name: 'Church Station',
-      totalTime: ChurchStationInbound,
-      numVehicles: ChurchStationInboundNumVehicles,
-      direction: 'inbound',
-      isStation: true
-    },
-    {
       name: 'Market St & Sanchez St',
       totalTime: MarketSanchezIntersectionOutbound,
       numVehicles: MarketSanchezIntersectionOutboundNumVehicles,
@@ -1236,20 +1152,6 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
       numVehicles: MarketNoeIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
-    },
-    {
-      name: 'Castro Station',
-      totalTime: CastroStationOutbound,
-      numVehicles: CastroStationOutboundNumVehicles,
-      direction: 'outbound',
-      isStation: true
-    },
-    {
-      name: 'Castro Station',
-      totalTime: CastroStationInbound,
-      numVehicles: CastroStationInboundNumVehicles,
-      direction: 'inbound',
-      isStation: true
     },
     {
       name: 'Market St & Eureka St',
@@ -1336,20 +1238,6 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
       isStation: false
     },
     {
-      name: 'Forest Hill Station',
-      totalTime: FHStationOutbound,
-      numVehicles: FHStationOutboundNumVehicles,
-      direction: 'outbound',
-      isStation: true
-    },
-    {
-      name: 'Forest Hill Station',
-      totalTime: FHStationInbound,
-      numVehicles: FHStationInboundNumVehicles,
-      direction: 'inbound',
-      isStation: true
-    },
-    {
       name: 'Dewey Blvd & Pacheco St',
       totalTime: DeweyPachecoIntersectionOutbound,
       numVehicles: DeweyPachecoIntersectionOutboundNumVehicles,
@@ -1378,20 +1266,6 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
       isStation: false
     },
     {
-      name: 'West Portal Station',
-      totalTime: WPStationOutbound,
-      numVehicles: WPStationOutboundNumVehicles,
-      direction: 'outbound',
-      isStation: true
-    },
-    {
-      name: 'West Portal Station',
-      totalTime: WPStationInbound,
-      numVehicles: WPStationInboundNumVehicles,
-      direction: 'inbound',
-      isStation: true
-    },
-    {
       name: 'West Portal Ave & Vicente St',
       totalTime: WPVicenteIntersectionOutbound,
       numVehicles: WPVicenteIntersectionOutboundNumVehicles,
@@ -1404,20 +1278,6 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
       numVehicles: WPVicenteIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
-    },
-    {
-      name: 'West Portal & 14th',
-      totalTime: WP14StationOutbound,
-      numVehicles: WP14StationOutboundNumVehicles,
-      direction: 'outbound',
-      isStation: true
-    },
-    {
-      name: 'West Portal & 14th',
-      totalTime: WP14StationInbound,
-      numVehicles: WP14StationInboundNumVehicles,
-      direction: 'inbound',
-      isStation: true
     },
     {
       name: 'West Portal Ave & 15th Ave',
@@ -1434,20 +1294,6 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
       isStation: false
     },
     {
-      name: 'West Portal & Sloat Blvd (Saint Francis Cir)',
-      totalTime: WPSLStationOutbound,
-      numVehicles: WPSLStationOutboundNumVehicles,
-      direction: 'outbound',
-      isStation: true
-    },
-    {
-      name: 'West Portal & Sloat Blvd (Saint Francis Cir)',
-      totalTime: WPSLStationInbound,
-      numVehicles: WPSLStationInboundNumVehicles,
-      direction: 'inbound',
-      isStation: true
-    },
-    {
       name: 'Junipero Serra Blvd & Monterey Blvd',
       totalTime: JSMontereyIntersectionOutbound,
       numVehicles: JSMontereyIntersectionOutboundNumVehicles,
@@ -1460,48 +1306,6 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
       numVehicles: JSMontereyIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
-    },
-    {
-      name: 'Junipero Serra Blvd & Ocean Ave',
-      totalTime: JSStationOutbound,
-      numVehicles: JSStationOutboundNumVehicles,
-      direction: 'outbound',
-      isStation: true
-    },
-    {
-      name: 'Junipero Serra Blvd & Ocean Ave',
-      totalTime: JSStationInbound,
-      numVehicles: JSStationInboundNumVehicles,
-      direction: 'inbound',
-      isStation: true
-    },
-    {
-      name: 'Ocean Ave & San Leandro Way',
-      totalTime: OSLStationOutbound,
-      numVehicles: OSLStationOutboundNumVehicles,
-      direction: 'outbound',
-      isStation: true
-    },
-    {
-      name: 'Ocean Ave & San Leandro Way',
-      totalTime: OSLStationInbound,
-      numVehicles: OSLStationInboundNumVehicles,
-      direction: 'inbound',
-      isStation: true
-    },
-    {
-      name: 'Ocean Ave & Aptos',
-      totalTime: OceanAptosStationOutbound,
-      numVehicles: OceanAptosStationOutboundNumVehicles,
-      direction: 'outbound',
-      isStation: true
-    },
-    {
-      name: 'Ocean Ave & Aptos',
-      totalTime: OceanAptosStationInbound,
-      numVehicles: OceanAptosStationInboundNumVehicles,
-      direction: 'inbound',
-      isStation: true
     },
     {
       name: 'Ocean Ave & Cerritos Ave',
@@ -1518,48 +1322,6 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
       isStation: false
     },
     {
-      name: 'Ocean Ave and Victoria St',
-      totalTime: OceanVictoriaStationOutbound,
-      numVehicles: OceanVictoriaStationOutboundNumVehicles,
-      direction: 'outbound',
-      isStation: true
-    },
-    {
-      name: 'Ocean Ave and Fairfield Way',
-      totalTime: OceanFairfieldStationInbound,
-      numVehicles: OceanFairfieldStationInboundNumVehicles,
-      direction: 'inbound',
-      isStation: true
-    },
-    {
-      name: 'Ocean Ave and Jules Ave',
-      totalTime: OceanJulesStationOutbound,
-      numVehicles: OceanJulesStationOutboundNumVehicles,
-      direction: 'outbound',
-      isStation: true
-    },
-    {
-      name: 'Ocean Ave and Dorado Ter',
-      totalTime: OceanDoradoStationInbound,
-      numVehicles: OceanDoradoStationInboundNumVehicles,
-      direction: 'inbound',
-      isStation: true
-    },
-    {
-      name: 'Ocean Ave & Miramar Ave',
-      totalTime: OceanMiramarStationOutbound,
-      numVehicles: OceanMiramarStationOutboundNumVehicles,
-      direction: 'outbound',
-      isStation: true
-    },
-    {
-      name: 'Ocean Ave & Miramar Ave',
-      totalTime: OceanMiramarStationInbound,
-      numVehicles: OceanMiramarStationInboundNumVehicles,
-      direction: 'inbound',
-      isStation: true
-    },
-    {
       name: 'Ocean Ave & Plymouth Ave',
       totalTime: OceanPlymouthIntersectionOutbound,
       numVehicles: OceanPlymouthIntersectionOutboundNumVehicles,
@@ -1572,34 +1334,6 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
       numVehicles: OceanPlymouthIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
-    },
-    {
-      name: 'Ocean Ave & Lee Ave',
-      totalTime: OceanLeeStationOutbound,
-      numVehicles: OceanLeeStationOutboundNumVehicles,
-      direction: 'outbound',
-      isStation: true
-    },
-    {
-      name: 'Ocean Ave & Lee Ave',
-      totalTime: OceanLeeStationInbound,
-      numVehicles: OceanLeeStationInboundNumVehicles,
-      direction: 'inbound',
-      isStation: true
-    },
-    {
-      name: 'Ocean Ave & CCSF Pedestrian Bridge',
-      totalTime: OceanCCSFStationOutbound,
-      numVehicles: OceanCCSFStationOutboundNumVehicles,
-      direction: 'outbound',
-      isStation: true
-    },
-    {
-      name: 'Ocean Ave & CCSF Pedestrian Bridge',
-      totalTime: OceanCCSFStationInbound,
-      numVehicles: OceanCCSFStationInboundNumVehicles,
-      direction: 'inbound',
-      isStation: true
     },
     {
       name: 'Howlth St & Ocean Ave',
@@ -1628,20 +1362,6 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
       numVehicles: HowlthBalboaParkIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
-    },
-    {
-      name: 'Balboa Park BART Station',
-      totalTime: BalboaParkStationOutbound,
-      numVehicles: BalboaParkStationOutboundNumVehicles,
-      direction: 'outbound',
-      isStation: true
-    },
-    {
-      name: 'San Jose Ave and Geneva Ave Station',
-      totalTime: SanJoseGenevaStationInbound,
-      numVehicles: SanJoseGenevaStationInboundNumVehicles,
-      direction: 'inbound',
-      isStation: true
     }
   ];
 
@@ -1813,7 +1533,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
   });
 
   // Move underground rectangle to align with the west portal station rectangle
-  const undergroundX = d3.select('.west-portal-station-rect').attr('x');
+  const undergroundX = d3.select('.west-portal-ave-\\&-dewey-blvd-rect').attr('x') - 2;
   d3.select('.underground').attr('x', undergroundX);
 
   // Move labels with differnt inbound and outbound names
