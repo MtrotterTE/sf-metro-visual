@@ -1,6 +1,6 @@
 <template>
   <div class="welcome">
-    <h1 class="page-title">Tenco CityScale K Line Visualization</h1>
+    <h1 class="page-title">Tenco CityScale K Line Intersection Delays</h1>
     <div class="time-filter-controls">
       <label class="date-selector-label" for="timeFilter">Select Time:</label>
       <select id="timeFilter" v-model="selectedTime" @change="changeData(selectedTime)">
@@ -179,7 +179,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
   // Line for K Line outbound
   svg.append('rect')
     .attr('x', 0)
-    .attr('y', outboundCY)
+    .attr('y', outboundCY - 1)
     .attr('width', width)
     .attr('height', 10)
     .attr('fill', 'steelblue');
@@ -187,7 +187,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
   // Line for K Line inbound
   svg.append('rect')
     .attr('x', 0)
-    .attr('y', inboundCY)
+    .attr('y', inboundCY + 1)
     .attr('width', width)
     .attr('height', 10)
     .attr('fill', 'steelblue');
@@ -1804,13 +1804,6 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
       });
 
     svg.append('text')
-      .attr('x', cx + 15)
-      .attr('y', isOutbound ? cy - 10 - height: cy + 30 + height)
-      .attr("text-anchor", "middle")
-      .attr('class', 'height-label')
-      .text(Math.round(height));
-
-    svg.append('text')
       .attr('x', cx + 10)
       .attr('y', 355)
       .attr('transform', 'rotate(90, ' + (cx + 10) + ', 355)')
@@ -1998,7 +1991,7 @@ function getTimeDifferenceInSeconds(timestamp1, timestamp2) {
 }
 
 function convertSecondsToMinutes(seconds) {
-  return (seconds / 60).toFixed(2);
+  return (seconds / 60).toFixed(1);
 }
 
 </script>
