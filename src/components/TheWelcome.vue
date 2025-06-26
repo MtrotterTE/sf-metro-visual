@@ -144,7 +144,6 @@ onMounted(async () => {
     //console.log(data1.value);
     dataToBeRendered = combinedData.value;
     runAfterLoad(dataToBeRendered, startHour, endHour);
-    makeLabels();
   } catch (error) {
     console.error('Error loading JSON files:', error);
   }
@@ -930,266 +929,266 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
   // Make array of station data
   const stationsData = [
     {
-      name: 'Embarcadero & Folsom St',
+      name: 'Embarcadero and& Folsom St',
       totalTime: EmbarcaderoFolsomIntersectionOutbound,
       numVehicles: EmbarcaderoFolsomIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Embarcadero & Folsom St',
+      name: 'Embarcadero and& Folsom St',
       totalTime: EmbarcaderoFolsomIntersectionInbound,
       numVehicles: EmbarcaderoFolsomIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Embarcadero & Howard',
+      name: 'Embarcadero and& Howard',
       totalTime: EmbarcaderoHowardIntersectionOutbound,
       numVehicles: EmbarcaderoHowardIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Embarcadero & Howard',
+      name: 'Embarcadero and& Howard',
       totalTime: EmbarcaderoHowardIntersectionInbound,
       numVehicles: EmbarcaderoHowardIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Embarcadero & Mission',
+      name: 'Embarcadero and& Mission',
       totalTime: EmbarcaderoMissionIntersectionOutbound,
       numVehicles: EmbarcaderoMissionIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Embarcadero & Mission',
+      name: 'Embarcadero and& Mission',
       totalTime: EmbarcaderoMissionIntersectionInbound,
       numVehicles: EmbarcaderoMissionIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Market St & Steuart St',
+      name: 'Market St and& Steuart St',
       totalTime: MarketSteuartIntersectionOutbound,
       numVehicles: MarketSteuartIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Market St & Steuart St',
+      name: 'Market St and& Steuart St',
       totalTime: MarketSteuartIntersectionInbound,
       numVehicles: MarketSteuartIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Market St & Battery St',
+      name: 'Market St and& Battery St',
       totalTime: MarketBatteryIntersectionOutbound,
       numVehicles: MarketBatteryIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Market St & Battery St',
+      name: 'Market St and& Battery St',
       totalTime: MarketBatteryIntersectionInbound,
       numVehicles: MarketBatteryIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Market St & Kearny St',
+      name: 'Market St and& Kearny St',
       totalTime: MarketMontgomeryIntersectionOutbound,
       numVehicles: MarketMontgomeryIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Market St & Kearny St',
+      name: 'Market St and& Kearny St',
       totalTime: MarketMontgomeryIntersectionInbound,
       numVehicles: MarketMontgomeryIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Market St & Mason St',
+      name: 'Market St and& Mason St',
       totalTime: MarketMasonIntersectionOutbound,
       numVehicles: MarketMasonIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Market St & Mason St',
+      name: 'Market St and& Mason St',
       totalTime: MarketMasonIntersectionInbound,
       numVehicles: MarketMasonIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Market St & Golden Gate Ave',
+      name: 'Market St and& Golden Gate Ave',
       totalTime: MarketGGIntersectionOutbound,
       numVehicles: MarketGGIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Market St & Golden Gate Ave',
+      name: 'Market St and& Golden Gate Ave',
       totalTime: MarketGGIntersectionInbound,
       numVehicles: MarketGGIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Market St & Jones St',
+      name: 'Market St and& Jones St',
       totalTime: MarketJonesIntersectionOutbound,
       numVehicles: MarketJonesIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Market St & Jones St',
+      name: 'Market St and& Jones St',
       totalTime: MarketJonesIntersectionInbound,
       numVehicles: MarketJonesIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Market St & Hyde St',
+      name: 'Market St and& Hyde St',
       totalTime: MarketHydeIntersectionOutbound,
       numVehicles: MarketHydeIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Market St & Hyde St',
+      name: 'Market St and& Hyde St',
       totalTime: MarketHydeIntersectionInbound,
       numVehicles: MarketHydeIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Market St & Larkin St',
+      name: 'Market St and& Larkin St',
       totalTime: MarketLarkinIntersectionOutbound,
       numVehicles: MarketLarkinIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Market St & Larkin St',
+      name: 'Market St and& Larkin St',
       totalTime: MarketLarkinIntersectionInbound,
       numVehicles: MarketLarkinIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Market St & Franklin St',
+      name: 'Market St and& Franklin St',
       totalTime: MarketFranklinIntersectionOutbound,
       numVehicles: MarketFranklinIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Market St & Franklin St',
+      name: 'Market St and& Franklin St',
       totalTime: MarketFranklinIntersectionInbound,
       numVehicles: MarketFranklinIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Market St & Laguna St',
+      name: 'Market St and& Laguna St',
       totalTime: MarketLagunaIntersectionOutbound,
       numVehicles: MarketLagunaIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Market St & Laguna St',
+      name: 'Market St and& Laguna St',
       totalTime: MarketLagunaIntersectionInbound,
       numVehicles: MarketLagunaIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Market St & Duboce Ave',
+      name: 'Market St and& Duboce Ave',
       totalTime: MarketDuboceIntersectionOutbound,
       numVehicles: MarketDuboceIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Market St & Duboce Ave',
+      name: 'Market St and& Duboce Ave',
       totalTime: MarketDuboceIntersectionInbound,
       numVehicles: MarketDuboceIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Market St & Sanchez St',
+      name: 'Market St and& Sanchez St',
       totalTime: MarketSanchezIntersectionOutbound,
       numVehicles: MarketSanchezIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Market St & Sanchez St',
+      name: 'Market St and& Sanchez St',
       totalTime: MarketSanchezIntersectionInbound,
       numVehicles: MarketSanchezIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Market St & Noe St',
+      name: 'Market St and& Noe St',
       totalTime: MarketNoeIntersectionOutbound,
       numVehicles: MarketNoeIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Market St & Noe St',
+      name: 'Market St and& Noe St',
       totalTime: MarketNoeIntersectionInbound,
       numVehicles: MarketNoeIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Market St & Eureka St',
+      name: 'Market St and& Eureka St',
       totalTime: MarketEurekaIntersectionOutbound,
       numVehicles: MarketEurekaIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Market St & Eureka St',
+      name: 'Market St and& Eureka St',
       totalTime: MarketEurekaIntersectionInbound,
       numVehicles: MarketEurekaIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Market St & Storrie St',
+      name: 'Market St and& Storrie St',
       totalTime: MarketStorrieIntersectionOutbound,
       numVehicles: MarketStorrieIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Market St & Storrie St',
+      name: 'Market St and& Storrie St',
       totalTime: MarketStorrieIntersectionInbound,
       numVehicles: MarketStorrieIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Corbett Ave & Iron Alley',
+      name: 'Corbett Ave and& Iron Alley',
       totalTime: CorbetIronIntersectionOutbound,
       numVehicles: CorbetIronIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Corbett Ave & Iron Alley',
+      name: 'Corbett Ave and& Iron Alley',
       totalTime: CorbetIronIntersectionInbound,
       numVehicles: CorbetIronIntersectionInboundNumVehicles,
       direction: 'inbound',
@@ -1238,126 +1237,126 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
       isStation: false
     },
     {
-      name: 'Dewey Blvd & Pacheco St',
+      name: 'Dewey Blvd and& Pacheco St',
       totalTime: DeweyPachecoIntersectionOutbound,
       numVehicles: DeweyPachecoIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Dewey Blvd & Pacheco St',
+      name: 'Dewey Blvd and& Pacheco St',
       totalTime: DeweyPachecoIntersectionInbound,
       numVehicles: DeweyPachecoIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'West Portal Ave & Dewey Blvd',
+      name: 'West Portal Ave and& Dewey Blvd',
       totalTime: WPDeweyIntersectionOutbound,
       numVehicles: WPDeweyIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'West Portal Ave & Dewey Blvd',
+      name: 'West Portal Ave and& Dewey Blvd',
       totalTime: WPDeweyIntersectionInbound,
       numVehicles: WPDeweyIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'West Portal Ave & Vicente St',
+      name: 'West Portal Ave and& Vicente St',
       totalTime: WPVicenteIntersectionOutbound,
       numVehicles: WPVicenteIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'West Portal Ave & Vicente St',
+      name: 'West Portal Ave and& Vicente St',
       totalTime: WPVicenteIntersectionInbound,
       numVehicles: WPVicenteIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'West Portal Ave & 15th Ave',
+      name: 'West Portal Ave and& 15th Ave',
       totalTime: WP15IntersectionOutbound,
       numVehicles: WP15IntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'West Portal Ave & 15th Ave',
+      name: 'West Portal Ave and& 15th Ave',
       totalTime: WP15IntersectionInbound,
       numVehicles: WP15IntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Junipero Serra Blvd & Monterey Blvd',
+      name: 'Junipero Serra Blvd and& Monterey Blvd',
       totalTime: JSMontereyIntersectionOutbound,
       numVehicles: JSMontereyIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Junipero Serra Blvd & Monterey Blvd',
+      name: 'Junipero Serra Blvd and& Monterey Blvd',
       totalTime: JSMontereyIntersectionInbound,
       numVehicles: JSMontereyIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Ocean Ave & Cerritos Ave',
+      name: 'Ocean Ave and& Cerritos Ave',
       totalTime: OceanCerritosIntersectionOutbound,
       numVehicles: OceanCerritosIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Ocean Ave & Cerritos Ave',
+      name: 'Ocean Ave and& Cerritos Ave',
       totalTime: OceanCerritosIntersectionInbound,
       numVehicles: OceanCerritosIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Ocean Ave & Plymouth Ave',
+      name: 'Ocean Ave and& Plymouth Ave',
       totalTime: OceanPlymouthIntersectionOutbound,
       numVehicles: OceanPlymouthIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Ocean Ave & Plymouth Ave',
+      name: 'Ocean Ave and& Plymouth Ave',
       totalTime: OceanPlymouthIntersectionInbound,
       numVehicles: OceanPlymouthIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Howlth St & Ocean Ave',
+      name: 'Howlth St and& Ocean Ave',
       totalTime: HowlthOceanIntersectionOutbound,
       numVehicles: HowlthOceanIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Howlth St & Ocean Ave',
+      name: 'Howlth St and& Ocean Ave',
       totalTime: HowlthOceanIntersectionInbound,
       numVehicles: HowlthOceanIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Ocean Ave & Balboa Park',
+      name: 'Ocean Ave and& Balboa Park',
       totalTime: HowlthBalboaParkIntersectionOutbound,
       numVehicles: HowlthBalboaParkIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Ocean Ave & Balboa Park',
+      name: 'Ocean Ave and& Balboa Park',
       totalTime: HowlthBalboaParkIntersectionInbound,
       numVehicles: HowlthBalboaParkIntersectionInboundNumVehicles,
       direction: 'inbound',
@@ -1488,7 +1487,6 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
     .text('Average Trip Duration: ' + inboundAverageTimeInMinutes + ' minutes');
 
   // Loop through stations data to create bars and labels
-  const heightScalar = 0.03; // Scale the height of the bars based on average time at station
   stationsData.forEach((station, index) => {
     const averageTime =  station.numVehicles > 0 ? station.totalTime / station.numVehicles : 0;
     const isOutbound = station.direction === 'outbound';
@@ -1523,116 +1521,37 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
         tooltip.style("opacity", 0);
       });
 
+    svg.append('rect')
+      .attr('x', cx)
+      .attr('y', 290)
+      .attr('width', offsetX + 10)
+      .attr('height', 130)
+      .attr('fill', '#010101')
+      .attr('rx', '4px');
+
     svg.append('text')
-      .attr('x', cx + 10)
+      .attr('x', cx + 17)
       .attr('y', 355)
-      .attr('transform', 'rotate(90, ' + (cx + 10) + ', 355)')
+      .attr('transform', 'rotate(90, ' + (cx + 17) + ', 355)')
       .attr("text-anchor", "middle")
       .attr('class', isStation ? `${station.name.toLowerCase().replace(/ /g, '-')}-label station-label label` : `${station.name.toLowerCase().replace(/ /g, '-')}-label intersection-label label`)
-      .text(station.name);
+      .selectAll('tspan')
+      .data(station.name.split('and')) // Split the text by '&'
+      .enter()
+      .append('tspan')
+      .attr('x', cx + 17) // Set x position for each line
+      .attr('dy', (d, i) => i * 1.2 + 'em') // Set vertical offset for each line
+      .text(d => d.trim()); // Add the text content
   });
 
   // Move underground rectangle to align with the west portal station rectangle
-  const undergroundX = d3.select('.west-portal-ave-\\&-dewey-blvd-rect').attr('x') - 2;
+  const undergroundX = d3.select('.west-portal-ave-and\\&-dewey-blvd-rect').attr('x') - 2;
   d3.select('.underground').attr('x', undergroundX);
 
   // Move labels with differnt inbound and outbound names
-  d3.select('.balboa-park-bart-station-label')
-    .text(null) // Clear any existing text
-    .append('tspan')
-    .attr('x', 25) // Set x position for the first line
-    .attr('y', 347)
-    .attr('dy', '0em') // Set y offset for the first line
-    .text('Balboa Park')
-    .append('tspan')
-    .attr('x', 25) // Set x position for the second line
-    .attr('dy', '1.2em') // Set y offset for the second line
-    .text('BART Station');
-  d3.select('.san-jose-ave-and-geneva-ave-station-label')
-    .text(null) // Clear any existing text
-    .append('tspan')
-    .attr('x', 135) // Set x position for the first line
-    .attr('y', 347)
-    .attr('dy', '0em') // Set y offset for the first line
-    .text('San Jose Ave &')
-    .append('tspan')
-    .attr('x', 135) // Set x position for the second line
-    .attr('dy', '1.2em') // Set y offset for the second line
-    .text('Geneva Ave Station');
-  d3.select('.ocean-ave-and-jules-ave-label')
-    .text(null) // Clear any existing text
-    .append('tspan')
-    .attr('x', 320) // Set x position for the first line
-    .attr('y', 347)
-    .attr('dy', '0em') // Set y offset for the first line
-    .text('Ocean Ave &')
-    .append('tspan')
-    .attr('x', 320) // Set x position for the second line
-    .attr('dy', '1.2em') // Set y offset for the second line
-    .text('Jules Ave');
-  d3.select('.ocean-ave-and-dorado-ter-label')
-    .text(null) // Clear any existing text
-    .append('tspan')
-    .attr('x', 420) // Set x position for the first line
-    .attr('y', 347)
-    .attr('dy', '0em') // Set y offset for the first line
-    .text('Ocean Ave &')
-    .append('tspan')
-    .attr('x', 420) // Set x position for the second line
-    .attr('dy', '1.2em') // Set y offset for the second line
-    .text('Dorado Ter');
-  d3.select('.ocean-ave-and-victoria-st-label')
-    .text(null) // Clear any existing text
-    .append('tspan')
-    .attr('x', 360) // Set x position for the first line
-    .attr('y', 347)
-    .attr('dy', '0em') // Set y offset for the first line
-    .text('Ocean Ave &')
-    .append('tspan')
-    .attr('x', 360) // Set x position for the second line
-    .attr('dy', '1.2em') // Set y offset for the second line
-    .text('Victoria St');
-  d3.select('.ocean-ave-and-fairfield-way-label')
-    .text(null) // Clear any existing text
-    .append('tspan')
-    .attr('x', 460) // Set x position for the first line
-    .attr('y', 347)
-    .attr('dy', '0em') // Set y offset for the first line
-    .text('Ocean Ave &')
-    .append('tspan')
-    .attr('x', 460) // Set x position for the second line
-    .attr('dy', '1.2em') // Set y offset for the second line
-    .text('Fairfield Way');
-}
-
-function makeLabels() {
-  function makeBG(elem) {
-    var svgns = "http://www.w3.org/2000/svg"
-    var bounds = elem.getBBox()
-    var bg = document.createElementNS(svgns, "rect")
-    var style = getComputedStyle(elem)
-    var padding_top = parseInt(style["padding-top"])
-    var padding_left = parseInt(style["padding-left"])
-    var padding_right = parseInt(style["padding-right"])
-    var padding_bottom = parseInt(style["padding-bottom"])
-    bg.setAttribute("x", bounds.x - parseInt(style["padding-left"]))
-    bg.setAttribute("y", bounds.y - parseInt(style["padding-top"]))
-    bg.setAttribute("width", bounds.width + padding_left + padding_right)
-    bg.setAttribute("height", bounds.height + padding_top + padding_bottom)
-    bg.setAttribute("fill", style["background-color"])
-    bg.setAttribute("rx", style["border-radius"])
-    bg.setAttribute("stroke-width", style["border-top-width"])
-    bg.setAttribute("stroke", style["border-top-color"])
-    if (elem.hasAttribute("transform")) {
-      bg.setAttribute("transform", elem.getAttribute("transform"))
-    }
-    elem.parentNode.insertBefore(bg, elem)
-  }
-
-  var texts = document.querySelectorAll(".label")
-  for (var i = 0; i < texts.length; i++) {
-    makeBG(texts[i])
-  }
+  d3.selectAll('.twin-peaks-blvd-label tspan').attr('y', 360);
+  d3.selectAll('.sutro-reservoir-label tspan').attr('y', 360);
+  d3.selectAll('.betty-sutro-meadow-label tspan').attr('y', 360);
 }
 
 function changeData(selectedValue) {
@@ -1653,7 +1572,6 @@ function changeData(selectedValue) {
     dataToBeRendered = combinedData.value;
   }
   runAfterLoad(dataToBeRendered, startHour, endHour);
-  makeLabels();
 }
 
 function clearChart() {
@@ -1671,7 +1589,6 @@ function filterByHour(firstHour, lastHour) {
   startHour = firstHour;
   endHour = lastHour;
   runAfterLoad(dataToBeRendered, startHour, endHour);
-  makeLabels();
 }
 
 function convertUTCToPDT(utcTimestamp) {
