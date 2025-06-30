@@ -153,7 +153,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
   console.log("start of runAfterLoad console");
 
   // svg canvas dimensions
-  const width = 2400;
+  const width = 1600;
   const height = 750;
 
   const outboundCY = 250;
