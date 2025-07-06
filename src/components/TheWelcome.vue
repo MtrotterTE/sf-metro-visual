@@ -14,39 +14,13 @@
       </select>
     </div>
     <div class="hour-filter-controls">
-      <label class="hour-selector-label" for="startHourFilter">Start Hour:</label>
-      <select id="startHourFilter" v-model="selectedStartHour" @change="filterByHour(selectedStartHour, selectedEndHour)">
+      <label class="hour-selector-label" for="hourRangeFilter">Hour Range:</label>
+      <select id="hourRangeFilter" v-model="selectedHourRange" @change="filterByHourRange(selectedHourRange)">
         <option value="all">All Hours</option>
-        <option value="8">8:00 PDT</option>
-        <option value="9">9:00 PDT</option>
-        <option value="10">10:00 PDT</option>
-        <option value="11">11:00 PDT</option>
-        <option value="12">12:00 PDT</option>
-        <option value="13">1:00 PM PDT</option>
-        <option value="14">2:00 PM PDT</option>
-        <option value="15">3:00 PM PDT</option>
-        <option value="16">4:00 PM PDT</option>
-        <option value="17">5:00 PM PDT</option>
-        <option value="18">6:00 PM PDT</option>
-        <option value="19">7:00 PM PDT</option>
-        <option value="20">8:00 PM PDT</option>
-      </select>
-      <label class="hour-selector-label" for="endHourFilter">End Hour:</label>
-      <select id="endHourFilter" v-model="selectedEndHour" @change="filterByHour(selectedStartHour, selectedEndHour)">
-        <option value="all">All Hours</option>
-        <option value="8">8:00 PDT</option>
-        <option value="9">9:00 PDT</option>
-        <option value="10">10:00 PDT</option>
-        <option value="11">11:00 PDT</option>
-        <option value="12">12:00 PDT</option>
-        <option value="13">1:00 PM PDT</option>
-        <option value="14">2:00 PM PDT</option>
-        <option value="15">3:00 PM PDT</option>
-        <option value="16">4:00 PM PDT</option>
-        <option value="17">5:00 PM PDT</option>
-        <option value="18">6:00 PM PDT</option>
-        <option value="19">7:00 PM PDT</option>
-        <option value="20">8:00 PM PDT</option>
+        <option value="7-10">7:00 AM PDT - 10:00 AM PDT</option>
+        <option value="10-15">10:00 AM PDT - 3:00 PM PDT</option>
+        <option value="15-19">3:00 PM PDT - 7:00 PM PDT</option>
+        <option value="19-21">7:00 PM PDT - 9:00 PM PDT</option>
       </select>
     </div>
     <div ref="chart" class="svg-area"></div>
@@ -56,38 +30,13 @@
         <div class="legend-header">Rectangle:</div>
         <div class="legend-grid-container">
           <div class="legend-item">
-            <span class="legend-color station-color"></span> Station
-          </div>
-          <div class="legend-item">
             <span class="legend-color intersection-color"></span> Intersection
-          </div>
-          <div class="legend-item">
-            <span class="legend-color terminal-color"></span> Terminal Station
           </div>
           <div class="legend-item">
             <span class="legend-color terminal-intersection-color"></span> Terminal Intersection
           </div>
         </div>
         <div class="terminal-note">Note: Train sits at terminal stations/intersections between trips for operator change, schedule, bathroom break, etc.</div>
-        <div class="legend-grid-container-bottom-content">
-          <div class="bottom-legend-left">
-            <div class="legend-header">Background:</div>
-            <div class="legend-grid-container">
-              <div class="legend-item">
-                <span class="legend-color surface-color"></span> Surface
-              </div>
-              <div class="legend-item">
-                <span class="legend-color underground-color"></span> Underground
-              </div>
-            </div>
-          </div>
-          <div class="bottom-legend-right">
-            <div class="legend-header">Label:</div>
-            <div class="legend-item">
-              <span class="legend-text rectangle-height-label">31</span> Average time, in seconds, at station/intersection (height of rectangle)
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>  
@@ -106,8 +55,7 @@ const data5 = ref(null);
 const data6 = ref(null);
 const combinedData = ref(null);
 const selectedTime = ref('combined'); // Default selected value
-const selectedStartHour = ref('all'); // Default to 'all'
-const selectedEndHour = ref('all'); // Default to 'all'
+const selectedHourRange = ref('all'); // Default to 'all'
 
 let startHour = "all";
 let endHour = "all";
@@ -1486,6 +1434,30 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
     .attr('class', 'inbound-average-label label')
     .text('Average Trip Duration: ' + inboundAverageTimeInMinutes + ' minutes');
 
+  svg.append('text')
+    .attr('x', 280)
+    .attr('y', 40)
+    .attr('class', 'inbound-average-label label')
+    .text('Surface');
+
+  svg.append('text')
+    .attr('x', 380)
+    .attr('y', 40)
+    .attr('class', 'inbound-average-label label')
+    .text('Underground');
+
+  svg.append('text')
+    .attr('x', 280)
+    .attr('y', 700)
+    .attr('class', 'inbound-average-label label')
+    .text('Surface');
+
+  svg.append('text')
+    .attr('x', 380)
+    .attr('y', 700)
+    .attr('class', 'inbound-average-label label')
+    .text('Underground');
+
   // Loop through stations data to create bars and labels
   stationsData.forEach((station, index) => {
     const averageTime =  station.numVehicles > 0 ? station.totalTime / station.numVehicles : 0;
@@ -1522,10 +1494,10 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
       });
 
     svg.append('rect')
-      .attr('x', cx)
-      .attr('y', 290)
-      .attr('width', offsetX + 10)
-      .attr('height', 130)
+      .attr('x', cx - 2)
+      .attr('y', 285)
+      .attr('width', offsetX + 14)
+      .attr('height', 140)
       .attr('fill', '#010101')
       .attr('rx', '4px');
 
@@ -1548,7 +1520,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
   const undergroundX = d3.select('.west-portal-ave-and\\&-dewey-blvd-rect').attr('x') - 2;
   d3.select('.underground').attr('x', undergroundX);
 
-  // Move labels with differnt inbound and outbound names
+  // Move labels with same inbound and outbound names
   d3.selectAll('.twin-peaks-blvd-label tspan').attr('y', 360);
   d3.selectAll('.sutro-reservoir-label tspan').attr('y', 360);
   d3.selectAll('.betty-sutro-meadow-label tspan').attr('y', 360);
@@ -1578,6 +1550,27 @@ function clearChart() {
   if (chart.value) {
     chart.value.innerHTML = ''; // Removes all content inside the div
   }
+}
+
+function filterByHourRange(hourRange) {
+  let startHour = 'all';
+  let endHour = 'all';
+
+  if (hourRange === '7-10') {
+    startHour = '7';
+    endHour = '10';
+  } else if (hourRange === '10-15') {
+    startHour = '10';
+    endHour = '15';
+  } else if (hourRange === '15-19') {
+    startHour = '15';
+    endHour = '19';
+  } else if (hourRange === '19-21') {
+    startHour = '19';
+    endHour = '21';
+  }
+
+  filterByHour(startHour, endHour);
 }
 
 function filterByHour(firstHour, lastHour) {
@@ -1671,7 +1664,7 @@ function convertSecondsToMinutes(seconds) {
   position: absolute;
   text-align: right;
   padding: 6px;
-  font-size: 12px;
+  font-size: 16px;
   background: #333;
   color: #fff;
   border-radius: 4px;
@@ -1710,7 +1703,7 @@ function convertSecondsToMinutes(seconds) {
 .station-label.label, .intersection-label.label {
   font-family: "Roboto", sans-serif;
   fill: #010101;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 400;
   letter-spacing: 0.2px;
   padding: 2px 8px;
