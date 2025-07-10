@@ -53,13 +53,21 @@ const data3 = ref(null);
 const data4 = ref(null);
 const data5 = ref(null);
 const data6 = ref(null);
+const fullTripData1 = ref(null);
+const fullTripData2 = ref(null);
+const fullTripData3 = ref(null);
+const fullTripData4 = ref(null);
+const fullTripData5 = ref(null);
+const fullTripData6 = ref(null);
 const combinedData = ref(null);
+const fullTripCombinedData = ref(null);
 const selectedTime = ref('combined'); // Default selected value
 const selectedHourRange = ref('all'); // Default to 'all'
 
 let startHour = "all";
 let endHour = "all";
-let dataToBeRendered; // Default to the latest data
+let dataToBeRendered; // Default to all data
+let fullTripDataToBeRendered; // Default to all data
 
 onMounted(async () => {
   try {
@@ -72,12 +80,28 @@ onMounted(async () => {
       import('../data/stopData-Curated-05-11.json')
     ]);
 
+    const [fullTripFile1, fullTripFile2, fullTripFile3, fullTripFile4, fullTripFile5, fullTripFile6] = await Promise.all([
+      import('../data/fullTrip-Curated-05-16.json'),
+      import('../data/fullTrip-Curated-05-15.json'),
+      import('../data/fullTrip-Curated-05-14.json'),
+      import('../data/fullTrip-Curated-05-13.json'),
+      import('../data/fullTrip-Curated-05-12.json'),
+      import('../data/fullTrip-Curated-05-11.json')
+    ]);
+
     data1.value = file1.default;
     data2.value = file2.default;
     data3.value = file3.default;
     data4.value = file4.default;
     data5.value = file5.default;
     data6.value = file6.default;
+
+    fullTripData1.value = fullTripFile1.default;
+    fullTripData2.value = fullTripFile2.default;
+    fullTripData3.value = fullTripFile3.default;
+    fullTripData4.value = fullTripFile4.default;
+    fullTripData5.value = fullTripFile5.default;
+    fullTripData6.value = fullTripFile6.default;
 
     // Combine all data into one array
     combinedData.value = [
@@ -89,15 +113,26 @@ onMounted(async () => {
       ...Object.values(data6.value)
     ];
 
+    // Combine full trip data into one array
+    fullTripCombinedData.value = [
+      ...Object.values(fullTripData1.value),
+      ...Object.values(fullTripData2.value),
+      ...Object.values(fullTripData3.value),
+      ...Object.values(fullTripData4.value),
+      ...Object.values(fullTripData5.value),
+      ...Object.values(fullTripData6.value)
+    ];
+
     //console.log(data1.value);
     dataToBeRendered = combinedData.value;
-    runAfterLoad(dataToBeRendered, startHour, endHour);
+    fullTripDataToBeRendered = fullTripCombinedData.value;
+    runAfterLoad(dataToBeRendered, startHour, endHour, fullTripDataToBeRendered);
   } catch (error) {
     console.error('Error loading JSON files:', error);
   }
 })
 
-function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
+function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
   console.log("start of runAfterLoad console");
 
   // svg canvas dimensions
@@ -406,7 +441,28 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
   let inboundAverageDurationArrayEnd = [];
   let inboundAverageIndexEnd = 0;
 
-  let currentDate = 0;
+  let outboundFullTrips = 0;
+  let inboundFullTrips = 0;
+  let outboundAveragesArray = [];
+  let inboundAveragesArray = [];
+
+  // Count full trips
+  Object.values(fullTripData).forEach((trip) => {
+    const date = new Date(trip.endTimestamp);
+    const pdtDate = new Date(convertUTCToPDT(date));
+    const hour = pdtDate.getHours();
+    if ((startHourFilter === "all" || endHourFilter === "all") || ((parseInt(startHourFilter) <= parseInt(hour)) && (parseInt(hour) < parseInt(endHourFilter)))) {
+      if (trip.direction === "outbound") {
+        outboundFullTrips++;
+        let totalTripTime = getTimeDifferenceInSeconds(trip.startTimestamp, trip.endTimestamp);
+        outboundAveragesArray.push(totalTripTime);
+      } else if (trip.direction === "inbound") {
+        inboundFullTrips++;
+        let totalTripTime = getTimeDifferenceInSeconds(trip.startTimestamp, trip.endTimestamp);
+        inboundAveragesArray.push(totalTripTime);
+      }
+    }
+  });
   // Cycle through the data
   Object.values(dataFile).forEach((stop) => {
     const date = new Date(stop.timestamp);
@@ -832,44 +888,21 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
     }
   });
 
-  let outboundTotalTripTimeArray = [];
-
   // calculate averages
-  outboundAverageDurationArrayEnd.forEach((endVehicle) => {
-    outboundAverageDurationArrayStart.forEach((startVehicle) => {
-      if (endVehicle.trip_id === startVehicle.trip_id && endVehicle.trip_day === startVehicle.trip_day) {
-        let totalTripTime = getTimeDifferenceInSeconds(startVehicle.timestamp, endVehicle.timestamp);
-        totalTripTime = totalTripTime - startVehicle.timeAtStop; // subtract time at first stop
-        outboundTotalTripTimeArray.push(totalTripTime);
-      }
-    });
-  });
   let outboundTotalTime = 0;
-  let outboundTotalIndex = 0;
-  outboundTotalTripTimeArray.forEach((totalTime) => {
-    outboundTotalTime += parseInt(totalTime);
-    outboundTotalIndex++;
+  let outboundTotalIndex = outboundAveragesArray.length;
+  outboundAveragesArray.forEach((time) => {
+    outboundTotalTime += time;
   });
+
   let outboundAverageTimeInSeconds = outboundTotalTime / outboundTotalIndex;
   let outboundAverageTimeInMinutes = convertSecondsToMinutes(outboundAverageTimeInSeconds);
 
-  let inboundTotalTripTimeArray = [];
-
   // calculate averages
-  inboundAverageDurationArrayEnd.forEach((endVehicle) => {
-    inboundAverageDurationArrayStart.forEach((startVehicle) => {
-      if (endVehicle.trip_id === startVehicle.trip_id && endVehicle.trip_day === startVehicle.trip_day) {
-        let totalTripTime = getTimeDifferenceInSeconds(startVehicle.timestamp, endVehicle.timestamp);
-        totalTripTime = totalTripTime - startVehicle.timeAtStop; // subtract time at first stop
-        inboundTotalTripTimeArray.push(totalTripTime);
-      }
-    });
-  });
   let inboundTotalTime = 0;
-  let inboundTotalIndex = 0;
-  inboundTotalTripTimeArray.forEach((totalTime) => {
-    inboundTotalTime += parseInt(totalTime);
-    inboundTotalIndex++;
+  let inboundTotalIndex = inboundAveragesArray.length;
+  inboundAveragesArray.forEach((time) => {
+    inboundTotalTime += time;
   });
   let inboundAverageTimeInSeconds = inboundTotalTime / inboundTotalIndex;
   let inboundAverageTimeInMinutes = convertSecondsToMinutes(inboundAverageTimeInSeconds);
@@ -1333,7 +1366,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
     .attr('x', 22)
     .attr('y', outboundCY - 60 - 3)
     .attr('class', 'minute-label')
-    .text('1 min');
+    .text('10 seconds');
 
   svg.append('rect')
     .attr('x', 0)
@@ -1346,7 +1379,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
     .attr('x', 22)
     .attr('y', outboundCY - 120 - 3)
     .attr('class', 'minute-label')
-    .text('2 min');
+    .text('20 seconds');
 
   svg.append('rect')
     .attr('x', 0)
@@ -1359,7 +1392,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
     .attr('x', 22)
     .attr('y', outboundCY - 180 - 3)
     .attr('class', 'minute-label')
-    .text('3 min');
+    .text('30 seconds');
 
   svg.append('rect')
     .attr('x', 0)
@@ -1372,7 +1405,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
     .attr('x', 22)
     .attr('y', inboundCY + 60 + 12)
     .attr('class', 'minute-label')
-    .text('1 min');
+    .text('10 seconds');
 
   svg.append('rect')
     .attr('x', 0)
@@ -1385,7 +1418,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
     .attr('x', 22)
     .attr('y', inboundCY + 120 + 12)
     .attr('class', 'minute-label')
-    .text('2 min');
+    .text('20 seconds');
 
   svg.append('rect')
     .attr('x', 0)
@@ -1398,7 +1431,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
     .attr('x', 22)
     .attr('y', inboundCY + 180 + 12)
     .attr('class', 'minute-label')
-    .text('3 min');
+    .text('30 seconds');
 
   svg.append('text')
     .attr('x', 22)
@@ -1435,32 +1468,37 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
     .text('Average Trip Duration: ' + inboundAverageTimeInMinutes + ' minutes');
 
   svg.append('text')
-    .attr('x', 280)
+    .attr('x', 290)
     .attr('y', 40)
     .attr('class', 'inbound-average-label label')
     .text('Surface');
 
   svg.append('text')
-    .attr('x', 380)
+    .attr('x', 390)
     .attr('y', 40)
     .attr('class', 'inbound-average-label label')
     .text('Underground');
 
   svg.append('text')
-    .attr('x', 280)
+    .attr('x', 290)
     .attr('y', 700)
     .attr('class', 'inbound-average-label label')
     .text('Surface');
 
   svg.append('text')
-    .attr('x', 380)
+    .attr('x', 390)
     .attr('y', 700)
     .attr('class', 'inbound-average-label label')
     .text('Underground');
 
   // Loop through stations data to create bars and labels
   stationsData.forEach((station, index) => {
-    const averageTime =  station.numVehicles > 0 ? station.totalTime / station.numVehicles : 0;
+    let averageTime = 0;
+    if (station.direction === "outbound") {
+      averageTime = station.numVehicles > 0 ? station.totalTime / outboundFullTrips : 0;
+    } else if (station.direction === "inbound") {
+      averageTime = station.numVehicles > 0 ? station.totalTime / inboundFullTrips : 0;
+    }
     const isOutbound = station.direction === 'outbound';
     const isStation = station.isStation;
     const offsetX = 20;
@@ -1471,8 +1509,10 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
     } else {
       cx = (index * offsetX) + 20; // Adjust horizontal position for each station
     }
-    cx += 60; // push out right to make room for axis
-    const height = averageTime;
+    cx += 70; // push out right to make room for axis
+    let height = averageTime;
+    const scalar = 6; // Scale factor to adjust height
+    height = height * scalar; // Scale the height
 
     svg.append('rect')
       .attr('x', cx)
@@ -1482,8 +1522,13 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter) {
       .attr('class', isStation ? `${station.name.toLowerCase().replace(/ /g, '-')}-rect station-rect` : `${station.name.toLowerCase().replace(/ /g, '-')}-rect intersection-rect`)
       .attr('fill', 'steelblue')
       .on("mouseover", (event, d) => {
-        tooltip.style("opacity", 1)
-          .html(`<span>${station.name}.</span><br>Total Time at Station: <span>${station.totalTime}</span> seconds<br>Total Vehicles: <span>${station.numVehicles}</span> vehicles<br>Average Time at Station: <span>${averageTime.toFixed(2)}</span> seconds`);
+        if (isOutbound) {
+          tooltip.style("opacity", 1)
+            .html(`<span>${station.name.replace("and", "")}.</span><br>Total Time at Intersection: <span>${station.totalTime}</span> seconds<br>Total Vehicles Stopped at Intersection: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Intersection: <span>${outboundFullTrips}</span> vehicles<br>Average Time at Intersection: <span>${averageTime.toFixed(2)}</span> seconds`);
+        } else {
+          tooltip.style("opacity", 1)
+            .html(`<span>${station.name.replace("and", "")}.</span><br>Total Time at Intersection: <span>${station.totalTime}</span> seconds<br>Total Vehicles Stopped at Intersection: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Intersection: <span>${inboundFullTrips}</span> vehicles<br>Average Time at Intersection: <span>${averageTime.toFixed(2)}</span> seconds`);
+        }
       })
       .on("mousemove", (event) => {
         tooltip.style("left", (event.pageX + 10) + "px")
@@ -1530,20 +1575,27 @@ function changeData(selectedValue) {
   clearChart();
   if (selectedValue === "05-16") {
     dataToBeRendered = data1.value;
+    fullTripDataToBeRendered = fullTripData1.value;
   } else if (selectedValue === "05-15") {
     dataToBeRendered = data2.value;
+    fullTripDataToBeRendered = fullTripData2.value;
   } else if (selectedValue === "05-14") {
     dataToBeRendered = data3.value;
+    fullTripDataToBeRendered = fullTripData3.value;
   } else if (selectedValue === "05-13") {
     dataToBeRendered = data4.value;
+    fullTripDataToBeRendered = fullTripData4.value;
   } else if (selectedValue === "05-12") {
     dataToBeRendered = data5.value;
+    fullTripDataToBeRendered = fullTripData5.value;
   } else if (selectedValue === "05-11") {
     dataToBeRendered = data6.value;
+    fullTripDataToBeRendered = fullTripData6.value;
   } else if (selectedValue === "combined") {
     dataToBeRendered = combinedData.value;
+    fullTripDataToBeRendered = fullTripCombinedData.value;
   }
-  runAfterLoad(dataToBeRendered, startHour, endHour);
+  runAfterLoad(dataToBeRendered, startHour, endHour, fullTripDataToBeRendered);
 }
 
 function clearChart() {
@@ -1581,7 +1633,7 @@ function filterByHour(firstHour, lastHour) {
   clearChart();
   startHour = firstHour;
   endHour = lastHour;
-  runAfterLoad(dataToBeRendered, startHour, endHour);
+  runAfterLoad(dataToBeRendered, startHour, endHour, fullTripDataToBeRendered);
 }
 
 function convertUTCToPDT(utcTimestamp) {
