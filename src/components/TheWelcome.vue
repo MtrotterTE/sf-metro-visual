@@ -1441,30 +1441,90 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
     .attr("text-anchor", "middle")
     .text('Average Time in Seconds')
 
+  // End of axis
+
+  svg.append('rect')
+    .attr('x', 285)
+    .attr('y', 20)
+    .attr('width', 70)
+    .attr('height',30)
+    .attr('opacity', 0.6)
+    .attr('fill', '#010101')
+    .attr('rx', '4px');
+
+  svg.append('rect')
+    .attr('x', 285)
+    .attr('y', 680)
+    .attr('width', 70)
+    .attr('height',30)
+    .attr('opacity', 0.6)
+    .attr('fill', '#010101')
+    .attr('rx', '4px');
+
+  svg.append('rect')
+    .attr('x', 385)
+    .attr('y', 20)
+    .attr('width', 110)
+    .attr('height',30)
+    .attr('opacity', 0.6)
+    .attr('fill', '#010101')
+    .attr('rx', '4px');
+
+  svg.append('rect')
+    .attr('x', 385)
+    .attr('y', 680)
+    .attr('width', 110)
+    .attr('height',30)
+    .attr('opacity', 0.6)
+    .attr('fill', '#010101')
+    .attr('rx', '4px');
+
+  svg.append('rect')
+    .attr('x', 620)
+    .attr('y', 20)
+    .attr('width', 300)
+    .attr('height',90)
+    .attr('opacity', 0.6)
+    .attr('fill', '#010101')
+    .attr('rx', '4px');
+
+  svg.append('rect')
+    .attr('x', 620)
+    .attr('y', 650)
+    .attr('width', 300)
+    .attr('height',90)
+    .attr('opacity', 0.6)
+    .attr('fill', '#010101')
+    .attr('rx', '4px');
+
   // Outbound labels
   svg.append('text')
     .attr('x', 770)
     .attr('y', 40)
     .attr('class', 'outbound-label label')
+    .attr("text-anchor", "middle")
     .text('<-- Outbound <--');
   // Outbound Average
   svg.append('text')
     .attr('x', 770)
     .attr('y', 70)
     .attr('class', 'outbound-average-label label')
+    .attr("text-anchor", "middle")
     .text('Average Trip Duration: ' + outboundAverageTimeInMinutes + ' minutes');
 
   // Inbound label
   svg.append('text')
     .attr('x', 770)
-    .attr('y', height - 50)
+    .attr('y', height - 80)
     .attr('class', 'inbound-label label')
+    .attr("text-anchor", "middle")
     .text('--> Inbound -->');
   // Inbound average
   svg.append('text')
     .attr('x', 770)
-    .attr('y', height - 20)
+    .attr('y', height - 50)
     .attr('class', 'inbound-average-label label')
+    .attr("text-anchor", "middle")
     .text('Average Trip Duration: ' + inboundAverageTimeInMinutes + ' minutes');
 
   svg.append('text')
@@ -1491,6 +1551,10 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
     .attr('class', 'inbound-average-label label')
     .text('Underground');
 
+  // Variable for total time saved at intersections
+  let totalTimeSavedOutbound = 0;
+  let totalTimeSavedInbound = 0;
+
   // Loop through stations data to create bars and labels
   stationsData.forEach((station, index) => {
     let averageTime = 0;
@@ -1513,6 +1577,17 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
     let height = averageTime;
     const scalar = 6; // Scale factor to adjust height
     height = height * scalar; // Scale the height
+
+    // Add heights for non-terminal intersections to get average time saved
+    if (isOutbound) {
+      if (station.name !== "Embarcadero and& Folsom St" && station.name !== "Embarcadero and& Howard" && station.name !== "Embarcadero and& Mission" && station.name !== "Market St and& Steuart St") {
+        totalTimeSavedOutbound += averageTime;
+      }
+    } else {
+      if (station.name !== "Embarcadero and& Folsom St" && station.name !== "Embarcadero and& Howard" && station.name !== "Embarcadero and& Mission" && station.name !== "Market St and& Steuart St") {
+        totalTimeSavedInbound += averageTime;
+      }
+    }
 
     svg.append('rect')
       .attr('x', cx)
@@ -1543,6 +1618,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
       .attr('y', 285)
       .attr('width', offsetX + 14)
       .attr('height', 140)
+      .attr('opacity', 0.35)
       .attr('fill', '#010101')
       .attr('rx', '4px');
 
@@ -1560,6 +1636,20 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
       .attr('dy', (d, i) => i * 1.2 + 'em') // Set vertical offset for each line
       .text(d => d.trim()); // Add the text content
   });
+
+  svg.append('text')
+    .attr('x', 770)
+    .attr('y', height - 20)
+    .attr('class', 'inbound-time-saved-label label')
+    .attr("text-anchor", "middle")
+    .text('Total Time Saved: ' + totalTimeSavedInbound.toFixed(1) + ' seconds');
+
+  svg.append('text')
+    .attr('x', 770)
+    .attr('y', 100)
+    .attr('class', 'outbound-time-saved-label label')
+    .attr("text-anchor", "middle")
+    .text('Total Time Saved: ' + totalTimeSavedOutbound.toFixed(1) + ' seconds');
 
   // Move underground rectangle to align with the west portal station rectangle
   const undergroundX = d3.select('.west-portal-ave-and\\&-dewey-blvd-rect').attr('x') - 2;
@@ -1771,7 +1861,7 @@ function convertSecondsToMinutes(seconds) {
   padding: 0 8px;
 }
 
-.intersection-label.label {
+.intersection-label.label, .label {
   background-color: #010101;
   font-weight: 300;
   stroke: #fff;
@@ -1784,7 +1874,7 @@ function convertSecondsToMinutes(seconds) {
   margin-right: 8px;
 }
 
-#timeFilter, #startHourFilter, #endHourFilter {
+#timeFilter, #hourRangeFilter {
   font-family: "Roboto", sans-serif;
   font-size: 14px;
   border-radius: 4px;
@@ -1867,6 +1957,10 @@ function convertSecondsToMinutes(seconds) {
   background: lightblue;
   border-radius: 0;
   border: 3px solid #010101;
+}
+
+.embarcadero-and\&-mission-rect, .embarcadero-and\&-howard-rect, .market-st-and\&-steuart-st-rect, .embarcadero-and\&-folsom-st-rect {
+  stroke: #010101;
 }
 
 .terminal-intersection-color {
