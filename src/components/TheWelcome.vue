@@ -1597,12 +1597,30 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
       .attr('class', isStation ? `${station.name.toLowerCase().replace(/ /g, '-')}-rect station-rect` : `${station.name.toLowerCase().replace(/ /g, '-')}-rect intersection-rect`)
       .attr('fill', 'steelblue')
       .on("mouseover", (event, d) => {
-        if (isOutbound) {
-          tooltip.style("opacity", 1)
-            .html(`<span>${station.name.replace("and", "")}.</span><br>Total Time at Intersection: <span>${station.totalTime}</span> seconds<br>Total Vehicles Stopped at Intersection: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Intersection: <span>${outboundFullTrips}</span> vehicles<br>Average Time at Intersection: <span>${averageTime.toFixed(2)}</span> seconds`);
+        if (station.totalTime > 3600) {
+          if (isOutbound) {
+            tooltip.style("opacity", 1)
+              .html(`<span>${station.name.replace("and", "")}.</span><br>Total Time at Intersection: <span>${convertMinutesToHours(convertSecondsToMinutes(station.totalTime))}</span> hours<br>Total Vehicles Stopped at Intersection: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Intersection: <span>${outboundFullTrips}</span> vehicles<br>Average Time at Intersection: <span>${averageTime.toFixed(2)}</span> seconds`);
+          } else {
+            tooltip.style("opacity", 1)
+              .html(`<span>${station.name.replace("and", "")}.</span><br>Total Time at Intersection: <span>${convertMinutesToHours(convertSecondsToMinutes(station.totalTime))}</span> hours<br>Total Vehicles Stopped at Intersection: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Intersection: <span>${inboundFullTrips}</span> vehicles<br>Average Time at Intersection: <span>${averageTime.toFixed(2)}</span> seconds`);
+          }
+        } else if (station.totalTime > 60) {
+          if (isOutbound) {
+            tooltip.style("opacity", 1)
+              .html(`<span>${station.name.replace("and", "")}.</span><br>Total Time at Intersection: <span>${convertSecondsToMinutes(station.totalTime)}</span> minutes<br>Total Vehicles Stopped at Intersection: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Intersection: <span>${outboundFullTrips}</span> vehicles<br>Average Time at Intersection: <span>${averageTime.toFixed(2)}</span> seconds`);
+          } else {
+            tooltip.style("opacity", 1)
+              .html(`<span>${station.name.replace("and", "")}.</span><br>Total Time at Intersection: <span>${convertSecondsToMinutes(station.totalTime)}</span> minutes<br>Total Vehicles Stopped at Intersection: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Intersection: <span>${inboundFullTrips}</span> vehicles<br>Average Time at Intersection: <span>${averageTime.toFixed(2)}</span> seconds`);
+          }
         } else {
-          tooltip.style("opacity", 1)
-            .html(`<span>${station.name.replace("and", "")}.</span><br>Total Time at Intersection: <span>${station.totalTime}</span> seconds<br>Total Vehicles Stopped at Intersection: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Intersection: <span>${inboundFullTrips}</span> vehicles<br>Average Time at Intersection: <span>${averageTime.toFixed(2)}</span> seconds`);
+          if (isOutbound) {
+            tooltip.style("opacity", 1)
+              .html(`<span>${station.name.replace("and", "")}.</span><br>Total Time at Intersection: <span>${station.totalTime}</span> seconds<br>Total Vehicles Stopped at Intersection: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Intersection: <span>${outboundFullTrips}</span> vehicles<br>Average Time at Intersection: <span>${averageTime.toFixed(2)}</span> seconds`);
+          } else {
+            tooltip.style("opacity", 1)
+              .html(`<span>${station.name.replace("and", "")}.</span><br>Total Time at Intersection: <span>${station.totalTime}</span> seconds<br>Total Vehicles Stopped at Intersection: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Intersection: <span>${inboundFullTrips}</span> vehicles<br>Average Time at Intersection: <span>${averageTime.toFixed(2)}</span> seconds`);
+          }
         }
       })
       .on("mousemove", (event) => {
@@ -1642,14 +1660,14 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
     .attr('y', height - 20)
     .attr('class', 'inbound-time-saved-label label')
     .attr("text-anchor", "middle")
-    .text('Total Time Saved: ' + totalTimeSavedInbound.toFixed(1) + ' seconds');
+    .text('Average Time Saved: ' + totalTimeSavedInbound.toFixed(1) + ' seconds');
 
   svg.append('text')
     .attr('x', 770)
     .attr('y', 100)
     .attr('class', 'outbound-time-saved-label label')
     .attr("text-anchor", "middle")
-    .text('Total Time Saved: ' + totalTimeSavedOutbound.toFixed(1) + ' seconds');
+    .text('Average Time Saved: ' + totalTimeSavedOutbound.toFixed(1) + ' seconds');
 
   // Move underground rectangle to align with the west portal station rectangle
   const undergroundX = d3.select('.west-portal-ave-and\\&-dewey-blvd-rect').attr('x') - 2;
@@ -1764,6 +1782,10 @@ function getTimeDifferenceInSeconds(timestamp1, timestamp2) {
 
 function convertSecondsToMinutes(seconds) {
   return (seconds / 60).toFixed(1);
+}
+
+function convertMinutesToHours(minutes) {
+  return (minutes / 60).toFixed(1);
 }
 
 </script>
