@@ -20,5 +20,6 @@ header {
 
 main {
   width: fit-content;
+  margin: auto;
 }
 </style>
