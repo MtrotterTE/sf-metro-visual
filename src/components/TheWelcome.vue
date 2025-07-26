@@ -136,11 +136,11 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
   console.log("start of runAfterLoad console");
 
   // svg canvas dimensions
-  const width = 840;
+  const width = 805;
   const height = 750;
 
-  const outboundCY = 250;
-  const inboundCY = 450;
+  const outboundCY = 220;
+  const inboundCY = 480;
 
   const svg = d3.select(chart.value)
     .append('svg')
@@ -1372,126 +1372,126 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
       isStation: true
     },
     {
-      name: 'West Portal Ave and& Vicente St',
+      name: 'West Portal Ave and& & Vicente St',
       totalTime: WPVicenteIntersectionOutbound,
       numVehicles: WPVicenteIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'West Portal Ave and& Vicente St',
+      name: 'West Portal Ave and& & Vicente St',
       totalTime: WPVicenteIntersectionInbound,
       numVehicles: WPVicenteIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'West Portal & 14th',
+      name: 'West Portal and& & 14th',
       totalTime: WP14StationOutbound,
       numVehicles: WP14StationOutboundNumVehicles,
       direction: 'outbound',
       isStation: true
     },
     {
-      name: 'West Portal & 14th',
+      name: 'West Portal and& & 14th',
       totalTime: WP14StationInbound,
       numVehicles: WP14StationInboundNumVehicles,
       direction: 'inbound',
       isStation: true
     },
     {
-      name: 'West Portal Ave and& 15th Ave',
+      name: 'West Portal Ave and& & 15th Ave',
       totalTime: WP15IntersectionOutbound,
       numVehicles: WP15IntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'West Portal Ave and& 15th Ave',
+      name: 'West Portal Ave and& & 15th Ave',
       totalTime: WP15IntersectionInbound,
       numVehicles: WP15IntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'West Portal & Sloat Blvd (Saint Francis Cir)',
+      name: 'West Portal and& & Sloat Blvd',
       totalTime: WPSLStationOutbound,
       numVehicles: WPSLStationOutboundNumVehicles,
       direction: 'outbound',
       isStation: true
     },
     {
-      name: 'West Portal & Sloat Blvd (Saint Francis Cir)',
+      name: 'West Portal and& & Sloat Blvd',
       totalTime: WPSLStationInbound,
       numVehicles: WPSLStationInboundNumVehicles,
       direction: 'inbound',
       isStation: true
     },
     {
-      name: 'Junipero Serra Blvd and& Monterey Blvd',
+      name: 'Junipero Serra Blvd and& & Monterey Blvd',
       totalTime: JSMontereyIntersectionOutbound,
       numVehicles: JSMontereyIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Junipero Serra Blvd and& Monterey Blvd',
+      name: 'Junipero Serra Blvd and& & Monterey Blvd',
       totalTime: JSMontereyIntersectionInbound,
       numVehicles: JSMontereyIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Junipero Serra Blvd & Ocean Ave',
+      name: 'Junipero Serra Blvd and& & Ocean Ave',
       totalTime: JSStationOutbound,
       numVehicles: JSStationOutboundNumVehicles,
       direction: 'outbound',
       isStation: true
     },
     {
-      name: 'Junipero Serra Blvd & Ocean Ave',
+      name: 'Junipero Serra Blvd and& & Ocean Ave',
       totalTime: JSStationInbound,
       numVehicles: JSStationInboundNumVehicles,
       direction: 'inbound',
       isStation: true
     },
     {
-      name: 'Ocean Ave & San Leandro Way',
+      name: 'Ocean Ave and& & San Leandro Way',
       totalTime: OSLStationOutbound,
       numVehicles: OSLStationOutboundNumVehicles,
       direction: 'outbound',
       isStation: true
     },
     {
-      name: 'Ocean Ave & San Leandro Way',
+      name: 'Ocean Ave and& & San Leandro Way',
       totalTime: OSLStationInbound,
       numVehicles: OSLStationInboundNumVehicles,
       direction: 'inbound',
       isStation: true
     },
     {
-      name: 'Ocean Ave & Aptos',
+      name: 'Ocean Ave and& & Aptos',
       totalTime: OceanAptosStationOutbound,
       numVehicles: OceanAptosStationOutboundNumVehicles,
       direction: 'outbound',
       isStation: true
     },
     {
-      name: 'Ocean Ave & Aptos',
+      name: 'Ocean Ave and& & Aptos',
       totalTime: OceanAptosStationInbound,
       numVehicles: OceanAptosStationInboundNumVehicles,
       direction: 'inbound',
       isStation: true
     },
     {
-      name: 'Ocean Ave and& Cerritos Ave',
+      name: 'Ocean Ave and& & Cerritos Ave',
       totalTime: OceanCerritosIntersectionOutbound,
       numVehicles: OceanCerritosIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Ocean Ave and& Cerritos Ave',
+      name: 'Ocean Ave and& & Cerritos Ave',
       totalTime: OceanCerritosIntersectionInbound,
       numVehicles: OceanCerritosIntersectionInboundNumVehicles,
       direction: 'inbound',
@@ -1526,84 +1526,84 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
       isStation: true
     },
     {
-      name: 'Ocean Ave & Miramar Ave',
+      name: 'Ocean Ave and& & Miramar Ave',
       totalTime: OceanMiramarStationOutbound,
       numVehicles: OceanMiramarStationOutboundNumVehicles,
       direction: 'outbound',
       isStation: true
     },
     {
-      name: 'Ocean Ave & Miramar Ave',
+      name: 'Ocean Ave and& & Miramar Ave',
       totalTime: OceanMiramarStationInbound,
       numVehicles: OceanMiramarStationInboundNumVehicles,
       direction: 'inbound',
       isStation: true
     },
     {
-      name: 'Ocean Ave and& Plymouth Ave',
+      name: 'Ocean Ave and& & Plymouth Ave',
       totalTime: OceanPlymouthIntersectionOutbound,
       numVehicles: OceanPlymouthIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Ocean Ave and& Plymouth Ave',
+      name: 'Ocean Ave and& & Plymouth Ave',
       totalTime: OceanPlymouthIntersectionInbound,
       numVehicles: OceanPlymouthIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Ocean Ave & Lee Ave',
+      name: 'Ocean Ave and& & Lee Ave',
       totalTime: OceanLeeStationOutbound,
       numVehicles: OceanLeeStationOutboundNumVehicles,
       direction: 'outbound',
       isStation: true
     },
     {
-      name: 'Ocean Ave & Lee Ave',
+      name: 'Ocean Ave and& & Lee Ave',
       totalTime: OceanLeeStationInbound,
       numVehicles: OceanLeeStationInboundNumVehicles,
       direction: 'inbound',
       isStation: true
     },
     {
-      name: 'Ocean Ave & CCSF Pedestrian Bridge',
+      name: 'Ocean Ave and& & CCSF Pedestrian Bridge',
       totalTime: OceanCCSFStationOutbound,
       numVehicles: OceanCCSFStationOutboundNumVehicles,
       direction: 'outbound',
       isStation: true
     },
     {
-      name: 'Ocean Ave & CCSF Pedestrian Bridge',
+      name: 'Ocean Ave and& & CCSF Pedestrian Bridge',
       totalTime: OceanCCSFStationInbound,
       numVehicles: OceanCCSFStationInboundNumVehicles,
       direction: 'inbound',
       isStation: true
     },
     {
-      name: 'Howlth St and& Ocean Ave',
+      name: 'Howlth St and& & Ocean Ave',
       totalTime: HowlthOceanIntersectionOutbound,
       numVehicles: HowlthOceanIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Howlth St and& Ocean Ave',
+      name: 'Howlth St and& & Ocean Ave',
       totalTime: HowlthOceanIntersectionInbound,
       numVehicles: HowlthOceanIntersectionInboundNumVehicles,
       direction: 'inbound',
       isStation: false
     },
     {
-      name: 'Ocean Ave and& Balboa Park',
+      name: 'Ocean Ave and& & Balboa Park',
       totalTime: HowlthBalboaParkIntersectionOutbound,
       numVehicles: HowlthBalboaParkIntersectionOutboundNumVehicles,
       direction: 'outbound',
       isStation: false
     },
     {
-      name: 'Ocean Ave and& Balboa Park',
+      name: 'Ocean Ave and& & Balboa Park',
       totalTime: HowlthBalboaParkIntersectionInbound,
       numVehicles: HowlthBalboaParkIntersectionInboundNumVehicles,
       direction: 'inbound',
@@ -1723,6 +1723,141 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
 
   // End of axis
 
+  // Variable for total time saved at intersections
+  let totalTimeSavedOutbound = 0;
+  let totalTimeSavedInbound = 0;
+
+  // Loop through stations data to create bars and labels
+  stationsData.forEach((station, index) => {
+    let averageTime = 0;
+    if (station.direction === "outbound") {
+      averageTime = station.numVehicles > 0 ? station.totalTime / outboundFullTrips : 0;
+    } else if (station.direction === "inbound") {
+      averageTime = station.numVehicles > 0 ? station.totalTime / inboundFullTrips : 0;
+    }
+    const isOutbound = station.direction === 'outbound';
+    const isStation = station.isStation;
+    const offsetX = 20;
+    const cy = isOutbound ? outboundCY : inboundCY;
+    let cx;
+    if (index % 2 > 0) {
+      cx = ((index - 1) * offsetX) + 20; // Adjust horizontal position for each station
+    } else {
+      cx = (index * offsetX) + 20; // Adjust horizontal position for each station
+    }
+    cx += 70; // push out right to make room for axis
+    let height = averageTime;
+    const scalar = 3; // Scale factor to adjust height
+    height = height * scalar; // Scale the height
+
+    // Add heights for non-terminal intersections to get average time saved
+    if (isOutbound) {
+      if (station.name !== "Embarcadero and& Folsom St" && station.name !== "Embarcadero and& Howard" && station.name !== "Embarcadero and& Mission" && station.name !== "Market St and& Steuart St"  && !station.isStation) {
+        totalTimeSavedOutbound += averageTime;
+      }
+    } else {
+      if (station.name !== "Embarcadero and& Folsom St" && station.name !== "Embarcadero and& Howard" && station.name !== "Embarcadero and& Mission" && station.name !== "Market St and& Steuart St"  && !station.isStation) {
+        totalTimeSavedInbound += averageTime;
+      }
+    }
+
+    svg.append('rect')
+      .attr('x', cx)
+      .attr('y', isOutbound ? cy - 2.5 - height : cy + 12.5)
+      .attr('width', offsetX + 10)
+      .attr('height', height)
+      .attr('class', isStation ? `${station.name.toLowerCase().replace(/ /g, '-')}-rect station-rect` : `${station.name.toLowerCase().replace(/ /g, '-')}-rect intersection-rect`)
+      .attr('fill', 'steelblue')
+      .on("mouseover", (event, d) => {
+        if (isStation) {
+          if (station.totalTime > 3600) {
+            if (isOutbound) {
+              tooltip.style("opacity", 1)
+                .html(`<span>${station.name.replace("and&", "")}.</span><br>Total Time at Station: <span>${convertMinutesToHours(convertSecondsToMinutes(station.totalTime))}</span> hours<br>Total Vehicles Stopped at Station: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Station: <span>${outboundFullTrips}</span> vehicles<br>Average Time at Station: <span>${averageTime.toFixed(2)}</span> seconds`);
+            } else {
+              tooltip.style("opacity", 1)
+                .html(`<span>${station.name.replace("and&", "")}.</span><br>Total Time at Station: <span>${convertMinutesToHours(convertSecondsToMinutes(station.totalTime))}</span> hours<br>Total Vehicles Stopped at Station: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Station: <span>${inboundFullTrips}</span> vehicles<br>Average Time at Station: <span>${averageTime.toFixed(2)}</span> seconds`);
+            }
+          } else if (station.totalTime > 60) {
+            if (isOutbound) {
+              tooltip.style("opacity", 1)
+                .html(`<span>${station.name.replace("and&", "")}.</span><br>Total Time at Station: <span>${convertSecondsToMinutes(station.totalTime)}</span> minutes<br>Total Vehicles Stopped at Station: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Station: <span>${outboundFullTrips}</span> vehicles<br>Average Time at Station: <span>${averageTime.toFixed(2)}</span> seconds`);
+            } else {
+              tooltip.style("opacity", 1)
+                .html(`<span>${station.name.replace("and&", "")}.</span><br>Total Time at Station: <span>${convertSecondsToMinutes(station.totalTime)}</span> minutes<br>Total Vehicles Stopped at Station: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Station: <span>${inboundFullTrips}</span> vehicles<br>Average Time at Station: <span>${averageTime.toFixed(2)}</span> seconds`);
+            }
+          } else {
+            if (isOutbound) {
+              tooltip.style("opacity", 1)
+                .html(`<span>${station.name.replace("and&", "")}.</span><br>Total Time at Station: <span>${station.totalTime}</span> seconds<br>Total Vehicles Stopped at Station: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Station: <span>${outboundFullTrips}</span> vehicles<br>Average Time at Station: <span>${averageTime.toFixed(2)}</span> seconds`);
+            } else {
+              tooltip.style("opacity", 1)
+                .html(`<span>${station.name.replace("and&", "")}.</span><br>Total Time at Station: <span>${station.totalTime}</span> seconds<br>Total Vehicles Stopped at Station: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Station: <span>${inboundFullTrips}</span> vehicles<br>Average Time at Station: <span>${averageTime.toFixed(2)}</span> seconds`);
+            }
+          }
+        } else {
+          if (station.totalTime > 3600) {
+            if (isOutbound) {
+              tooltip.style("opacity", 1)
+                .html(`<span>${station.name.replace("and&", "")}.</span><br>Total Time at Intersection: <span>${convertMinutesToHours(convertSecondsToMinutes(station.totalTime))}</span> hours<br>Total Vehicles Stopped at Intersection: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Intersection: <span>${outboundFullTrips}</span> vehicles<br>Average Time at Intersection: <span>${averageTime.toFixed(2)}</span> seconds`);
+            } else {
+              tooltip.style("opacity", 1)
+                .html(`<span>${station.name.replace("and&", "")}.</span><br>Total Time at Intersection: <span>${convertMinutesToHours(convertSecondsToMinutes(station.totalTime))}</span> hours<br>Total Vehicles Stopped at Intersection: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Intersection: <span>${inboundFullTrips}</span> vehicles<br>Average Time at Intersection: <span>${averageTime.toFixed(2)}</span> seconds`);
+            }
+          } else if (station.totalTime > 60) {
+            if (isOutbound) {
+              tooltip.style("opacity", 1)
+                .html(`<span>${station.name.replace("and&", "")}.</span><br>Total Time at Intersection: <span>${convertSecondsToMinutes(station.totalTime)}</span> minutes<br>Total Vehicles Stopped at Intersection: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Intersection: <span>${outboundFullTrips}</span> vehicles<br>Average Time at Intersection: <span>${averageTime.toFixed(2)}</span> seconds`);
+            } else {
+              tooltip.style("opacity", 1)
+                .html(`<span>${station.name.replace("and&", "")}.</span><br>Total Time at Intersection: <span>${convertSecondsToMinutes(station.totalTime)}</span> minutes<br>Total Vehicles Stopped at Intersection: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Intersection: <span>${inboundFullTrips}</span> vehicles<br>Average Time at Intersection: <span>${averageTime.toFixed(2)}</span> seconds`);
+            }
+          } else {
+            if (isOutbound) {
+              tooltip.style("opacity", 1)
+                .html(`<span>${station.name.replace("and&", "")}.</span><br>Total Time at Intersection: <span>${station.totalTime}</span> seconds<br>Total Vehicles Stopped at Intersection: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Intersection: <span>${outboundFullTrips}</span> vehicles<br>Average Time at Intersection: <span>${averageTime.toFixed(2)}</span> seconds`);
+            } else {
+              tooltip.style("opacity", 1)
+                .html(`<span>${station.name.replace("and&", "")}.</span><br>Total Time at Intersection: <span>${station.totalTime}</span> seconds<br>Total Vehicles Stopped at Intersection: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Intersection: <span>${inboundFullTrips}</span> vehicles<br>Average Time at Intersection: <span>${averageTime.toFixed(2)}</span> seconds`);
+            }
+          }
+        }
+      })
+      .on("mousemove", (event) => {
+        tooltip.style("left", (event.pageX + 10) + "px")
+          .style("top", (event.pageY - 20) + "px");
+      })
+      .on("mouseout", () => {
+        tooltip.style("opacity", 0);
+      });
+
+    if (index % 2  === 0) {
+      svg.append('rect')
+        .attr('x', cx - 2)
+        .attr('y', 235)
+        .attr('width', offsetX + 14)
+        .attr('height', 240)
+        .attr('opacity', 0.35)
+        .attr('fill', '#010101')
+        .attr('style', 'z-index: -1;')
+        .attr('rx', '4px');
+    } 
+
+    svg.append('text')
+      .attr('x', cx + 17)
+      .attr('y', 355)
+      .attr('transform', 'rotate(90, ' + (cx + 17) + ', 355)')
+      .attr("text-anchor", "middle")
+      .attr('class', isStation ? `${station.name.toLowerCase().replace(/ /g, '-')}-label station-label label` : `${station.name.toLowerCase().replace(/ /g, '-')}-label intersection-label label`)
+      .selectAll('tspan')
+      .data(station.name.split('and&')) // Split the text by '&'
+      .enter()
+      .append('tspan')
+      .attr('x', cx + 17) // Set x position for each line
+      .attr('dy', (d, i) => i * 1.2 + 'em') // Set vertical offset for each line
+      .text(d => d.trim()); // Add the text content
+  });
+
   svg.append('rect')
     .attr('x', 320)
     .attr('y', 20)
@@ -1771,110 +1906,6 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
     .attr("text-anchor", "middle")
     .text('Average Trip Duration: ' + inboundAverageTimeInMinutes + ' minutes');
 
-  // Variable for total time saved at intersections
-  let totalTimeSavedOutbound = 0;
-  let totalTimeSavedInbound = 0;
-
-  // Loop through stations data to create bars and labels
-  stationsData.forEach((station, index) => {
-    let averageTime = 0;
-    if (station.direction === "outbound") {
-      averageTime = station.numVehicles > 0 ? station.totalTime / outboundFullTrips : 0;
-    } else if (station.direction === "inbound") {
-      averageTime = station.numVehicles > 0 ? station.totalTime / inboundFullTrips : 0;
-    }
-    const isOutbound = station.direction === 'outbound';
-    const isStation = station.isStation;
-    const offsetX = 20;
-    const cy = isOutbound ? outboundCY : inboundCY;
-    let cx;
-    if (index % 2 > 0) {
-      cx = ((index - 1) * offsetX) + 20; // Adjust horizontal position for each station
-    } else {
-      cx = (index * offsetX) + 20; // Adjust horizontal position for each station
-    }
-    cx += 70; // push out right to make room for axis
-    let height = averageTime;
-    const scalar = 3; // Scale factor to adjust height
-    height = height * scalar; // Scale the height
-
-    // Add heights for non-terminal intersections to get average time saved
-    if (isOutbound) {
-      if (station.name !== "Embarcadero and& Folsom St" && station.name !== "Embarcadero and& Howard" && station.name !== "Embarcadero and& Mission" && station.name !== "Market St and& Steuart St"  && !station.isStation) {
-        totalTimeSavedOutbound += averageTime;
-      }
-    } else {
-      if (station.name !== "Embarcadero and& Folsom St" && station.name !== "Embarcadero and& Howard" && station.name !== "Embarcadero and& Mission" && station.name !== "Market St and& Steuart St"  && !station.isStation) {
-        totalTimeSavedInbound += averageTime;
-      }
-    }
-
-    svg.append('rect')
-      .attr('x', cx)
-      .attr('y', isOutbound ? cy - 2 - height : cy + 12)
-      .attr('width', offsetX + 10)
-      .attr('height', height)
-      .attr('class', isStation ? `${station.name.toLowerCase().replace(/ /g, '-')}-rect station-rect` : `${station.name.toLowerCase().replace(/ /g, '-')}-rect intersection-rect`)
-      .attr('fill', 'steelblue')
-      .on("mouseover", (event, d) => {
-        if (station.totalTime > 3600) {
-          if (isOutbound) {
-            tooltip.style("opacity", 1)
-              .html(`<span>${station.name.replace("and", "")}.</span><br>Total Time at Intersection: <span>${convertMinutesToHours(convertSecondsToMinutes(station.totalTime))}</span> hours<br>Total Vehicles Stopped at Intersection: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Intersection: <span>${outboundFullTrips}</span> vehicles<br>Average Time at Intersection: <span>${averageTime.toFixed(2)}</span> seconds`);
-          } else {
-            tooltip.style("opacity", 1)
-              .html(`<span>${station.name.replace("and", "")}.</span><br>Total Time at Intersection: <span>${convertMinutesToHours(convertSecondsToMinutes(station.totalTime))}</span> hours<br>Total Vehicles Stopped at Intersection: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Intersection: <span>${inboundFullTrips}</span> vehicles<br>Average Time at Intersection: <span>${averageTime.toFixed(2)}</span> seconds`);
-          }
-        } else if (station.totalTime > 60) {
-          if (isOutbound) {
-            tooltip.style("opacity", 1)
-              .html(`<span>${station.name.replace("and", "")}.</span><br>Total Time at Intersection: <span>${convertSecondsToMinutes(station.totalTime)}</span> minutes<br>Total Vehicles Stopped at Intersection: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Intersection: <span>${outboundFullTrips}</span> vehicles<br>Average Time at Intersection: <span>${averageTime.toFixed(2)}</span> seconds`);
-          } else {
-            tooltip.style("opacity", 1)
-              .html(`<span>${station.name.replace("and", "")}.</span><br>Total Time at Intersection: <span>${convertSecondsToMinutes(station.totalTime)}</span> minutes<br>Total Vehicles Stopped at Intersection: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Intersection: <span>${inboundFullTrips}</span> vehicles<br>Average Time at Intersection: <span>${averageTime.toFixed(2)}</span> seconds`);
-          }
-        } else {
-          if (isOutbound) {
-            tooltip.style("opacity", 1)
-              .html(`<span>${station.name.replace("and", "")}.</span><br>Total Time at Intersection: <span>${station.totalTime}</span> seconds<br>Total Vehicles Stopped at Intersection: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Intersection: <span>${outboundFullTrips}</span> vehicles<br>Average Time at Intersection: <span>${averageTime.toFixed(2)}</span> seconds`);
-          } else {
-            tooltip.style("opacity", 1)
-              .html(`<span>${station.name.replace("and", "")}.</span><br>Total Time at Intersection: <span>${station.totalTime}</span> seconds<br>Total Vehicles Stopped at Intersection: <span>${station.numVehicles}</span> vehicles<br>Total Vehicles Passed Through Intersection: <span>${inboundFullTrips}</span> vehicles<br>Average Time at Intersection: <span>${averageTime.toFixed(2)}</span> seconds`);
-          }
-        }
-      })
-      .on("mousemove", (event) => {
-        tooltip.style("left", (event.pageX + 10) + "px")
-          .style("top", (event.pageY - 20) + "px");
-      })
-      .on("mouseout", () => {
-        tooltip.style("opacity", 0);
-      });
-
-    svg.append('rect')
-      .attr('x', cx - 2)
-      .attr('y', 285)
-      .attr('width', offsetX + 14)
-      .attr('height', 140)
-      .attr('opacity', 0.35)
-      .attr('fill', '#010101')
-      .attr('rx', '4px');
-
-    svg.append('text')
-      .attr('x', cx + 17)
-      .attr('y', 355)
-      .attr('transform', 'rotate(90, ' + (cx + 17) + ', 355)')
-      .attr("text-anchor", "middle")
-      .attr('class', isStation ? `${station.name.toLowerCase().replace(/ /g, '-')}-label station-label label` : `${station.name.toLowerCase().replace(/ /g, '-')}-label intersection-label label`)
-      .selectAll('tspan')
-      .data(station.name.split('and')) // Split the text by '&'
-      .enter()
-      .append('tspan')
-      .attr('x', cx + 17) // Set x position for each line
-      .attr('dy', (d, i) => i * 1.2 + 'em') // Set vertical offset for each line
-      .text(d => d.trim()); // Add the text content
-  });
-
   svg.append('text')
     .attr('x', 470)
     .attr('y', height - 20)
@@ -1893,10 +1924,106 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
   const undergroundX = d3.select('.west-portal-station-rect').attr('x') - 2;
   d3.select('.underground').attr('x', undergroundX);
 
+  // Move labels with differnt inbound and outbound names
+  d3.select('.balboa-park-bart-station-label')
+    .text(null) // Clear any existing text
+    .append('tspan')
+    .attr('x', 50) // Set x position for the first line
+    .attr('y', 347)
+    .attr('dy', '0em') // Set y offset for the first line
+    .text('Balboa Park')
+    .append('tspan')
+    .attr('x', 50) // Set x position for the second line
+    .attr('dy', '1.2em') // Set y offset for the second line
+    .text('BART Station');
+  d3.select('.san-jose-ave-and-geneva-ave-station-label')
+    .text(null) // Clear any existing text
+    .append('tspan')
+    .attr('x', 160) // Set x position for the first line
+    .attr('y', 347)
+    .attr('dy', '0em') // Set y offset for the first line
+    .text('San Jose Ave &')
+    .append('tspan')
+    .attr('x', 160) // Set x position for the second line
+    .attr('dy', '1.2em') // Set y offset for the second line
+    .text('Geneva Ave Station');
+  d3.select('.ocean-ave-and-jules-ave-label')
+    .text(null) // Clear any existing text
+    .append('tspan')
+    .attr('x', 340) // Set x position for the first line
+    .attr('y', 347)
+    .attr('dy', '0em') // Set y offset for the first line
+    .text('Ocean Ave &')
+    .append('tspan')
+    .attr('x', 340) // Set x position for the second line
+    .attr('dy', '1.2em') // Set y offset for the second line
+    .text('Jules Ave');
+  d3.select('.ocean-ave-and-dorado-ter-label')
+    .text(null) // Clear any existing text
+    .append('tspan')
+    .attr('x', 440) // Set x position for the first line
+    .attr('y', 347)
+    .attr('dy', '0em') // Set y offset for the first line
+    .text('Ocean Ave &')
+    .append('tspan')
+    .attr('x', 440) // Set x position for the second line
+    .attr('dy', '1.2em') // Set y offset for the second line
+    .text('Dorado Ter');
+  d3.select('.ocean-ave-and-victoria-st-label')
+    .text(null) // Clear any existing text
+    .append('tspan')
+    .attr('x', 380) // Set x position for the first line
+    .attr('y', 347)
+    .attr('dy', '0em') // Set y offset for the first line
+    .text('Ocean Ave &')
+    .append('tspan')
+    .attr('x', 380) // Set x position for the second line
+    .attr('dy', '1.2em') // Set y offset for the second line
+    .text('Victoria St');
+  d3.select('.ocean-ave-and-fairfield-way-label')
+    .text(null) // Clear any existing text
+    .append('tspan')
+    .attr('x', 480) // Set x position for the first line
+    .attr('y', 347)
+    .attr('dy', '0em') // Set y offset for the first line
+    .text('Ocean Ave &')
+    .append('tspan')
+    .attr('x', 480) // Set x position for the second line
+    .attr('dy', '1.2em') // Set y offset for the second line
+    .text('Fairfield Way');
+
   // Move labels with same inbound and outbound names
   d3.selectAll('.twin-peaks-blvd-label tspan').attr('y', 360);
   d3.selectAll('.sutro-reservoir-label tspan').attr('y', 360);
   d3.selectAll('.betty-sutro-meadow-label tspan').attr('y', 360);
+  d3.selectAll('.station-label tspan').attr('y', 353);
+
+  // Add horizontal line between Ocean Ave & Fairfield Way and Ocean Ave & Victoria St
+svg.append('line')
+  .attr('x1', 435) // x position of Ocean Ave & Fairfield Way
+  .attr('y1', 347 + 10) // y position below the label
+  .attr('x2', 415) // x position of Ocean Ave & Victoria St
+  .attr('y2', 347 + 10) // y position below the label
+  .attr('stroke', 'white')
+  .attr('stroke-width', 1);
+
+// Add horizontal line between Ocean Ave & Dorado Ter and Ocean Ave & Jules Ave
+svg.append('line')
+  .attr('x1', 395) // x position of Ocean Ave & Dorado Ter
+  .attr('y1', 347 + 10) // y position below the label
+  .attr('x2', 375) // x position of Ocean Ave & Jules Ave
+  .attr('y2', 347 + 10) // y position below the label
+  .attr('stroke', 'white')
+  .attr('stroke-width', 1);
+
+// Add horizontal line between San Jose Ave & Geneva Ave Station and Balboa Park BART Station
+svg.append('line')
+  .attr('x1', 115) // x position of San Jose Ave & Geneva Ave Station
+  .attr('y1', 345) // y position below the label
+  .attr('x2', 95) // x position of Balboa Park BART Station
+  .attr('y2', 345) // y position below the label
+  .attr('stroke', 'white')
+  .attr('stroke-width', 1);
 }
 
 function changeData(selectedValue) {
@@ -2103,10 +2230,11 @@ function convertMinutesToHours(minutes) {
   padding: 0 8px;
 }
 
-.intersection-label.label, .label {
+.intersection-label.label, .station-label.label, .label {
   background-color: #010101;
   font-weight: 300;
   stroke: #fff;
+  fill: #fff;
   letter-spacing: 1px;
 }
 
