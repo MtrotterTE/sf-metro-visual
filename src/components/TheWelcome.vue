@@ -68,7 +68,6 @@ let startHour = "all";
 let endHour = "all";
 let dataToBeRendered; // Default to all data
 let fullTripDataToBeRendered; // Default to all data
-let sqrtScale = d3.scaleSqrt([0, 150], [0, 150]);
 
 onMounted(async () => {
   try {
@@ -137,7 +136,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
   console.log("start of runAfterLoad console");
 
   // svg canvas dimensions
-  const width = 845;
+  const width = 1600;
   const height = 750;
 
   const outboundCY = 250;
@@ -1638,161 +1637,81 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
 
   svg.append('rect')
     .attr('x', 0)
-    .attr('y', outboundCY - sqrtScale(1) - 3)
+    .attr('y', outboundCY - 60 - 3)
     .attr('width', 2400)
     .attr('height', 1)
     .attr('fill', "#71797E");
 
   svg.append('text')
     .attr('x', 22)
-    .attr('y', outboundCY - sqrtScale(1) - 3)
-    .attr('class', 'minute-label')
-    .text('1 second');
-
-  svg.append('rect')
-    .attr('x', 0)
-    .attr('y', outboundCY - sqrtScale(10) - 3)
-    .attr('width', 2400)
-    .attr('height', 1)
-    .attr('fill', "#71797E");
-
-  svg.append('text')
-    .attr('x', 22)
-    .attr('y', outboundCY - sqrtScale(10) - 3)
+    .attr('y', outboundCY - 60 - 3)
     .attr('class', 'minute-label')
     .text('10 seconds');
 
   svg.append('rect')
     .attr('x', 0)
-    .attr('y', outboundCY - sqrtScale(20) - 3)
+    .attr('y', outboundCY - 120 - 3)
     .attr('width', 2400)
     .attr('height', 1)
     .attr('fill', "#71797E");
 
   svg.append('text')
     .attr('x', 22)
-    .attr('y', outboundCY - sqrtScale(20) - 3)
+    .attr('y', outboundCY - 120 - 3)
     .attr('class', 'minute-label')
     .text('20 seconds');
 
   svg.append('rect')
     .attr('x', 0)
-    .attr('y', outboundCY - sqrtScale(30) - 3)
+    .attr('y', outboundCY - 180 - 3)
     .attr('width', 2400)
     .attr('height', 1)
     .attr('fill', "#71797E");
 
   svg.append('text')
     .attr('x', 22)
-    .attr('y', outboundCY - sqrtScale(30) - 3)
+    .attr('y', outboundCY - 180 - 3)
     .attr('class', 'minute-label')
     .text('30 seconds');
 
   svg.append('rect')
     .attr('x', 0)
-    .attr('y', outboundCY - sqrtScale(40) - 3)
-    .attr('width', 2400)
-    .attr('height', 1)
-    .attr('fill', "#71797E");
-
-  svg.append('rect')
-    .attr('x', 0)
-    .attr('y', outboundCY - sqrtScale(50) - 3)
-    .attr('width', 2400)
-    .attr('height', 1)
-    .attr('fill', "#71797E");
-
-  svg.append('rect')
-    .attr('x', 0)
-    .attr('y', outboundCY - sqrtScale(60) - 3)
+    .attr('y', inboundCY + 60 + 12)
     .attr('width', 2400)
     .attr('height', 1)
     .attr('fill', "#71797E");
 
   svg.append('text')
     .attr('x', 22)
-    .attr('y', outboundCY - sqrtScale(60) - 3)
-    .attr('class', 'minute-label')
-    .text('60 seconds');
-
-  svg.append('rect')
-    .attr('x', 0)
-    .attr('y', inboundCY + sqrtScale(1) + 12)
-    .attr('width', 2400)
-    .attr('height', 1)
-    .attr('fill', "#71797E");
-
-  svg.append('text')
-    .attr('x', 22)
-    .attr('y', inboundCY + sqrtScale(1) + 12)
-    .attr('class', 'minute-label')
-    .text('1 second');
-
-  svg.append('rect')
-    .attr('x', 0)
-    .attr('y', inboundCY + sqrtScale(10) + 12)
-    .attr('width', 2400)
-    .attr('height', 1)
-    .attr('fill', "#71797E");
-
-  svg.append('text')
-    .attr('x', 22)
-    .attr('y', inboundCY + sqrtScale(10) + 12)
+    .attr('y', inboundCY + 60 + 12)
     .attr('class', 'minute-label')
     .text('10 seconds');
 
   svg.append('rect')
     .attr('x', 0)
-    .attr('y', inboundCY + sqrtScale(20) + 12)
+    .attr('y', inboundCY + 120 + 12)
     .attr('width', 2400)
     .attr('height', 1)
     .attr('fill', "#71797E");
 
   svg.append('text')
     .attr('x', 22)
-    .attr('y', inboundCY + sqrtScale(20) + 12)
+    .attr('y', inboundCY + 120 + 12)
     .attr('class', 'minute-label')
     .text('20 seconds');
 
   svg.append('rect')
     .attr('x', 0)
-    .attr('y', inboundCY + sqrtScale(30) + 12)
+    .attr('y', inboundCY + 180 + 12)
     .attr('width', 2400)
     .attr('height', 1)
     .attr('fill', "#71797E");
   
   svg.append('text')
     .attr('x', 22)
-    .attr('y', inboundCY + sqrtScale(30) + 12)
+    .attr('y', inboundCY + 180 + 12)
     .attr('class', 'minute-label')
     .text('30 seconds');
-  
-  svg.append('rect')
-    .attr('x', 0)
-    .attr('y', inboundCY + sqrtScale(40) + 12)
-    .attr('width', 2400)
-    .attr('height', 1)
-    .attr('fill', "#71797E");
-
-  svg.append('rect')
-    .attr('x', 0)
-    .attr('y', inboundCY + sqrtScale(50) + 12)
-    .attr('width', 2400)
-    .attr('height', 1)
-    .attr('fill', "#71797E");
-
-  svg.append('rect')
-    .attr('x', 0)
-    .attr('y', inboundCY + sqrtScale(60) + 12)
-    .attr('width', 2400)
-    .attr('height', 1)
-    .attr('fill', "#71797E");
-  
-  svg.append('text')
-    .attr('x', 22)
-    .attr('y', inboundCY + sqrtScale(60) + 12)
-    .attr('class', 'minute-label')
-    .text('60 seconds');
 
   svg.append('text')
     .attr('x', 22)
@@ -1805,7 +1724,43 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
   // End of axis
 
   svg.append('rect')
-    .attr('x', 320)
+    .attr('x', 285)
+    .attr('y', 20)
+    .attr('width', 70)
+    .attr('height',30)
+    .attr('opacity', 0.6)
+    .attr('fill', '#010101')
+    .attr('rx', '4px');
+
+  svg.append('rect')
+    .attr('x', 285)
+    .attr('y', 680)
+    .attr('width', 70)
+    .attr('height',30)
+    .attr('opacity', 0.6)
+    .attr('fill', '#010101')
+    .attr('rx', '4px');
+
+  svg.append('rect')
+    .attr('x', 385)
+    .attr('y', 20)
+    .attr('width', 110)
+    .attr('height',30)
+    .attr('opacity', 0.6)
+    .attr('fill', '#010101')
+    .attr('rx', '4px');
+
+  svg.append('rect')
+    .attr('x', 385)
+    .attr('y', 680)
+    .attr('width', 110)
+    .attr('height',30)
+    .attr('opacity', 0.6)
+    .attr('fill', '#010101')
+    .attr('rx', '4px');
+
+  svg.append('rect')
+    .attr('x', 620)
     .attr('y', 20)
     .attr('width', 300)
     .attr('height',90)
@@ -1814,7 +1769,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
     .attr('rx', '4px');
 
   svg.append('rect')
-    .attr('x', 320)
+    .attr('x', 620)
     .attr('y', 650)
     .attr('width', 300)
     .attr('height',90)
@@ -1824,14 +1779,14 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
 
   // Outbound labels
   svg.append('text')
-    .attr('x', 470)
+    .attr('x', 770)
     .attr('y', 40)
     .attr('class', 'outbound-label label')
     .attr("text-anchor", "middle")
     .text('<-- Outbound <--');
   // Outbound Average
   svg.append('text')
-    .attr('x', 470)
+    .attr('x', 770)
     .attr('y', 70)
     .attr('class', 'outbound-average-label label')
     .attr("text-anchor", "middle")
@@ -1839,18 +1794,42 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
 
   // Inbound label
   svg.append('text')
-    .attr('x', 470)
+    .attr('x', 770)
     .attr('y', height - 80)
     .attr('class', 'inbound-label label')
     .attr("text-anchor", "middle")
     .text('--> Inbound -->');
   // Inbound average
   svg.append('text')
-    .attr('x', 470)
+    .attr('x', 770)
     .attr('y', height - 50)
     .attr('class', 'inbound-average-label label')
     .attr("text-anchor", "middle")
     .text('Average Trip Duration: ' + inboundAverageTimeInMinutes + ' minutes');
+
+  svg.append('text')
+    .attr('x', 290)
+    .attr('y', 40)
+    .attr('class', 'inbound-average-label label')
+    .text('Surface');
+
+  svg.append('text')
+    .attr('x', 390)
+    .attr('y', 40)
+    .attr('class', 'inbound-average-label label')
+    .text('Underground');
+
+  svg.append('text')
+    .attr('x', 290)
+    .attr('y', 700)
+    .attr('class', 'inbound-average-label label')
+    .text('Surface');
+
+  svg.append('text')
+    .attr('x', 390)
+    .attr('y', 700)
+    .attr('class', 'inbound-average-label label')
+    .text('Underground');
 
   // Variable for total time saved at intersections
   let totalTimeSavedOutbound = 0;
@@ -1876,16 +1855,16 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
     }
     cx += 70; // push out right to make room for axis
     let height = averageTime;
-    //const scalar = 6; // Scale factor to adjust height
-    height = sqrtScale(height); // Scale the height
+    const scalar = 6; // Scale factor to adjust height
+    height = height * scalar; // Scale the height
 
     // Add heights for non-terminal intersections to get average time saved
     if (isOutbound) {
-      if (station.name !== "Embarcadero and& Folsom St" && station.name !== "Embarcadero and& Howard" && station.name !== "Embarcadero and& Mission" && station.name !== "Market St and& Steuart St" && !station.isStation) {
+      if (station.name !== "Embarcadero and& Folsom St" && station.name !== "Embarcadero and& Howard" && station.name !== "Embarcadero and& Mission" && station.name !== "Market St and& Steuart St") {
         totalTimeSavedOutbound += averageTime;
       }
     } else {
-      if (station.name !== "Embarcadero and& Folsom St" && station.name !== "Embarcadero and& Howard" && station.name !== "Embarcadero and& Mission" && station.name !== "Market St and& Steuart St" && !station.isStation) {
+      if (station.name !== "Embarcadero and& Folsom St" && station.name !== "Embarcadero and& Howard" && station.name !== "Embarcadero and& Mission" && station.name !== "Market St and& Steuart St") {
         totalTimeSavedInbound += averageTime;
       }
     }
@@ -1957,14 +1936,14 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
   });
 
   svg.append('text')
-    .attr('x', 470)
+    .attr('x', 770)
     .attr('y', height - 20)
     .attr('class', 'inbound-time-saved-label label')
     .attr("text-anchor", "middle")
     .text('Average Time Saved: ' + totalTimeSavedInbound.toFixed(1) + ' seconds');
 
   svg.append('text')
-    .attr('x', 470)
+    .attr('x', 770)
     .attr('y', 100)
     .attr('class', 'outbound-time-saved-label label')
     .attr("text-anchor", "middle")
