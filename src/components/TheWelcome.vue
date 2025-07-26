@@ -136,7 +136,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
   console.log("start of runAfterLoad console");
 
   // svg canvas dimensions
-  const width = 1600;
+  const width = 840;
   const height = 750;
 
   const outboundCY = 250;
@@ -1724,43 +1724,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
   // End of axis
 
   svg.append('rect')
-    .attr('x', 285)
-    .attr('y', 20)
-    .attr('width', 70)
-    .attr('height',30)
-    .attr('opacity', 0.6)
-    .attr('fill', '#010101')
-    .attr('rx', '4px');
-
-  svg.append('rect')
-    .attr('x', 285)
-    .attr('y', 680)
-    .attr('width', 70)
-    .attr('height',30)
-    .attr('opacity', 0.6)
-    .attr('fill', '#010101')
-    .attr('rx', '4px');
-
-  svg.append('rect')
-    .attr('x', 385)
-    .attr('y', 20)
-    .attr('width', 110)
-    .attr('height',30)
-    .attr('opacity', 0.6)
-    .attr('fill', '#010101')
-    .attr('rx', '4px');
-
-  svg.append('rect')
-    .attr('x', 385)
-    .attr('y', 680)
-    .attr('width', 110)
-    .attr('height',30)
-    .attr('opacity', 0.6)
-    .attr('fill', '#010101')
-    .attr('rx', '4px');
-
-  svg.append('rect')
-    .attr('x', 620)
+    .attr('x', 320)
     .attr('y', 20)
     .attr('width', 300)
     .attr('height',90)
@@ -1769,7 +1733,7 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
     .attr('rx', '4px');
 
   svg.append('rect')
-    .attr('x', 620)
+    .attr('x', 320)
     .attr('y', 650)
     .attr('width', 300)
     .attr('height',90)
@@ -1779,14 +1743,14 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
 
   // Outbound labels
   svg.append('text')
-    .attr('x', 770)
+    .attr('x', 470)
     .attr('y', 40)
     .attr('class', 'outbound-label label')
     .attr("text-anchor", "middle")
     .text('<-- Outbound <--');
   // Outbound Average
   svg.append('text')
-    .attr('x', 770)
+    .attr('x', 470)
     .attr('y', 70)
     .attr('class', 'outbound-average-label label')
     .attr("text-anchor", "middle")
@@ -1794,42 +1758,18 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
 
   // Inbound label
   svg.append('text')
-    .attr('x', 770)
+    .attr('x', 470)
     .attr('y', height - 80)
     .attr('class', 'inbound-label label')
     .attr("text-anchor", "middle")
     .text('--> Inbound -->');
   // Inbound average
   svg.append('text')
-    .attr('x', 770)
+    .attr('x', 470)
     .attr('y', height - 50)
     .attr('class', 'inbound-average-label label')
     .attr("text-anchor", "middle")
     .text('Average Trip Duration: ' + inboundAverageTimeInMinutes + ' minutes');
-
-  svg.append('text')
-    .attr('x', 290)
-    .attr('y', 40)
-    .attr('class', 'inbound-average-label label')
-    .text('Surface');
-
-  svg.append('text')
-    .attr('x', 390)
-    .attr('y', 40)
-    .attr('class', 'inbound-average-label label')
-    .text('Underground');
-
-  svg.append('text')
-    .attr('x', 290)
-    .attr('y', 700)
-    .attr('class', 'inbound-average-label label')
-    .text('Surface');
-
-  svg.append('text')
-    .attr('x', 390)
-    .attr('y', 700)
-    .attr('class', 'inbound-average-label label')
-    .text('Underground');
 
   // Variable for total time saved at intersections
   let totalTimeSavedOutbound = 0;
@@ -1936,14 +1876,14 @@ function runAfterLoad(dataFile, startHourFilter, endHourFilter, fullTripData) {
   });
 
   svg.append('text')
-    .attr('x', 770)
+    .attr('x', 470)
     .attr('y', height - 20)
     .attr('class', 'inbound-time-saved-label label')
     .attr("text-anchor", "middle")
     .text('Average Time Saved: ' + totalTimeSavedInbound.toFixed(1) + ' seconds');
 
   svg.append('text')
-    .attr('x', 770)
+    .attr('x', 470)
     .attr('y', 100)
     .attr('class', 'outbound-time-saved-label label')
     .attr("text-anchor", "middle")
