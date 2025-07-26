@@ -33,7 +33,10 @@
             <span class="legend-color intersection-color"></span> Intersection
           </div>
           <div class="legend-item">
-            <span class="legend-color terminal-intersection-color"></span> Terminal Intersection
+            <span class="legend-color station-color"></span> Station
+          </div>
+          <div class="legend-item">
+            <span class="legend-color terminal-station-color"></span> Terminal Station
           </div>
         </div>
         <div class="terminal-note">Note: Train sits at terminal stations/intersections between trips for operator change, schedule, bathroom break, etc.</div>
@@ -2019,9 +2022,9 @@ svg.append('line')
 // Add horizontal line between San Jose Ave & Geneva Ave Station and Balboa Park BART Station
 svg.append('line')
   .attr('x1', 115) // x position of San Jose Ave & Geneva Ave Station
-  .attr('y1', 345) // y position below the label
+  .attr('y1', 343) // y position below the label
   .attr('x2', 95) // x position of Balboa Park BART Station
-  .attr('y2', 345) // y position below the label
+  .attr('y2', 343) // y position below the label
   .attr('stroke', 'white')
   .attr('stroke-width', 1);
 }
@@ -2276,7 +2279,7 @@ function convertMinutesToHours(minutes) {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: height 0.3s ease, width 0.3s ease;
-  width: 600px;
+  width: 400px;
   height: auto;
 }
 
@@ -2333,8 +2336,8 @@ function convertMinutesToHours(minutes) {
   stroke: #010101;
 }
 
-.terminal-intersection-color {
-  background: steelblue;
+.terminal-station-color {
+  background: lightblue;
   border-radius: 0;
   border: 3px solid #010101;
 }
